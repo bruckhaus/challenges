@@ -4,13 +4,15 @@ import java.util.Stack;
 public class Hanoi {
 
     Stack<Integer> sourcePeg = new Stack<Integer>();
-    Stack<Integer> targetPeg = new Stack<Integer>();
     Stack<Integer> helperPeg = new Stack<Integer>();
+    Stack<Integer> targetPeg = new Stack<Integer>();
+
+    public static void main(String[] args) {
+        new Hanoi().solve(5);
+    }
 
     private void solve(int disks) {
-        for (int i = disks; i > 0; i--) {
-            sourcePeg.push(i);
-        }
+        setUp(disks);
         System.out.println("Playing Hanoi for " + disks + " disks:\n");
         showPegs();
         move(disks, sourcePeg, targetPeg, helperPeg);
@@ -19,14 +21,10 @@ public class Hanoi {
 
     private void move(int n, Stack<Integer> sourcePeg, Stack<Integer> targetPeg, Stack<Integer> helperPeg) {
         if (n > 0) {
-            if (n > 1) {
-                move(n - 1, sourcePeg, helperPeg, targetPeg);
-            }
+            move(n - 1, sourcePeg, helperPeg, targetPeg);
             targetPeg.push(sourcePeg.pop());
             showPegs();
-            if (n > 1) {
-                move(n - 1, helperPeg, targetPeg, sourcePeg);
-            }
+            move(n - 1, helperPeg, targetPeg, sourcePeg);
         }
     }
 
@@ -36,8 +34,9 @@ public class Hanoi {
         System.out.println("targetPeg = " + Arrays.toString(targetPeg.toArray()) + "\n");
     }
 
-    public static void main(String[] args) {
-        Hanoi hanoi = new Hanoi();
-        hanoi.solve(5);
+    private void setUp(int disks) {
+        for (int i = disks; i > 0; i--) {
+            sourcePeg.push(i);
+        }
     }
 }
