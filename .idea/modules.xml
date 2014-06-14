@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/challenges.iml" filepath="$PROJECT_DIR$/.idea/challenges.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fizzbuzz/fizzbuzz.iml" filepath="$PROJECT_DIR$/fizzbuzz/fizzbuzz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/k_difference/k_difference.iml" filepath="$PROJECT_DIR$/k_difference/k_difference.iml" />
+      <module fileurl="file://$PROJECT_DIR$/matrix_traversal/matrix_traversal.iml" filepath="$PROJECT_DIR$/matrix_traversal/matrix_traversal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/maxdiff/maxdiff.iml" filepath="$PROJECT_DIR$/maxdiff/maxdiff.iml" />
+    </modules>
+  </component>
+</project>
+
