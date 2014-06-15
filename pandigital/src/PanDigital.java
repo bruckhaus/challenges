@@ -49,7 +49,7 @@ public class PanDigital {
                 return false;
             }
         }
-        return true;
+        return p != 1;
     }
 
     public long get() {
