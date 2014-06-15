@@ -7,6 +7,7 @@ public class StrDistTest {
         assert 2 == StrDist.strDist("ab", "ab");
         assert 1 == StrDist.strDist("x", "x");
         assert 0 == StrDist.strDist("", "");
+        assert 0 == StrDist.strDist("abc", "xyz");
         assert 0 == StrDist.strDist("", "a");
         assert 12 == StrDist.strDist("123456789012", "12");
         assert 34 == StrDist.strDist("Some matching thing in the middle matches the sub-string", "match");

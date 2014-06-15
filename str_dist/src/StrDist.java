@@ -11,19 +11,18 @@ public class StrDist {
     }
 
     public static int recursiveStrDist(String str, String sub) {
-        int result;
         if (str.length() < sub.length()) {
-            result = 0;
+            return 0;
         } else if (frontMatch(str, sub)) {
             if (backMatch(str, sub)) {
-                result = str.length();
+                System.out.println("match found = " + str);
+                return str.length();
             } else {
-                result = recursiveStrDist(clipBack(str), sub);
+                return recursiveStrDist(clipBack(str), sub);
             }
         } else {
-            result = recursiveStrDist(clipFront(str), sub);
+            return recursiveStrDist(clipFront(str), sub);
         }
-        return result;
     }
 
     private static String clipFront(String str) {
