@@ -4,7 +4,7 @@ import unittest
 import matrix
 
 
-class MatrixTest(unittest.TestCase):
+class TestMatrix(unittest.TestCase):
     def test_traverse(self):
         self.assertEqual(0, matrix.Matrix([[0]]).traverse())
         self.assertEqual(1, matrix.Matrix([[1]]).traverse())

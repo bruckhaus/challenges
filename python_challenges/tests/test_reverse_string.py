@@ -4,7 +4,7 @@ import unittest
 import reverse_string
 
 
-class MaxDiffTest(unittest.TestCase):
+class TestMaxDiff(unittest.TestCase):
     def test_max_diff(self):
         self.assertEqual("cba", reverse_string.reverse_string("abc"))
         self.assertEqual("!gnirtS TSET ym si sihT", reverse_string.reverse_string("This is my TEST String!"))

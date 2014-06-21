@@ -4,7 +4,7 @@ import unittest
 import max_diff
 
 
-class MaxDiffTest(unittest.TestCase):
+class TestMaxDiff(unittest.TestCase):
     def test_max_diff(self):
         self.assertEqual(8, max_diff.max_diff([2, 3, 10, 2, 4, 8, 1]))
         self.assertEqual(2, max_diff.max_diff([7, 9, 5, 6, 3, 2]))
