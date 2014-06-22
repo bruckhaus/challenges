@@ -31,7 +31,7 @@ class Hanoi
   end
 
   def show_pegs
-    puts "\npeg 1: #@peg1"
+    puts "\npeg 1: #{@peg1}"
     puts "peg 2: #{@peg2}"
     puts "peg 3: #{@peg3}"
   end
