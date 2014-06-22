@@ -13,7 +13,7 @@ def recursive_string_distance(string, sub_string)
   first             = string[0..sub_string_length-1]
   last              = string[-sub_string_length..-1]
 
-  return 0 if string_length < sub_string.length
+  return 0 if string_length < sub_string_length
   return recursive_string_distance(string[1..-1], sub_string) unless first == sub_string
   return recursive_string_distance(string[0..-2], sub_string) unless last == sub_string
   string_length
