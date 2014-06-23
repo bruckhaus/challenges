@@ -20,7 +20,7 @@ describe 'Pandigital' do
 
   describe '#largest_prime' do
     it 'returns the largest pandigital prime' do
-      Pandigital.new.largest_pandigital.should == 7652413
+      Pandigital.new.largest_prime.should == 7652413
     end
   end
 end

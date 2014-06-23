@@ -5,7 +5,7 @@ class Pandigital
     @max_length = 9
   end
 
-  def largest_pandigital
+  def largest_prime
     # Find the largest pandigital prime number.
     # Only pandigital numbers of length 4 or 7 can be prime.
     # [http://www.mathblog.dk/project-euler-41-pandigital-prime/]
@@ -52,14 +52,6 @@ class Pandigital
     @positions = [0] * 9
     return current if @length <= @max_length
     -1
-  end
-
-  def count
-    pandigital = current
-    while pandigital != -1 do
-      puts "#{@positions.inspect}: #{pandigital}"
-      pandigital = next_pandigital
-    end
   end
 
   def list(length)
