@@ -4,6 +4,8 @@ class Hanoi {
 
     static int Disks = 4;
 
+    CharacterBoard board = new CharacterBoard(Disks);
+
     Stack<Integer> peg_1 = new Stack<>();
     Stack<Integer> peg_2 = new Stack<>();
     Stack<Integer> peg_3 = new Stack<>();
@@ -36,7 +38,7 @@ class Hanoi {
     }
 
     private void showBoard() {
-        System.out.print(drawPegs() + drawTable());
+        System.out.print(drawPegs() + board.drawTable());
     }
 
     private String drawPegs() {
@@ -50,56 +52,20 @@ class Hanoi {
         return pegs;
     }
 
-    private String drawTable() {
-        String table = "";
-        for (int i = 1; i < 3 * (2 * Disks + 2); i++) {
-            table += "-";
-        }
-        table += "\n\n";
-        return table;
-    }
-
     private String drawSlot(int level, Stack<Integer> peg) {
         String slot;
         if (peg.size() >= level) {
             int diskSize = peg.get(level - 1);
-            slot = drawDisk(diskSize);
+            slot = board.drawDisk(diskSize);
         } else {
-            slot = drawSpace();
+            slot = board.drawSpace();
         }
         return slot;
     }
 
-    private String drawDisk(int diskSize) {
-        return spacer(diskSize) + halfDisk(diskSize) + "|" +
-                halfDisk(diskSize) + spacer(diskSize) + " ";
-    }
 
-    private String halfDisk(int diskSize) {
-        String halfDisk = "";
-        for (int j = 1; j <= diskSize; j++) {
-            halfDisk += diskSize;
-        }
-        return halfDisk;
-    }
 
-    private String spacer(int diskSize) {
-        String spacer = "";
-        for (int j = diskSize; j < Disks; j++) {
-            spacer += " ";
-        }
-        return spacer;
-    }
 
-    private String drawSpace() {
-        return halfSpace() + "|" + halfSpace() + " ";
-    }
 
-    private String halfSpace() {
-        String halfSpace = "";
-        for (int j = 1; j <= Disks; j++) {
-            halfSpace += " ";
-        }
-        return halfSpace;
-    }
+
 }
