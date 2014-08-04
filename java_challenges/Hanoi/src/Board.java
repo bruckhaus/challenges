@@ -1,38 +1,38 @@
 import java.util.Stack;
 
-public class HanoiBoard {
+public class Board {
 
     int disks;
 
-    public HanoiBoard(int count) {
+    public Board(int count) {
         disks = count;
     }
 
-    public void showBoard(Hanoi hanoi) {
-        String pegs = drawPegs(hanoi);
-        CharacterDisplay.show(pegs, disks);
+    public void show(Hanoi hanoi) {
+        String pegs = pegs(hanoi);
+        CharacterDisplay.render(pegs, disks);
     }
 
-    public void startMessage() {
+    public void start() {
         CharacterDisplay.message("Playing Hanoi for " + disks + " disks:\n");
     }
 
-    public void doneMessage() {
+    public void done() {
         CharacterDisplay.message("Solved.");
     }
 
-    private String drawPegs(Hanoi hanoi) {
+    private String pegs(Hanoi hanoi) {
         String pegs = "";
         for (int i = 1; i <= Hanoi.Disks; i++) {
-            String row = drawSlot(i, hanoi.peg_1) +
-                    drawSlot(i, hanoi.peg_2) +
-                    drawSlot(i, hanoi.peg_3);
+            String row = slot(i, hanoi.peg_1) +
+                    slot(i, hanoi.peg_2) +
+                    slot(i, hanoi.peg_3);
             pegs = row + "\n" + pegs;
         }
         return pegs;
     }
 
-    private String drawSlot(int level, Stack<Integer> peg) {
+    private String slot(int level, Stack<Integer> peg) {
         String slot;
         if (peg.size() >= level) {
             int diskSize = peg.get(level - 1);

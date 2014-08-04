@@ -1,6 +1,6 @@
 public class CharacterDisplay {
 
-    public static void show(String content, int size) {
+    public static void render(String content, int size) {
         System.out.print(content + base(size));
     }
 

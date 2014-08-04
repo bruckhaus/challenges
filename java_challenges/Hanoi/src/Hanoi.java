@@ -4,7 +4,7 @@ class Hanoi {
 
     static int Disks = 4;
 
-    HanoiBoard board = new HanoiBoard(Disks);
+    Board board = new Board(Disks);
 
     Stack<Integer> peg_1 = new Stack<>();
     Stack<Integer> peg_2 = new Stack<>();
@@ -16,17 +16,17 @@ class Hanoi {
 
     private void solve(int disks) {
         setUp(disks);
-        board.startMessage();
-        board.showBoard(this);
+        board.start();
+        board.show(this);
         move(disks, peg_1, peg_2, peg_3);
-        board.doneMessage();
+        board.done();
     }
 
     private void move(int n, Stack<Integer> sourcePeg, Stack<Integer> helperPeg, Stack<Integer> targetPeg) {
         if (n > 0) {
             move(n - 1, sourcePeg, targetPeg, helperPeg);
             targetPeg.push(sourcePeg.pop());
-            board.showBoard(this);
+            board.show(this);
             move(n - 1, helperPeg, sourcePeg, targetPeg);
         }
     }
