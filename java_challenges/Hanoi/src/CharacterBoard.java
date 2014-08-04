@@ -59,4 +59,5 @@ public class CharacterBoard {
     public void doneMessage() {
         System.out.println("Solved.");
     }
+
 }
