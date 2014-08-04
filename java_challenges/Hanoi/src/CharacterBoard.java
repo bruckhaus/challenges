@@ -6,6 +6,10 @@ public class CharacterBoard {
         disks = count;
     }
 
+    public void renderBoard(String pegs) {
+        System.out.print(pegs + drawTable());
+    }
+
     public String drawTable() {
         String table = "";
         for (int i = 1; i < 3 * (2 * disks + 2); i++) {
@@ -47,5 +51,4 @@ public class CharacterBoard {
         }
         return halfSpace;
     }
-
 }

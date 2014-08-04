@@ -38,7 +38,8 @@ class Hanoi {
     }
 
     private void showBoard() {
-        System.out.print(drawPegs() + board.drawTable());
+        String pegs = drawPegs();
+        board.renderBoard(pegs);
     }
 
     private String drawPegs() {
