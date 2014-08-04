@@ -23,7 +23,7 @@ public class Board {
 
     private String pegs(Hanoi hanoi) {
         String pegs = "";
-        for (int i = 1; i <= Hanoi.Disks; i++) {
+        for (int i = 1; i <= disks; i++) {
             String row = slot(i, hanoi.peg_1) +
                     slot(i, hanoi.peg_2) +
                     slot(i, hanoi.peg_3);
