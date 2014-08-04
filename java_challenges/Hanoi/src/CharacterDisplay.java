@@ -14,12 +14,12 @@ public class CharacterDisplay {
     }
 
     public static String drawNumbers(int number, int size) {
-        return spaceer(size - number) + numberLine(number) + "|" +
-                numberLine(number) + spaceer(size - number) + " ";
+        return spacer(size - number) + numberLine(number) + "|" +
+                numberLine(number) + spacer(size - number) + " ";
     }
 
     public static String drawSpace(int size) {
-        return spaceer(size) + "|" + spaceer(size) + " ";
+        return spacer(size) + "|" + spacer(size) + " ";
     }
 
     public static void message(String message) {
@@ -28,15 +28,15 @@ public class CharacterDisplay {
 
     private static String numberLine(int number) {
         String line = "";
-        for (int j = 1; j <= number; j++) {
+        for (int i = 1; i <= number; i++) {
             line += number;
         }
         return line;
     }
 
-    private static String spaceer(int size) {
+    private static String spacer(int size) {
         String line = "";
-        for (int j = 1; j <= size; j++) {
+        for (int i = 1; i <= size; i++) {
             line += " ";
         }
         return line;
