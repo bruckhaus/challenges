@@ -11,6 +11,7 @@ public class Board {
     public void show(Hanoi hanoi) {
         String pegs = pegs(hanoi);
         CharacterDisplay.render(pegs, disks);
+        wait_seconds(1.2);
     }
 
     public void start() {
@@ -41,5 +42,10 @@ public class Board {
             slot = CharacterDisplay.drawSpace(disks);
         }
         return slot;
+    }
+
+    private void wait_seconds(double seconds) {
+        long started = System.currentTimeMillis();
+        while (System.currentTimeMillis() < started + 1000 * seconds) {}
     }
 }
