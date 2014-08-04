@@ -11,14 +11,14 @@ class Hanoi {
     Stack<Integer> peg_3 = new Stack<>();
 
     public static void main(String[] args) {
-        new Hanoi().solve(Disks);
+        new Hanoi().solve();
     }
 
-    private void solve(int disks) {
-        setUp(disks);
+    private void solve() {
+        setUp();
         board.start();
         board.show(this);
-        move(disks, peg_1, peg_2, peg_3);
+        move(Disks, peg_1, peg_2, peg_3);
         board.done();
     }
 
@@ -31,8 +31,8 @@ class Hanoi {
         }
     }
 
-    private void setUp(int disks) {
-        for (int i = disks; i > 0; i--) {
+    private void setUp() {
+        for (int i = Disks; i > 0; i--) {
             peg_1.push(i);
         }
     }
