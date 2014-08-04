@@ -36,9 +36,9 @@ public class Board {
         String slot;
         if (peg.size() >= level) {
             int diskSize = peg.get(level - 1);
-            slot = CharacterDisplay.number(diskSize, disks);
+            slot = CharacterDisplay.drawNumber(diskSize, disks);
         } else {
-            slot = CharacterDisplay.space(disks);
+            slot = CharacterDisplay.drawSpace(disks);
         }
         return slot;
     }
