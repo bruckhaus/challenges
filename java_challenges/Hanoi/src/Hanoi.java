@@ -16,10 +16,10 @@ class Hanoi {
 
     private void solve(int disks) {
         setUp(disks);
-        System.out.println("Playing Hanoi for " + disks + " disks:\n");
+        board.startMessage();
         showBoard();
         move(disks, peg_1, peg_2, peg_3);
-        System.out.println("Solved.");
+        board.doneMessage();
     }
 
     private void move(int n, Stack<Integer> sourcePeg, Stack<Integer> helperPeg, Stack<Integer> targetPeg) {
@@ -63,10 +63,4 @@ class Hanoi {
         }
         return slot;
     }
-
-
-
-
-
-
 }

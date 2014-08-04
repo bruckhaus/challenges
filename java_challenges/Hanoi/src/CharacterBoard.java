@@ -51,4 +51,12 @@ public class CharacterBoard {
         }
         return halfSpace;
     }
+
+    public void startMessage() {
+        System.out.println("Playing Hanoi for " + disks + " disks:\n");
+    }
+
+    public void doneMessage() {
+        System.out.println("Solved.");
+    }
 }
