@@ -6,7 +6,7 @@ public class CharacterBoard {
         disks = count;
     }
 
-    public void renderBoard(String pegs) {
+    public void show(String pegs) {
         System.out.print(pegs + drawTable());
     }
 
@@ -26,6 +26,10 @@ public class CharacterBoard {
 
     public String drawSpace() {
         return halfSpace() + "|" + halfSpace() + " ";
+    }
+
+    public void message(String message) {
+        System.out.println(message);
     }
 
     private String halfDisk(int diskSize) {
@@ -51,13 +55,4 @@ public class CharacterBoard {
         }
         return halfSpace;
     }
-
-    public void startMessage() {
-        System.out.println("Playing Hanoi for " + disks + " disks:\n");
-    }
-
-    public void doneMessage() {
-        System.out.println("Solved.");
-    }
-
 }

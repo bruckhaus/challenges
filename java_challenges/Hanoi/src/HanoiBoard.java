@@ -1,24 +1,26 @@
 import java.util.Stack;
 
-public class HanoiDisplay {
+public class HanoiBoard {
 
     CharacterBoard board;
+    int disks;
 
-    public HanoiDisplay(int count) {
+    public HanoiBoard(int count) {
         board = new CharacterBoard(count);
+        disks = count;
     }
 
     public void showBoard(Hanoi hanoi) {
         String pegs = drawPegs(hanoi, board);
-        board.renderBoard(pegs);
+        board.show(pegs);
     }
 
     public void startMessage() {
-        board.startMessage();
+        board.message("Playing Hanoi for " + disks + " disks:\n");
     }
 
     public void doneMessage() {
-        board.doneMessage();
+        board.message("Solved.");
     }
 
     private String drawPegs(Hanoi hanoi, CharacterBoard board) {
@@ -42,5 +44,4 @@ public class HanoiDisplay {
         }
         return slot;
     }
-
 }
