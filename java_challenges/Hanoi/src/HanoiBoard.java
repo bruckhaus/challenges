@@ -36,9 +36,9 @@ public class HanoiBoard {
         String slot;
         if (peg.size() >= level) {
             int diskSize = peg.get(level - 1);
-            slot = CharacterDisplay.drawNumbers(diskSize, disks);
+            slot = CharacterDisplay.number(diskSize, disks);
         } else {
-            slot = CharacterDisplay.drawSpace(disks);
+            slot = CharacterDisplay.space(disks);
         }
         return slot;
     }

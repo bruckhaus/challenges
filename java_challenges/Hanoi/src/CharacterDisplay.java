@@ -1,10 +1,10 @@
 public class CharacterDisplay {
 
     public static void show(String content, int size) {
-        System.out.print(content + drawBase(size));
+        System.out.print(content + base(size));
     }
 
-    public static String drawBase(int size) {
+    public static String base(int size) {
         String base = "";
         for (int i = 1; i < 3 * (2 * size + 2); i++) {
             base += "-";
@@ -13,12 +13,12 @@ public class CharacterDisplay {
         return base;
     }
 
-    public static String drawNumbers(int number, int size) {
+    public static String number(int number, int size) {
         return spacer(size - number) + numberLine(number) + "|" +
                 numberLine(number) + spacer(size - number) + " ";
     }
 
-    public static String drawSpace(int size) {
+    public static String space(int size) {
         return spacer(size) + "|" + spacer(size) + " ";
     }
 
