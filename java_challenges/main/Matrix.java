@@ -33,12 +33,12 @@ public class Matrix {
     }
 
     private void show() {
-        System.out.println("\nMatrix.traverse:");
+        System.out.println("\nMatrix traversal:");
         System.out.println("m: " + rows);
         System.out.println("n: " + columns);
         System.out.println("a:");
-        for (int[] aMaze : maze) {
-            System.out.println("    " + Arrays.toString(aMaze));
+        for (int[] row : maze) {
+            System.out.println("    " + Arrays.toString(row));
         }
     }
 
