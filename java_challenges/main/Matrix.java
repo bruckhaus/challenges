@@ -2,6 +2,8 @@ import java.util.Arrays;
 
 public class Matrix {
 
+    Boolean SolveRecursively = false;
+
     int[][] maze = new int[][]{{}};
     int rows = 0;
     int columns = 0;
@@ -12,15 +14,30 @@ public class Matrix {
         columns = maze[0].length;
     }
 
-    public int traverse() {
-        show();
+    public int solve() {
         int paths;
-        paths = countPaths(maze, 0, 0);
-        conclude(paths);
+        showStart();
+        paths = SolveRecursively ? countPathsRecursive(maze, 0, 0) : countPaths();
+        showResult(paths);
         return paths;
     }
 
-    private int countPaths(int[][] maze, int i, int j) {
+    private int countPaths() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (i == 0 && j > 0 && maze[i][j] == 1) {
+                    maze[i][j] = maze[i][j - 1];
+                } else if (i > 0 && j == 0 && maze[i][j] == 1) {
+                    maze[i][j] = maze[i - 1][j];
+                } else if (i > 0 && j > 0 && maze[i][j] == 1) {
+                    maze[i][j] = maze[i - 1][j] + maze[i][j - 1];
+                }
+            }
+        }
+        return maze[rows - 1][columns - 1];
+    }
+
+    private int countPathsRecursive(int[][] maze, int i, int j) {
         if (i >= rows || j >= columns) {
             return 0;
         } else if (maze[i][j] == 0) {
@@ -28,22 +45,26 @@ public class Matrix {
         } else if (i == rows - 1 && j == columns - 1) {
             return 1;
         } else {
-            return countPaths(maze, i + 1, j) + countPaths(maze, i, j + 1);
+            return countPathsRecursive(maze, i + 1, j) + countPathsRecursive(maze, i, j + 1);
         }
     }
 
-    private void show() {
-        System.out.println("\nMatrix traversal:");
-        System.out.println("m: " + rows);
-        System.out.println("n: " + columns);
-        System.out.println("a:");
+    private void showMaze() {
         for (int[] row : maze) {
             System.out.println("    " + Arrays.toString(row));
         }
     }
 
-    private void conclude(int paths) {
-        System.out.println("result: " + paths);
+    private void showStart() {
+        System.out.println("\nMaze: ");
+        showMaze();
     }
 
+    private void showResult(int paths) {
+        if (!SolveRecursively) {
+            System.out.println("Path count analysis:");
+            showMaze();
+        }
+        System.out.println("result: " + paths);
+    }
 }
