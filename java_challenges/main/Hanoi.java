@@ -3,9 +3,9 @@ import java.util.Stack;
 
 public class Hanoi {
 
-    Stack<Integer> sourcePeg = new Stack<Integer>();
-    Stack<Integer> helperPeg = new Stack<Integer>();
-    Stack<Integer> targetPeg = new Stack<Integer>();
+    private Stack<Integer> sourcePeg = new Stack<Integer>();
+    private Stack<Integer> helperPeg = new Stack<Integer>();
+    private Stack<Integer> targetPeg = new Stack<Integer>();
 
     public static void main(String[] args) {
         new Hanoi().solve(5);

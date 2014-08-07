@@ -2,7 +2,7 @@ import java.util.Stack;
 
 public class Board {
 
-    int disks;
+    private int disks;
 
     public Board(int count) {
         disks = count;

@@ -2,7 +2,7 @@ import java.util.Stack;
 
 class Hanoi {
 
-    static int Disks = 4;
+    private static int Disks = 4;
 
     Board board = new Board(Disks);
 
