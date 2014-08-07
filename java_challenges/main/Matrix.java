@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class Matrix {
 
-    Boolean SolveRecursively = false;
+    Boolean SolveRecursively = true;
 
     int[][] maze = new int[][]{{}};
     int rows = 0;
@@ -25,13 +25,9 @@ public class Matrix {
     private int countPaths() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (i == 0 && j > 0 && maze[i][j] == 1) {
-                    maze[i][j] = maze[i][j - 1];
-                } else if (i > 0 && j == 0 && maze[i][j] == 1) {
-                    maze[i][j] = maze[i - 1][j];
-                } else if (i > 0 && j > 0 && maze[i][j] == 1) {
-                    maze[i][j] = maze[i - 1][j] + maze[i][j - 1];
-                }
+                if (i == 0 && j > 0 && maze[i][j] == 1) maze[0][j] = maze[0][j - 1];
+                else if (i > 0 && j == 0 && maze[i][j] == 1) maze[i][0] = maze[i - 1][0];
+                else if (i > 0 && j > 0 && maze[i][j] == 1) maze[i][j] = maze[i - 1][j] + maze[i][j - 1];
             }
         }
         return maze[rows - 1][columns - 1];

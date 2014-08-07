@@ -3,7 +3,7 @@ import org.junit.Test;
 public class MatrixTest {
 
     @Test
-    public void testTraverse() throws Exception {
+    public void testMatrixSolve() throws Exception {
 
         assert 1 == new Matrix(new int[][]{{1}}).solve();
 
@@ -30,6 +30,15 @@ public class MatrixTest {
                 {1, 1, 1, 0, 1},
                 {1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1}
+        }).solve();
+
+        assert 252 == new Matrix(new int[][]{
+                {1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1}
         }).solve();
 
         assert 10 == new Matrix(new int[][]{
