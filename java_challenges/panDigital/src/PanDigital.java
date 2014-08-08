@@ -12,17 +12,21 @@ import java.util.Arrays;
 public class PanDigital {
 
     private int length = 1;
-    private int maxLength = 9;
+    private int maxLength = -1;
     private long maxPrime = -1;
     private int[] position = resetPosition();
     private static ArrayList<String> Digits =
-            new ArrayList<String>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9"));
+            new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9"));
 
-    public static void main(String[] args) {
-        new PanDigital().panDigital();
+    public PanDigital(int maxLength) {
+        this.maxLength = maxLength;
     }
 
-    public long panDigital() {
+    public static void main(String[] args) {
+        new PanDigital(9).maxPrime();
+    }
+
+    public long maxPrime() {
         long p = get();
         while (p != -1) {
             System.out.println(p + checkPrime(p));
@@ -33,28 +37,15 @@ public class PanDigital {
     }
 
     private String checkPrime(long p) {
-        if (isPrime(p)) {
-            if (p > maxPrime) {
-                maxPrime = p;
-            }
+        if (Prime.isPrime(p)) {
+            if (p > maxPrime) maxPrime = p;
             return " *";
-        } else {
-            return "";
-        }
-    }
-
-    private static boolean isPrime(long p) {
-        for (long l = 2; l <= p / 2; l++) {
-            if (p % l == 0) {
-                return false;
-            }
-        }
-        return p != 1;
+        } else return "";
     }
 
     public long get() {
         String result = "";
-        ArrayList<String> digits = new ArrayList<String>(Digits);
+        ArrayList<String> digits = new ArrayList<>(Digits);
         for (int i = 0; i < length; i++) {
             result += digits.get(position[i]);
             digits.remove(position[i]);
