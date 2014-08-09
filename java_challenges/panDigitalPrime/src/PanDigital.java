@@ -26,8 +26,7 @@ public class PanDigital {
         String result = "";
         ArrayList<String> digits = new ArrayList<>(Digits);
         for (int i = 0; i < length; i++) {
-            result += digits.get(position[i]);
-            digits.remove(position[i]);
+            result += digits.remove(position[i]);
         }
         return Integer.valueOf(result);
     }
