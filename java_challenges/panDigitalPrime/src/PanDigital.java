@@ -13,34 +13,13 @@ public class PanDigital {
 
     private int length = 1;
     private int maxLength = -1;
-    private long maxPrime = -1;
-    private int[] position = resetPosition();
+    private int[] position;
     private static ArrayList<String> Digits =
             new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9"));
 
-    public PanDigital(int maxLength) {
-        this.maxLength = maxLength;
-    }
-
-    public static void main(String[] args) {
-        new PanDigital(9).maxPrime();
-    }
-
-    public long maxPrime() {
-        long p = get();
-        while (p != -1) {
-            System.out.println(p + checkPrime(p));
-            p = next();
-        }
-        System.out.println("maxPrime = " + maxPrime);
-        return maxPrime;
-    }
-
-    private String checkPrime(long p) {
-        if (Prime.isPrime(p)) {
-            if (p > maxPrime) maxPrime = p;
-            return " *";
-        } else return "";
+    public PanDigital(int length) {
+        maxLength = length;
+        resetPosition();
     }
 
     public long get() {
@@ -58,21 +37,27 @@ public class PanDigital {
             if (i + position[i] < length - 1) {
                 position[i]++;
                 return get();
-            } else {
-                position[i] = 0;
-            }
+            } else position[i] = 0;
         }
         if (length < maxLength) {
             length++;
-            position = resetPosition();
+            resetPosition();
             return get();
-        } else {
-            return -1;
+        } else return -1;
+    }
+
+    public String list() {
+        String result = "" + get();
+        Long p = next();
+        while (p != -1) {
+            result += ", " + p;
+            p = next();
         }
+        System.out.println(result);
+        return result;
     }
 
-    private int[] resetPosition() {
-        return new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private void resetPosition() {
+        position = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
     }
-
 }

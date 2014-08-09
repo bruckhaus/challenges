@@ -1,10 +1,23 @@
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 public class PanDigitalTest {
 
     @Test
-    public void testPanDigital() throws Exception {
-        assert new PanDigital(9).maxPrime() == 7652413;
+    public void testPanDigitalPrime() throws Exception {
+        assert new PanDigitalPrime(9).maxPrime() == 7652413;
+    }
+
+    @Test
+    public void testPandigital() {
+        assert new PanDigital(1).list().equals("1");
+        assert new PanDigital(2).list().equals("1, 12, 21");
+        assert new PanDigital(3).list().equals("1, 12, 21, 123, 213, 312, 132, 231, 321");
+        assert new PanDigital(4).list().equals("1, 12, 21, 123, 213, 312, 132, 231, 321, " +
+                "1234, 2134, 3124, 4123, 1324, 2314, 3214, 4213, 1423, 2413, 3412, 4312, " +
+                "1243, 2143, 3142, 4132, 1342, 2341, 3241, 4231, 1432, 2431, 3421, 4321");
     }
 
     @Test
