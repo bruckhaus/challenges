@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 
 public class PanDigitalTest {
@@ -14,10 +15,10 @@ public class PanDigitalTest {
     public void testPandigital() {
         assert new PanDigital(1).list().equals("1");
         assert new PanDigital(2).list().equals("1, 12, 21");
-        assert new PanDigital(3).list().equals("1, 12, 21, 123, 213, 312, 132, 231, 321");
-        assert new PanDigital(4).list().equals("1, 12, 21, 123, 213, 312, 132, 231, 321, " +
-                "1234, 2134, 3124, 4123, 1324, 2314, 3214, 4213, 1423, 2413, 3412, 4312, " +
-                "1243, 2143, 3142, 4132, 1342, 2341, 3241, 4231, 1432, 2431, 3421, 4321");
+        assert new PanDigital(3).list().equals("1, 12, 21, 123, 132, 213, 231, 312, 321");
+        assert new PanDigital(4).list().equals("1, 12, 21, 123, 132, 213, 231, 312, 321, " +
+                "1234, 1243, 1324, 1342, 1423, 1432, 2134, 2143, 2314, 2341, 2413, 2431, " +
+                "3124, 3142, 3214, 3241, 3412, 3421, 4123, 4132, 4213, 4231, 4312, 4321");
     }
 
     @Test

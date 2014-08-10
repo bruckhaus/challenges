@@ -25,15 +25,13 @@ public class PanDigital {
     public long get() {
         String result = "";
         ArrayList<String> digits = new ArrayList<>(Digits);
-        for (int i = 0; i < length; i++) {
-            result += digits.remove(position[i]);
-        }
+        for (int i = 0; i < length; i++) result += digits.remove(position[i]);
         return Integer.valueOf(result);
     }
 
     public long next() {
-        for (int i = 0; i < length; i++) {
-            if (i + position[i] < length - 1) {
+        for (int i = length - 2; i >= 0; i--) {
+            if (position[i] + i < length - 1) {
                 position[i]++;
                 return get();
             } else position[i] = 0;
