@@ -1,102 +1,48 @@
 public class RomanNumeral {
 
     public static int romanToArabic(String roman) {
-
-        String state = "Start"; // I, V, X, L, C, D, M
         char token;
-        Integer arabic = 0;
+        int tokenValue = 0;
+        int lastTokenValue = 0;
+        int result = 0;
 
         System.out.print("Roman: " + roman);
-
         for (int i = 0; i < roman.length(); i++) {
             token = roman.charAt(i);
-            switch (state) {
-                case "Start":
-                    switch (token) {
-                        case 'I':
-                            arabic += 1;
-                            state = "I";
-                            break;
-                        case 'V':
-                            arabic += 5;
-                            state = "V";
-                            break;
-                        case 'X':
-                            arabic += 10;
-                            state = "X";
-                            break;
-                        case 'L':
-                            arabic += 50;
-                            state = "L";
-                            break;
-                    }
-                    break;
-                case "I":
-                    switch (token) {
-                        case 'I':
-                            arabic += 1;
-                            state = "I";
-                            break;
-                        case 'V':
-                            arabic += 3;
-                            state = "V";
-                            break;
-                        case 'X':
-                            arabic += 8;
-                            state = "X";
-                            break;
-                        case 'L':
-                            arabic += 48;
-                            state = "L";
-                            break;
-                    }
-                    break;
-                case "V":
-                    switch (token) {
-                        case 'I':
-                            arabic += 1;
-                            state = "I";
-                            break;
-                    }
-                    break;
-                case "X":
-                    switch (token) {
-                        case 'I':
-                            arabic += 1;
-                            state = "I";
-                            break;
-                        case 'V':
-                            arabic += 5;
-                            state = "V";
-                            break;
-                        case 'X':
-                            arabic += 10;
-                            state = "X";
-                            break;
-                        case 'L':
-                            arabic += 30;
-                            state = "L";
-                            break;
-                    }
-                    break;
-                case "L":
-                    switch (token) {
-                        case 'I':
-                            arabic += 1;
-                            state = "I";
-                            break;
-                        case 'V':
-                            arabic += 5;
-                            state = "V";
-                            break;
-                    }
-                    break;
-            }
-
+            tokenValue = value(token);
+            result += tokenValue;
+            if (tokenValue > lastTokenValue) result -= 2 * lastTokenValue;
+            lastTokenValue = tokenValue;
         }
+        System.out.println(", arabic: " + result);
+        return result;
+    }
 
-        System.out.println(", arabic: " + arabic);
-
-        return arabic;
+    private static int value(char token) {
+        int value = 0;
+        switch (token) {
+            case 'I':
+                value = 1;
+                break;
+            case 'V':
+                value = 5;
+                break;
+            case 'X':
+                value = 10;
+                break;
+            case 'L':
+                value = 50;
+                break;
+            case 'C':
+                value = 100;
+                break;
+            case 'D':
+                value = 500;
+                break;
+            case 'M':
+                value = 1000;
+                break;
+        }
+        return value;
     }
 }

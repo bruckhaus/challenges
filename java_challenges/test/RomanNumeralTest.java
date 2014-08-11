@@ -53,5 +53,19 @@ public class RomanNumeralTest {
         assert RomanNumeral.romanToArabic("XLVIII") == 48;
         assert RomanNumeral.romanToArabic("IL") == 49;
         assert RomanNumeral.romanToArabic("L") == 50;
+        assert RomanNumeral.romanToArabic("LVII") == 57;
+        assert RomanNumeral.romanToArabic("LXIV") == 64;
+        assert RomanNumeral.romanToArabic("LXXI") == 71;
+        assert RomanNumeral.romanToArabic("LXXVII") == 77;
+        assert RomanNumeral.romanToArabic("LXXXIV") == 84;
+        assert RomanNumeral.romanToArabic("XCI") == 91;
+        assert RomanNumeral.romanToArabic("IC") == 99;
+        assert RomanNumeral.romanToArabic("C") == 100;
+        assert RomanNumeral.romanToArabic("CI") == 101;
+        assert RomanNumeral.romanToArabic("CVIII") == 108;
+        assert RomanNumeral.romanToArabic("CXI") == 111;
+        assert RomanNumeral.romanToArabic("CXXVIII") == 128;
+        assert RomanNumeral.romanToArabic("CXLIV") == 144;
+        assert RomanNumeral.romanToArabic("CLXXI") == 171;
     }
 }
