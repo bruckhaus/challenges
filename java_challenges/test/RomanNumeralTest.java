@@ -67,5 +67,15 @@ public class RomanNumeralTest {
         assert RomanNumeral.romanToArabic("CXXVIII") == 128;
         assert RomanNumeral.romanToArabic("CXLIV") == 144;
         assert RomanNumeral.romanToArabic("CLXXI") == 171;
+        assert RomanNumeral.romanToArabic("MCMXIV") == 1914;
+        assert RomanNumeral.romanToArabic("MCMXVIII") == 1918;
+        assert RomanNumeral.romanToArabic("MCMXXXIII") == 1933;
+        assert RomanNumeral.romanToArabic("MCMXLV") == 1945;
+        assert RomanNumeral.romanToArabic("MCMLXVI") == 1966;
+        assert RomanNumeral.romanToArabic("MCMLXIX") == 1969;
+        assert RomanNumeral.romanToArabic("MXMVII") == 1997;
+        assert RomanNumeral.romanToArabic("MM") == 2000;
+        assert RomanNumeral.romanToArabic("MMXIV") == 2014;
+        assert RomanNumeral.romanToArabic("MMMDLV") == 3555;
     }
 }
