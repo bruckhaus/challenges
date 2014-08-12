@@ -1,76 +1,63 @@
 public class RomanNumeral {
 
+    private static final char[] NUMERALS = {'M', 'D', 'C', 'L', 'X', 'V', 'I'};
+    private static final String[][] STYLE_RULES = new String[][]{
+         // {"poor style", "good style"}
+            {"IIII", "IV"},
+            {"XXXX", "XL"},
+            {"CCCC", "CD"},
+            {"VIV", "IX"},
+            {"LXL", "XC"},
+            {"CDC", "CM"},
+            {"XXXIX", "IXL"},
+            {"CCCXC", "XCD"}};
     private String roman = "";
     private int arabic = 0;
 
     public String arabicToRoman(int i) {
         roman = "";
         arabic = i;
-        while (arabic >= 1000) add('M');
-        while (arabic >= 500) add('D');
-        while (arabic >= 100) add('C');
-        while (arabic >= 50) add('L');
-        while (arabic >= 10) add('X');
-        while (arabic >= 5) add('V');
-        while (arabic >= 1) add('I');
-        roman = roman.replace("IIII", "IV");
-        roman = roman.replace("XXXX", "XL");
-        roman = roman.replace("CCCC", "CD");
-        roman = roman.replace("VIV", "IX");
-        roman = roman.replace("LXL", "XC");
-        roman = roman.replace("CDC", "CM");
-        roman = roman.replace("XXXIX", "IXL");
-        roman = roman.replace("CCCXC", "XCD");
+        for (char numeral : NUMERALS) applyNumeral(numeral);
+        for (String[] rule : STYLE_RULES) applyRule(rule);
         return roman;
     }
 
-    private void add(char m) {
-        roman += m;
-        arabic -= value(m);
+    private void applyRule(String[] rule) {
+        roman = roman.replace(rule[0], rule[1]);
     }
 
-    public static int romanToArabic(String roman) {
+    private void applyNumeral(char n) {
+        while (arabic >= numeralValue(n)) {
+            roman += n;
+            arabic -= numeralValue(n);
+        }
+    }
+
+    public int romanToArabic(String roman) {
+        arabic = 0;
         char token;
-        int tokenValue = 0;
+        int tokenValue;
         int lastTokenValue = 0;
-        int result = 0;
 
         for (int i = 0; i < roman.length(); i++) {
             token = roman.charAt(i);
-            tokenValue = value(token);
-            result += tokenValue;
-            if (tokenValue > lastTokenValue) result -= 2 * lastTokenValue;
+            tokenValue = numeralValue(token);
+            arabic += tokenValue;
+            if (tokenValue > lastTokenValue) arabic -= 2 * lastTokenValue;
             lastTokenValue = tokenValue;
         }
-//        System.out.println("Roman: " + roman + ", arabic: " + result);
-        return result;
+        return arabic;
     }
 
-    private static int value(char token) {
+    private static int numeralValue(char token) {
         int value = 0;
-        switch (token) {
-            case 'I':
-                value = 1;
-                break;
-            case 'V':
-                value = 5;
-                break;
-            case 'X':
-                value = 10;
-                break;
-            case 'L':
-                value = 50;
-                break;
-            case 'C':
-                value = 100;
-                break;
-            case 'D':
-                value = 500;
-                break;
-            case 'M':
-                value = 1000;
-                break;
-        }
+        if (token == 'I') value = 1;
+        else if (token == 'V') value = 5;
+        else if (token == 'X') value = 10;
+        else if (token == 'L') value = 50;
+        else if (token == 'C') value = 100;
+        else if (token == 'D') value = 500;
+        else if (token == 'M') value = 1000;
         return value;
     }
 }
