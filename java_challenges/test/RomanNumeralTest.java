@@ -1,6 +1,15 @@
 import org.junit.Test;
 
 public class RomanNumeralTest {
+
+    @Test
+    public void testArabicToRoman() {
+        RomanNumeral r = new RomanNumeral();
+        for (int i = 1; i <= 3999; i++) {
+            assert RomanNumeral.romanToArabic(r.arabicToRoman(i)) == i;
+        }
+    }
+
     @Test
     public void testRomanToArabic() {
         assert RomanNumeral.romanToArabic("I") == 1;
