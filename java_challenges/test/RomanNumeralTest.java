@@ -6,7 +6,8 @@ public class RomanNumeralTest {
     public void testArabicToRoman() {
         RomanNumeral r = new RomanNumeral();
         for (int i = 1; i <= 3999; i++) {
-            assert r.romanToArabic(r.arabicToRoman(i)) == i;
+            int arabic = r.romanToArabic(r.arabicToRoman(i));
+            assert arabic == i;
         }
     }
 

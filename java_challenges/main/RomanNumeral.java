@@ -1,8 +1,11 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class RomanNumeral {
 
     private static final char[] NUMERALS = {'M', 'D', 'C', 'L', 'X', 'V', 'I'};
     private static final String[][] STYLE_RULES = new String[][]{
-         // {"poor style", "good style"}
+            // {"poor style", "good style"}
             {"IIII", "IV"},
             {"XXXX", "XL"},
             {"CCCC", "CD"},
@@ -11,8 +14,19 @@ public class RomanNumeral {
             {"CDC", "CM"},
             {"XXXIX", "IXL"},
             {"CCCXC", "XCD"}};
+    private static final Map<String, Integer> numeralValues = new HashMap<>();
     private String roman = "";
     private int arabic = 0;
+
+    public RomanNumeral() {
+        numeralValues.put("I", 1);
+        numeralValues.put("V", 5);
+        numeralValues.put("X", 10);
+        numeralValues.put("L", 50);
+        numeralValues.put("C", 100);
+        numeralValues.put("D", 500);
+        numeralValues.put("M", 1000);
+    }
 
     public String arabicToRoman(int i) {
         roman = "";
@@ -49,15 +63,7 @@ public class RomanNumeral {
         return arabic;
     }
 
-    private static int numeralValue(char token) {
-        int value = 0;
-        if (token == 'I') value = 1;
-        else if (token == 'V') value = 5;
-        else if (token == 'X') value = 10;
-        else if (token == 'L') value = 50;
-        else if (token == 'C') value = 100;
-        else if (token == 'D') value = 500;
-        else if (token == 'M') value = 1000;
-        return value;
+    private Integer numeralValue(char token) {
+        return numeralValues.get(String.valueOf(token));
     }
 }
