@@ -7,16 +7,16 @@ class SetGame:
     NUM_CARDS_IN_DECK = 81
     NUM_CARDS_IN_HAND = 12
     NUM_ATTRIBUTES = 4
+    COUNTS = [1, 2, 3]
     FILLS = ['empty', 'striped', 'full']
     COLORS = ['red', 'green', 'blue']
     SHAPES = ['diamond', 'squiggly', 'oval']
-    COUNTS = [1, 2, 3]
     deck = []
     hand = []
-    triplet = [0, 1, 2]
+    triplet = None
 
     def __init__(self):
-        pass
+        self.triplet = [0, 0, 0]
 
     def play(self):
         self.make_deck()
@@ -25,11 +25,11 @@ class SetGame:
 
     def make_deck(self):
         self.deck = []
-        for fill in self.FILLS:
-            for color in self.COLORS:
-                for shape in self.SHAPES:
-                    for count in self.COUNTS:
-                        card = [fill, color, shape, count]
+        for count in self.COUNTS:
+            for fill in self.FILLS:
+                for color in self.COLORS:
+                    for shape in self.SHAPES:
+                        card = [count, fill, color, shape]
                         self.deck.append(card)
         if self.interactive_mode:
             print "\nDeck:"
@@ -51,6 +51,7 @@ class SetGame:
         matches = []
         if self.interactive_mode:
             print "\nMatches:"
+        self.next_valid_triplet()
         while self.triplet:
             if self.check_match():
                 matches.append(self.triplet[:])
