@@ -3,6 +3,7 @@ import random
 
 
 class SetGame:
+    interactive_mode = False
     NUM_CARDS_IN_DECK = 81
     NUM_CARDS_IN_HAND = 12
     NUM_ATTRIBUTES = 4
@@ -12,20 +13,23 @@ class SetGame:
     COUNTS = [1, 2, 3]
     deck = []
     hand = []
-    triplet = [0, 1, 2]
+    triplet = [0, 0, 0]
 
     def __init__(self):
         self.pp = pprint.PrettyPrinter(indent=4)
 
     def make_deck(self):
+        self.deck = []
         for fill in self.FILLS:
             for color in self.COLORS:
                 for shape in self.SHAPES:
                     for count in self.COUNTS:
                         card = [fill, color, shape, count]
                         self.deck.append(card)
-        print "\nDeck:"
-        self.pp.pprint(self.deck)
+        if self.interactive_mode:
+            print "\nDeck:"
+            self.pp.pprint(self.deck)
+        return self.deck
 
     def deal_hand(self):
         for i in range(self.NUM_CARDS_IN_HAND):
@@ -33,8 +37,10 @@ class SetGame:
             card = self.deck[r]
             self.hand.append(card)
             self.deck.remove(card)
-        print "\nHand:"
-        self.pp.pprint(self.hand)
+        if self.interactive_mode:
+            print "\nHand:"
+            self.pp.pprint(self.hand)
+        return self.hand
 
     def all_same(self, p):
         t = self.triplet
@@ -77,11 +83,16 @@ class SetGame:
         print "        ", self.hand[self.triplet[2]]
 
     def check_hand(self):
-        print "\nMatches:"
+        matches = []
+        if self.interactive_mode:
+            print "\nMatches:"
         while self.triplet:
             if self.check_match():
-                self.show_triplet()
+                matches.append(self.triplet[:])
+                if self.interactive_mode:
+                    self.show_triplet()
             self.next_triplet()
+        return matches
 
     def play(self):
         self.make_deck()
@@ -89,4 +100,7 @@ class SetGame:
         self.check_hand()
 
 
-SetGame().play()
+if __name__ == '__main__':
+    game = SetGame()
+    game.interactive_mode = True
+    game.play()
