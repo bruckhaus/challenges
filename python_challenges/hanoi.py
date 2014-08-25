@@ -32,4 +32,5 @@ class Hanoi:
         for i in reversed(range(1, self.disks + 1)):
             self.source_peg.append(i)
 
-Hanoi(4).solve()
+if __name__ == '__main__':
+    Hanoi(4).solve()
