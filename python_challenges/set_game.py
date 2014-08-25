@@ -1,4 +1,4 @@
-import pprint
+import pprint as pp
 import random
 
 
@@ -13,10 +13,15 @@ class SetGame:
     COUNTS = [1, 2, 3]
     deck = []
     hand = []
-    triplet = [0, 0, 0]
+    triplet = [0, 1, 2]
 
     def __init__(self):
-        self.pp = pprint.PrettyPrinter(indent=4)
+        pass
+
+    def play(self):
+        self.make_deck()
+        self.deal_hand()
+        self.check_hand()
 
     def make_deck(self):
         self.deck = []
@@ -28,7 +33,7 @@ class SetGame:
                         self.deck.append(card)
         if self.interactive_mode:
             print "\nDeck:"
-            self.pp.pprint(self.deck)
+            pp.pprint(self.deck)
         return self.deck
 
     def deal_hand(self):
@@ -39,8 +44,26 @@ class SetGame:
             self.deck.remove(card)
         if self.interactive_mode:
             print "\nHand:"
-            self.pp.pprint(self.hand)
+            pp.pprint(self.hand)
         return self.hand
+
+    def check_hand(self):
+        matches = []
+        if self.interactive_mode:
+            print "\nMatches:"
+        while self.triplet:
+            if self.check_match():
+                matches.append(self.triplet[:])
+                if self.interactive_mode:
+                    self.show_triplet()
+            self.next_valid_triplet()
+        return matches
+
+    def check_match(self):
+        for p in range(self.NUM_ATTRIBUTES):
+            if not (self.all_same(p) or self.all_different(p)):
+                return False
+        return True
 
     def all_same(self, p):
         t = self.triplet
@@ -56,16 +79,17 @@ class SetGame:
         t3 = self.hand[t[2]]
         return t1[p] != t2[p] and t2[p] != t3[p] and t1[p] != t3[p]
 
-    def check_match(self):
-        t = self.triplet
-        if t[0] == t[1] or t[1] == t[2]:
-            return False
-        if t[1] < t[0] or t[2] < t[1]:
-            return False
-        for p in range(self.NUM_ATTRIBUTES):
-            if not (self.all_same(p) or self.all_different(p)):
-                return False
-        return True
+    def show_triplet(self):
+        print "    ", self.triplet
+        print "        ", self.hand[self.triplet[0]]
+        print "        ", self.hand[self.triplet[1]]
+        print "        ", self.hand[self.triplet[2]]
+
+    def next_valid_triplet(self):
+        while True:
+            self.next_triplet()
+            if (not self.triplet) or self.is_triplet_valid():
+                break
 
     def next_triplet(self):
         for p in reversed(range(3)):
@@ -76,28 +100,15 @@ class SetGame:
                 self.triplet[p] = 0
         self.triplet = None
 
-    def show_triplet(self):
-        print "    ", self.triplet
-        print "        ", self.hand[self.triplet[0]]
-        print "        ", self.hand[self.triplet[1]]
-        print "        ", self.hand[self.triplet[2]]
-
-    def check_hand(self):
-        matches = []
-        if self.interactive_mode:
-            print "\nMatches:"
-        while self.triplet:
-            if self.check_match():
-                matches.append(self.triplet[:])
-                if self.interactive_mode:
-                    self.show_triplet()
-            self.next_triplet()
-        return matches
-
-    def play(self):
-        self.make_deck()
-        self.deal_hand()
-        self.check_hand()
+    def is_triplet_valid(self):
+        t = self.triplet
+        # can't choose same card twice:
+        if t[0] == t[1] or t[1] == t[2]:
+            return False
+        # order of cards is not significant: allow only smallest sort order of each combination and reject others:
+        if t[0] > t[1] or t[1] > t[2]:
+            return False
+        return True
 
 
 if __name__ == '__main__':
