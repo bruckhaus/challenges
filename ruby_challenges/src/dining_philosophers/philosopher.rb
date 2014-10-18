@@ -2,7 +2,7 @@ class Philosopher
   def initialize(name)
     @name = name
     @state = 'sitting'
-    @holds = 'no'
+    @sticks = 'no'
   end
 
   def dine(table, position)
@@ -29,22 +29,22 @@ class Philosopher
   end
 
   def take_chopsticks
-    @holds = 'no'
+    @sticks = 'no'
     @left_chopstick.take
-    @holds = 'left'
+    @sticks = 'left'
     @right_chopstick.take
-    @holds = 'left and right'
+    @sticks = 'left and right'
   end
 
   def drop_chopsticks
-    @holds = 'left and right'
+    @sticks = 'left and right'
     @left_chopstick.drop
-    @holds = 'right'
+    @sticks = 'right'
     @right_chopstick.drop
-    @holds = 'no'
+    @sticks = 'no'
   end
 
   def show_state
-    puts "#{@name} is #{@state} holding #{@holds} chopstick."
+    puts "#{@name} is #{@state} holding #{@sticks} chopstick."
   end
 end
