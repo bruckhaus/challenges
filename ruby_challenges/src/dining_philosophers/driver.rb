@@ -15,7 +15,6 @@ begin
 
 rescue Exception => e
   puts "\nException: #{e.message}"
-  puts e.class
   philosophers.each(&:show_state)
   table.show_chopsticks
 end
