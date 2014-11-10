@@ -1,6 +1,6 @@
 #The Utopian Tree Problem
 
-This coding problem is taken from [HackerRank](https://www.hackerrank).
+This coding problem is taken from [HackerRank](https://www.hackerrank.com).
 
 ##Overview
 The Utopian tree goes through 2 cycles of growth every year. The first growth cycle occurs during the spring, when it doubles in height. The second growth cycle occurs during the summer, when its height increases by 1 meter.
@@ -36,8 +36,8 @@ Sample Output #00:
 
 Explanation #00:
 
-- There are 2 test cases. 
-- When N = 0, the height of the tree remains unchanged. 
+- There are 2 test cases.
+- When N = 0, the height of the tree remains unchanged.
 - When N = 1, the tree doubles its height as it's planted just before the onset of spring.
 
 ###Example 01
