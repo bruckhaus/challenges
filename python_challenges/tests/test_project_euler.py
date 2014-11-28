@@ -4,6 +4,7 @@ import unittest
 from project_euler.problem_1 import SumOfMultiples
 from project_euler.problem_2 import Fibonacci
 from project_euler.problem_3 import LargestPrimeFactor
+from project_euler.problem_4 import LargestPalindrome
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -31,6 +32,11 @@ class TestProjectEuler(unittest.TestCase):
 
         for fixture in fixtures:
             self.assertEquals(fixture[1], LargestPrimeFactor.find(fixture[0]))
+
+    def test_problem_4(self):
+        fixtures = [[1, 9], [2, 9009], [3, 906609]]
+        for fixture in fixtures:
+            self.assertEquals(fixture[1], LargestPalindrome.find(fixture[0]))
 
 if __name__ == '__main__':
     unittest.main()
