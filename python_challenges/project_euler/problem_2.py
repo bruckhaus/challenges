@@ -27,19 +27,17 @@ class Fibonacci:
             self.prepared_offset = index
         return self.sequence[index]
 
+    def even_sum(self, limit):
+        fibonacci_sum = 0
+        i = 1
+        f = self.get(i)
+        while f <= limit:
+            if f % 2 == 0:
+                fibonacci_sum += f
+                print "Even sum for", i, ":", fibonacci_sum
+            i += 1
+            f = self.get(i)
+        return fibonacci_sum
 
-def even_sum(limit):
-    fibonacci_sum = 0
-    i = 1
-    f = fibonacci.get(i)
-    while f <= limit:
-        if f % 2 == 0:
-            fibonacci_sum += f
-            print "Even sum for", i, ":", fibonacci_sum
-        i += 1
-        f = fibonacci.get(i)
-    return fibonacci_sum
-
-
-fibonacci = Fibonacci()
-print even_sum(4000000)
+if __name__ == '__main__':
+    print Fibonacci().even_sum(4000000)

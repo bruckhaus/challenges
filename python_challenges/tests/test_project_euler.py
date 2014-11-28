@@ -1,10 +1,15 @@
 __author__ = 'tilmannbruckhaus'
 
 import unittest
+from project_euler.problem_2 import Fibonacci
 from project_euler.problem_3 import LargestPrimeFactor
 
 
 class TestProjectEuler(unittest.TestCase):
+
+    def test_problem2(self):
+        self.assertEquals(4613732, Fibonacci().even_sum(4000000))
+
     def test_problem_3(self):
         fixtures = [[2, 1],
                     [3, 1],
@@ -20,7 +25,6 @@ class TestProjectEuler(unittest.TestCase):
 
         for fixture in fixtures:
             self.assertEquals(fixture[1], LargestPrimeFactor.find(fixture[0]))
-
 
 if __name__ == '__main__':
     unittest.main()
