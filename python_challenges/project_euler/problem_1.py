@@ -8,9 +8,7 @@ class SumOfMultiples:
 
     @staticmethod
     def divisible_by_3_or_5(i):
-        divisible = i % 3 == 0 or i % 5 == 0
-        # print("natural number:", i, "is divisible:", divisible)
-        return divisible
+        return i % 3 == 0 or i % 5 == 0
 
     @staticmethod
     def sum_of_multiples_of_3_or_5(limit):
@@ -18,9 +16,10 @@ class SumOfMultiples:
         # we get 3, 5, 6 and 9. The sum of these multiples is 23.
         # Find the sum of all the multiples of 3 or 5 below 1000.
         multi_sum = 0
-        for limit in range(limit):
-            if SumOfMultiples.divisible_by_3_or_5(limit):
-                multi_sum += limit
+        for i in range(limit):
+            if SumOfMultiples.divisible_by_3_or_5(i):
+                multi_sum += i
+        print "The sum of multiples of 3 or 5 less than", limit, "is", multi_sum
         return multi_sum
 
 

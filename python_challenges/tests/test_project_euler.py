@@ -9,9 +9,9 @@ from project_euler.problem_3 import LargestPrimeFactor
 class TestProjectEuler(unittest.TestCase):
 
     def test_problem1(self):
-        self.assertEquals(23, SumOfMultiples.sum_of_multiples_of_3_or_5(10))
-        self.assertEquals(2318, SumOfMultiples.sum_of_multiples_of_3_or_5(100))
-        self.assertEquals(233168, SumOfMultiples.sum_of_multiples_of_3_or_5(1000))
+        fixtures = [[10, 23],[100, 2318],[1000, 233168]]
+        for fixture in fixtures:
+            self.assertEquals(fixture[1], SumOfMultiples.sum_of_multiples_of_3_or_5(fixture[0]))
 
     def test_problem2(self):
         self.assertEquals(4613732, Fibonacci().even_sum(4000000))
