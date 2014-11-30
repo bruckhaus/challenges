@@ -6,6 +6,7 @@ from project_euler.problem_2 import Fibonacci
 from project_euler.problem_3 import LargestPrimeFactor
 from project_euler.problem_4 import LargestPalindrome
 from project_euler.problem_5 import SmallestMultiple
+from project_euler.problem_6 import SumSquareDifference
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -40,6 +41,9 @@ class TestProjectEuler(unittest.TestCase):
 
     def test_problem_5(self):
         self.assertEquals(232792560, SmallestMultiple.find())
+
+    def test_problem_6(self):
+        self.assertEquals(25164150, SumSquareDifference.find())
 
 
 if __name__ == '__main__':
