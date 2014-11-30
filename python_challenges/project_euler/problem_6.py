@@ -14,12 +14,14 @@ class SumSquareDifference:
     # Find the difference between the sum of the squares of the first one hundred natural numbers
     # and the square of the sum.
 
+    LIMIT = 100
+
     def __init__(self):
         pass
 
     @staticmethod
     def find():
-        limit = 100
+        limit = SumSquareDifference.LIMIT
         return SumSquareDifference.square_of_sum(limit) - SumSquareDifference.sum_of_squares(limit)
 
     @staticmethod
