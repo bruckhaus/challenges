@@ -8,6 +8,7 @@ from project_euler.problem_4 import LargestPalindrome
 from project_euler.problem_5 import SmallestMultiple
 from project_euler.problem_6 import SumSquareDifference
 from project_euler.problem_7 import TenThousandFirstPrime
+from project_euler.problem_8 import LargestProductInSeries
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -49,6 +50,8 @@ class TestProjectEuler(unittest.TestCase):
     def test_problem_7(self):
         self.assertEquals(104743, TenThousandFirstPrime.find())
 
+    def test_problem_8(self):
+        self.assertEquals(23514624000, LargestProductInSeries.find())
 
 if __name__ == '__main__':
     unittest.main()
