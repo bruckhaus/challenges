@@ -10,6 +10,7 @@ from project_euler.problem_6 import SumSquareDifference
 from project_euler.problem_7 import TenThousandFirstPrime
 from project_euler.problem_8 import LargestProductInSeries
 from project_euler.problem_9 import SpecialPythagoreanTriplet
+from project_euler.problem_10 import SummationOfPrimes
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -56,6 +57,9 @@ class TestProjectEuler(unittest.TestCase):
 
     def test_problem_9(self):
         self.assertEquals((200, 375, 425), SpecialPythagoreanTriplet.find())
+
+    def test_problem_10(self):
+        self.assertEquals(142913828922, SummationOfPrimes().find())
 
 if __name__ == '__main__':
     unittest.main()
