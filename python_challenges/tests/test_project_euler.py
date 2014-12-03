@@ -11,6 +11,7 @@ from project_euler.problem_7 import TenThousandFirstPrime
 from project_euler.problem_8 import LargestProductInSeries
 from project_euler.problem_9 import SpecialPythagoreanTriplet
 from project_euler.problem_10 import SummationOfPrimes
+from project_euler.problem_11 import LargestProductInAGrid
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -60,6 +61,9 @@ class TestProjectEuler(unittest.TestCase):
 
     def test_problem_10(self):
         self.assertEquals(142913828922, SummationOfPrimes().find())
+
+    def test_problem_11(self):
+        self.assertEquals(70600674, LargestProductInAGrid().find())
 
 if __name__ == '__main__':
     unittest.main()
