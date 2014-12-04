@@ -12,6 +12,7 @@ from project_euler.problem_8 import LargestProductInSeries
 from project_euler.problem_9 import SpecialPythagoreanTriplet
 from project_euler.problem_10 import SummationOfPrimes
 from project_euler.problem_11 import LargestProductInAGrid
+from project_euler.problem_12 import HighlyDivisible
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -64,6 +65,25 @@ class TestProjectEuler(unittest.TestCase):
 
     def test_problem_11(self):
         self.assertEquals(70600674, LargestProductInAGrid().find())
+
+    def test_problem_12(self):
+        h = HighlyDivisible
+        self.assertEquals([[2, 2], [7, 1]], h.factor(28))
+        self.assertEquals(6, h.num_divisors([[2, 2], [7, 1]]))
+        self.assertEquals(28, h.find(5))
+        self.assertEquals([[17, 1]], h.factor(17))
+        self.assertEquals(2, h.num_divisors([[17, 1]]))
+        self.assertEquals([[5, 2]], h.factor(25))
+        self.assertEquals(3, h.num_divisors([[5, 2]]))
+        self.assertEquals([[2, 2], [3, 1], [5, 1]], h.factor(60))
+        self.assertEquals(12, h.num_divisors([[2, 2], [3, 1], [5, 1]]))
+        self.assertEquals([[2, 2], [5, 2]], h.factor(100))
+        self.assertEquals(9, h.num_divisors([[2, 2], [5, 2]]))
+        self.assertEquals([[2, 4], [3, 4], [5, 1], [7, 1]], h.factor(45360))
+        self.assertEquals(100, h.num_divisors([[2, 4], [3, 4], [5, 1], [7, 1]]))
+        self.assertEquals([[2, 2], [3, 2], [5, 3], [7, 1], [11, 1], [13, 1], [17, 1]], h.factor(76576500))
+        self.assertEquals(576, h.num_divisors([[2, 2], [3, 2], [5, 3], [7, 1], [11, 1], [13, 1], [17, 1]]))
+
 
 if __name__ == '__main__':
     unittest.main()
