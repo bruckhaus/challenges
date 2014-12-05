@@ -13,6 +13,7 @@ from project_euler.problem_9 import SpecialPythagoreanTriplet
 from project_euler.problem_10 import SummationOfPrimes
 from project_euler.problem_11 import LargestProductInAGrid
 from project_euler.problem_12 import HighlyDivisible
+from project_euler.problem_13 import LargeSum
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -83,6 +84,13 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(100, h.num_divisors([[2, 4], [3, 4], [5, 1], [7, 1]]))
         self.assertEquals([[2, 2], [3, 2], [5, 3], [7, 1], [11, 1], [13, 1], [17, 1]], h.factor(76576500))
         self.assertEquals(576, h.num_divisors([[2, 2], [3, 2], [5, 3], [7, 1], [11, 1], [13, 1], [17, 1]]))
+
+    def test_problem_13(self):
+        self.assertEquals('5537376229', LargeSum().digit_sum(10))
+        self.assertEquals('5537376230', LargeSum().digit_sum(11))
+        self.assertEquals('5537376230', LargeSum().digit_sum(20))
+        self.assertEquals('5537376230', LargeSum().digit_sum(50))
+        self.assertEquals('5537376230', LargeSum().find())
 
 
 if __name__ == '__main__':
