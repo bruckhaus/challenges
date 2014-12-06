@@ -22,7 +22,6 @@ class SmallestMultiple:
 
     @staticmethod
     def is_solution(n):
-        print "checking:", n
         for divisor in range(1, 21):
             if n % divisor != 0:
                 return False

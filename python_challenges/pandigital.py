@@ -15,7 +15,6 @@ class Pandigital:
         """
         largest_pandigital_prime = -1
         for check_length in [4, 7]:
-            print "checking length:", check_length
             self.length = check_length
             candidate = self.current()
             while self.length == check_length:

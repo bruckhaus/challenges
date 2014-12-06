@@ -29,8 +29,9 @@ class LargestPalindrome:
                     if candidate > largest:
                         factors = [i, j]
                         largest = candidate
-        print "The largest palindrome made from the product of two", digits, "digit numbers is", \
-            factors[0], "*", factors[1], "=", largest
+        if __name__ == '__main__':
+            print "The largest palindrome made from the product of two", digits, "digit numbers is", \
+                factors[0], "*", factors[1], "=", largest
         return largest
 
 if __name__ == '__main__':

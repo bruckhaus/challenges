@@ -22,12 +22,12 @@ class LargestPrimeFactor:
             if LargestPrimeFactor.is_divisible(number, candidate):
                 result = False
             candidate += 1
-        print "is_prime(", number, "):", result
         return result
 
     @staticmethod
     def find(n):
-        print "\nFinding largest prime factor of", n
+        if __name__ == '__main__':
+            print "\nFinding largest prime factor of", n
         L = LargestPrimeFactor
         result = 1
         candidate = 2
@@ -39,7 +39,8 @@ class LargestPrimeFactor:
                 else:
                     result = candidate
                     n = factor
-                print "found prime factor: ", result
+                if __name__ == '__main__':
+                    print "found prime factor: ", result
             else:
                 candidate += 1
         return result
