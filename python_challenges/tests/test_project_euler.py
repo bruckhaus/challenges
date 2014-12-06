@@ -14,6 +14,7 @@ from project_euler.problem_10 import SummationOfPrimes
 from project_euler.problem_11 import LargestProductInAGrid
 from project_euler.problem_12 import HighlyDivisible
 from project_euler.problem_13 import LargeSum
+from project_euler.problem_14 import LongestCollatzSequence
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -91,6 +92,17 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals('5537376230', LargeSum().digit_sum(20))
         self.assertEquals('5537376230', LargeSum().digit_sum(50))
         self.assertEquals('5537376230', LargeSum().find())
+
+    def test_problem14(self):
+        self.assertEquals(0, LongestCollatzSequence.collatz(1))
+        self.assertEquals(1, LongestCollatzSequence.collatz(2))
+        self.assertEquals(7, LongestCollatzSequence.collatz(3))
+        self.assertEquals(20, LongestCollatzSequence.collatz(18))
+        self.assertEquals(121, LongestCollatzSequence.collatz(129))
+        self.assertEquals(181, LongestCollatzSequence.collatz(1161))
+        self.assertEquals(508, LongestCollatzSequence.collatz(626331))
+        self.assertEquals(524, LongestCollatzSequence.collatz(837799))
+        self.assertEquals(474, LongestCollatzSequence.collatz(1234567890987654321))
 
 
 if __name__ == '__main__':
