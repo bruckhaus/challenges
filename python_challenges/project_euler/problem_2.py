@@ -23,7 +23,6 @@ class Fibonacci:
             for i in range(self.prepared_offset + 1, index + 1):
                 new_value = self.sequence[i - 2] + self.sequence[i - 1]
                 self.sequence[i] = new_value
-                print "Fibonacci: added", i, ":", new_value
             self.prepared_offset = index
         return self.sequence[index]
 
@@ -34,10 +33,11 @@ class Fibonacci:
         while f <= limit:
             if f % 2 == 0:
                 fibonacci_sum += f
-                print "Even sum for", i, ":", fibonacci_sum
             i += 1
             f = self.get(i)
         return fibonacci_sum
 
 if __name__ == '__main__':
-    print Fibonacci().even_sum(4000000)
+    result = Fibonacci().even_sum(4000000)
+    print "The sum of the even-valued terms in the Fibonacci sequence whose values doe not exceed four million is", \
+        result

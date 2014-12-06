@@ -6,11 +6,7 @@ class Matrix:
         self.values = values
 
     def traverse(self):
-        print "\nInput"
-        self.show()
         self.compute_paths()
-        print "Paths:"
-        self.show()
         return self.values[-1][-1]
 
     def compute_paths(self):
@@ -40,3 +36,13 @@ class Matrix:
     def show(self):
         for row in range(len(self.values)):
             print self.values[row]
+
+if __name__ == '__main__':
+    data = [[1, 1, 1, 1, 1], [1, 1, 1, 0, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]
+    matrix = Matrix(data)
+    print "Given matrix:"
+    matrix.show()
+    paths = matrix.traverse()
+    print "\nPath analysis:"
+    matrix.show()
+    print "\nNumber of paths:", paths

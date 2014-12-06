@@ -19,11 +19,11 @@ class SumOfMultiples:
         for i in range(limit):
             if SumOfMultiples.divisible_by_3_or_5(i):
                 multi_sum += i
-        print "The sum of multiples of 3 or 5 less than", limit, "is", multi_sum
         return multi_sum
 
 
 if __name__ == '__main__':
     som = SumOfMultiples()
     for test_limit in [10, 1000]:
-        print som.sum_of_multiples_of_3_or_5(test_limit)
+        result = som.sum_of_multiples_of_3_or_5(test_limit)
+        print "The sum of multiples of 3 or 5 less than", test_limit, "is", result
