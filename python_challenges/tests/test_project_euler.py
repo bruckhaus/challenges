@@ -15,6 +15,7 @@ from project_euler.problem_11 import LargestProductInAGrid
 from project_euler.problem_12 import HighlyDivisible
 from project_euler.problem_13 import LargeSum
 from project_euler.problem_14 import LongestCollatzSequence
+from project_euler.problem_15 import LatticePaths
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -104,6 +105,16 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(524, LongestCollatzSequence.collatz(837799))
         self.assertEquals(474, LongestCollatzSequence.collatz(1234567890987654321))
 
+    def test_problem15(self):
+        self.assertAlmostEquals(6, LatticePaths.find(2), 1)
+        self.assertAlmostEquals(20, LatticePaths.find(3), 1)
+        self.assertAlmostEquals(70, LatticePaths.find(4), 1)
+        self.assertAlmostEquals(252, LatticePaths.find(5), 1)
+        self.assertAlmostEquals(924, LatticePaths.find(6), 1)
+        self.assertAlmostEquals(184756, LatticePaths.find(10), 1)
+        self.assertAlmostEquals(35345263800, LatticePaths.find(19), 1)
+        self.assertAlmostEquals(137846528820, LatticePaths.find(20), 1)
+        self.assertAlmostEquals(538257874440, LatticePaths.find(21), 1)
 
 if __name__ == '__main__':
     unittest.main()
