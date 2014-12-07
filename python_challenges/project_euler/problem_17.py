@@ -59,7 +59,7 @@ class NumberLetterCounts:
             words += d[tens * 10]
             if i > 0:
                 words += "-"
-        if i > 0:
+        if i >= 1:
             words += d[i]
         return words
 
