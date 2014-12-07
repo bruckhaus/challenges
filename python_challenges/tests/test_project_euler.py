@@ -16,6 +16,7 @@ from project_euler.problem_12 import HighlyDivisible
 from project_euler.problem_13 import LargeSum
 from project_euler.problem_14 import LongestCollatzSequence
 from project_euler.problem_15 import LatticePaths
+from project_euler.problem_16 import PowerDigitSum
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -115,6 +116,16 @@ class TestProjectEuler(unittest.TestCase):
         self.assertAlmostEquals(35345263800, LatticePaths.find(19), 1)
         self.assertAlmostEquals(137846528820, LatticePaths.find(20), 1)
         self.assertAlmostEquals(538257874440, LatticePaths.find(21), 1)
+
+    def test_problem_16(self):
+        self.assertEquals(1, PowerDigitSum.find(0))
+        self.assertEquals(2, PowerDigitSum.find(1))
+        self.assertEquals(4, PowerDigitSum.find(2))
+        self.assertEquals(7, PowerDigitSum.find(10))
+        self.assertEquals(31, PowerDigitSum.find(20))
+        self.assertEquals(115, PowerDigitSum.find(100))
+        self.assertEquals(679, PowerDigitSum.find(500))
+        self.assertEquals(1366, PowerDigitSum.find(1000))
 
 if __name__ == '__main__':
     unittest.main()
