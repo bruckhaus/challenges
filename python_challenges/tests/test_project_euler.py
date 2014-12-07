@@ -17,6 +17,7 @@ from project_euler.problem_13 import LargeSum
 from project_euler.problem_14 import LongestCollatzSequence
 from project_euler.problem_15 import LatticePaths
 from project_euler.problem_16 import PowerDigitSum
+from project_euler.problem_17 import NumberLetterCounts
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -126,6 +127,26 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(115, PowerDigitSum.find(100))
         self.assertEquals(679, PowerDigitSum.find(500))
         self.assertEquals(1366, PowerDigitSum.find(1000))
+
+    def test_problem_17(self):
+        self.assertEquals('one', NumberLetterCounts.in_words(1))
+        self.assertEquals('two', NumberLetterCounts.in_words(2))
+        self.assertEquals('seventeen', NumberLetterCounts.in_words(17))
+        self.assertEquals('one hundred and fifteen', NumberLetterCounts.in_words(115))
+        self.assertEquals('three hundred and forty-two', NumberLetterCounts.in_words(342))
+        self.assertEquals('one thousand', NumberLetterCounts.in_words(1000))
+        self.assertEquals(3, NumberLetterCounts.letter_count('one'))
+        self.assertEquals(3, NumberLetterCounts.letter_count('two'))
+        self.assertEquals(9, NumberLetterCounts.letter_count('seventeen'))
+        self.assertEquals(20, NumberLetterCounts.letter_count('one hundred and fifteen'))
+        self.assertEquals(23, NumberLetterCounts.letter_count('three hundred and forty-two'))
+        self.assertEquals(11, NumberLetterCounts.letter_count('one thousand'))
+        self.assertEquals(3, NumberLetterCounts.find(1))
+        self.assertEquals(6, NumberLetterCounts.find(2))
+        self.assertEquals(90, NumberLetterCounts.find(17))
+        self.assertEquals(1133, NumberLetterCounts.find(115))
+        self.assertEquals(6117, NumberLetterCounts.find(342))
+        self.assertEquals(21124, NumberLetterCounts.find(1000))
 
 if __name__ == '__main__':
     unittest.main()
