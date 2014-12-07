@@ -41,23 +41,26 @@ class NumberLetterCounts:
     def in_words(i):
         d = NumberLetterCounts.NUMBER_WORDS
         words = ''
-        if i == 1000:
-            words = "one thousand"
-        else:
-            if i >= 100:
-                hundreds = i / 100
-                i %= 100
-                words += d[hundreds] + " hundred"
-                if i > 0:
-                    words += " and "
-            if i >= 20:
-                tens = i / 10
-                i %= 10
-                words += d[tens * 10]
-                if i > 0:
-                    words += "-"
+        if i >= 1000:
+            thousands = i / 1000
+            i %= 1000
+            words = d[thousands] + " thousand"
             if i > 0:
-                words += d[i]
+                words += " "
+        if i >= 100:
+            hundreds = i / 100
+            i %= 100
+            words += d[hundreds] + " hundred"
+            if i > 0:
+                words += " and "
+        if i >= 20:
+            tens = i / 10
+            i %= 10
+            words += d[tens * 10]
+            if i > 0:
+                words += "-"
+        if i > 0:
+            words += d[i]
         return words
 
     @staticmethod
@@ -68,6 +71,7 @@ class NumberLetterCounts:
 
 
 if __name__ == '__main__':
-    letters = NumberLetterCounts.find(1000)
-    print "If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words,", \
+    limit = 1000
+    letters = NumberLetterCounts.find(limit)
+    print "If all the numbers from 1 to", limit, "inclusive were written out in words,", \
         "the number of letters used would be", letters
