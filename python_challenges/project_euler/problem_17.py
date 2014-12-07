@@ -20,58 +20,58 @@ class NumberLetterCounts:
                     11: "eleven", 12: "twelve", 13: "thirteen", 14: "fourteen", 15: "fifteen",
                     16: "sixteen", 17: "seventeen", 18: "eighteen", 19: "nineteen",
                     20: "twenty", 30: "thirty", 40: "forty", 50: "fifty",
-                    60: "sixty", 70: "seventy", 80: "eighty", 90: "ninety"}
+                    60: "sixty", 70: "seventy", 80: "eighty", 90: "ninety",
+                    100: "hundred", 1000: "thousand"}
+    SEPARATORS = {1000: " ", 100: " and ", 10: "-"}
 
-    def __init__(self):
-        pass
+    def __init__(self, number):
+        self.number = number
+        self.phrase = ""
 
-    @staticmethod
-    def find(n):
-        nlc = NumberLetterCounts
-        total_letters = 0
-        for i in range(1, n + 1):
-            words = nlc.in_words(i)
-            letters = nlc.letter_count(words)
-            if __name__ == '__main__':
-                print i, ":", words, "(", letters, "letters )"
-            total_letters += letters
-        return total_letters
+    def set_phrase(self):
+        self.phrase = ""
+        for order in [1000, 100, 10, 1]:
+            self.process_digit(order)
+        return self.phrase
 
-    @staticmethod
-    def in_words(i):
-        d = NumberLetterCounts.NUMBER_WORDS
-        words = ''
-        if i >= 1000:
-            thousands = i / 1000
-            i %= 1000
-            words = d[thousands] + " thousand"
-            if i > 0:
-                words += " "
-        if i >= 100:
-            hundreds = i / 100
-            i %= 100
-            words += d[hundreds] + " hundred"
-            if i > 0:
-                words += " and "
-        if i >= 20:
-            tens = i / 10
-            i %= 10
-            words += d[tens * 10]
-            if i > 0:
-                words += "-"
-        if i >= 1:
-            words += d[i]
-        return words
+    def process_digit(self, order):
+        if self.number >= order:
+            if self.number >= 100:
+                digit = self.number / order
+                self.number %= order
+            elif self.number >= 20:
+                digit = 10 * (self.number / order)
+                self.number %= order
+            else:
+                digit = self.number
+                self.number = 0
+            self.phrase += NumberLetterCounts.NUMBER_WORDS[digit]
+            if order >= 100:
+                self.phrase += " " + NumberLetterCounts.NUMBER_WORDS[order]
+            if self.number > 0:
+                self.phrase += NumberLetterCounts.SEPARATORS[order]
 
-    @staticmethod
-    def letter_count(phrase):
-        return len(phrase.
+    def letter_count(self):
+        if self.phrase == '':
+            self.set_phrase()
+        return len(self.phrase.
                    replace(" ", "").
                    replace("-", ""))
+
+    def find(self):
+        total_letters = 0
+        for i in range(1, self.number + 1):
+            self.number = i
+            self.set_phrase()
+            letters = self.letter_count()
+            if __name__ == '__main__':
+                print i, ":", self.phrase, "(", letters, "letters )"
+            total_letters += letters
+        return total_letters
 
 
 if __name__ == '__main__':
     limit = 1000
-    letters = NumberLetterCounts.find(limit)
+    letters = NumberLetterCounts(limit).find()
     print "If all the numbers from 1 to", limit, "inclusive were written out in words,", \
         "the number of letters used would be", letters
