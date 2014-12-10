@@ -18,6 +18,7 @@ from project_euler.problem_14 import LongestCollatzSequence
 from project_euler.problem_15 import LatticePaths
 from project_euler.problem_16 import PowerDigitSum
 from project_euler.problem_17 import NumberLetterCounts
+from project_euler.problem_18 import MaximumPathSum
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -147,6 +148,12 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(1133, NumberLetterCounts(115).find())
         self.assertEquals(6117, NumberLetterCounts(342).find())
         self.assertEquals(21124, NumberLetterCounts(1000).find())
+
+    def test_problem_18(self):
+        self.assertEquals(3, MaximumPathSum([[3]]).find())
+        self.assertEquals(10, MaximumPathSum([[3], [7, 4]]).find())
+        self.assertEquals(14, MaximumPathSum([[3], [7, 4], [2, 4, 6]]).find())
+        self.assertEquals(23, MaximumPathSum([[3], [7, 4], [2, 4, 6], [8, 5, 9, 3]]).find())
 
 if __name__ == '__main__':
     unittest.main()
