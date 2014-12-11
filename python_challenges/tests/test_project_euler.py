@@ -19,6 +19,7 @@ from project_euler.problem_15 import LatticePaths
 from project_euler.problem_16 import PowerDigitSum
 from project_euler.problem_17 import NumberLetterCounts
 from project_euler.problem_18 import MaximumPathSum
+from project_euler.problem_19 import CountingSundays
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -154,6 +155,9 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(10, MaximumPathSum([[3], [7, 4]]).find())
         self.assertEquals(14, MaximumPathSum([[3], [7, 4], [2, 4, 6]]).find())
         self.assertEquals(23, MaximumPathSum([[3], [7, 4], [2, 4, 6], [8, 5, 9, 3]]).find())
+
+    def test_problem_19(self):
+        self.assertEquals(171, CountingSundays.find())
 
 if __name__ == '__main__':
     unittest.main()
