@@ -21,6 +21,7 @@ from project_euler.problem_17 import NumberLetterCounts
 from project_euler.problem_18 import MaximumPathSum
 from project_euler.problem_19 import CountingSundays
 from project_euler.problem_20 import FactorialDigitSum
+from project_euler.problem_21 import AmicableNumbers
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -168,6 +169,11 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(27, FactorialDigitSum.find(10))  # 3628800
         self.assertEquals(225, FactorialDigitSum.find(47))
         self.assertEquals(648, FactorialDigitSum.find(100))
+
+    def test_problem_21(self):
+        self.assertEquals(0, AmicableNumbers.find(100))
+        self.assertEquals(504, AmicableNumbers.find(400))
+        self.assertEquals(2898, AmicableNumbers.find(2000))
 
 
 if __name__ == '__main__':
