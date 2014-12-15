@@ -30,8 +30,19 @@ class NameScores:
 
 
     def find(self):
-        print self.names
-        return -1
+        score_sum = 0
+        rank = 0
+        for name in sorted(self.names):
+            rank += 1
+            score_sum += rank * NameScores.score(name)
+        return score_sum
+
+    @staticmethod
+    def score(name):
+        score = 0
+        for char in name:
+            score += ord(char) - ord("A") + 1
+        return score
 
 
 if __name__ == '__main__':

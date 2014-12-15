@@ -175,7 +175,7 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(2898, AmicableNumbers.find(2000))
 
     def test_problem_22(self):
-        self.assertEquals(-2, NameScores('../tests/resources/p022_names.txt').find())
+        self.assertEquals(871198282, NameScores('../tests/resources/p022_names.txt').find())
 
 
 if __name__ == '__main__':
