@@ -21,6 +21,7 @@ from project_euler.problem_19 import CountingSundays
 from project_euler.problem_20 import FactorialDigitSum
 from project_euler.problem_21 import AmicableNumbers
 from project_euler.problem_22 import NameScores
+from project_euler.problem_23 import NonAbundantSums
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -176,6 +177,18 @@ class TestProjectEuler(unittest.TestCase):
 
     def test_problem_22(self):
         self.assertEquals(871198282, NameScores('../tests/resources/p022_names.txt').find())
+
+    def test_problem_23(self):
+        n = NonAbundantSums
+        self.assertEquals([1, 2, 3, 4, 6, 8, 12], n.divisors(24))
+        self.assertEquals([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 16, 20, 24, 30, 40, 48, 60, 80, 120], n.divisors(240))
+        self.assertEquals([1, 7, 349], n.divisors(2443))
+        self.assertEquals(False, n.abundant(23))
+        self.assertEquals(True, n.abundant(24))
+        self.assertEquals(False, n.abundant(25))
+        self.assertEquals(False, n.abundant(2498))
+        self.assertEquals(True, n.abundant(24444))
+        # self.assertEquals(4179871, n.find())  # runs long: > 20 seconds on MacBook Air
 
 
 if __name__ == '__main__':
