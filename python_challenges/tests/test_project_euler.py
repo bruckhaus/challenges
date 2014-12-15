@@ -1,5 +1,3 @@
-__author__ = 'tilmannbruckhaus'
-
 import unittest
 from project_euler.problem_1 import SumOfMultiples
 from project_euler.problem_2 import Fibonacci
@@ -22,6 +20,7 @@ from project_euler.problem_18 import MaximumPathSum
 from project_euler.problem_19 import CountingSundays
 from project_euler.problem_20 import FactorialDigitSum
 from project_euler.problem_21 import AmicableNumbers
+from project_euler.problem_22 import NameScores
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -174,6 +173,9 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(0, AmicableNumbers.find(100))
         self.assertEquals(504, AmicableNumbers.find(400))
         self.assertEquals(2898, AmicableNumbers.find(2000))
+
+    def test_problem_22(self):
+        self.assertEquals(871198282, NameScores('../tests/resources/p022_names.txt').find())
 
 
 if __name__ == '__main__':
