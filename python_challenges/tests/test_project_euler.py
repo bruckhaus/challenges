@@ -22,6 +22,7 @@ from project_euler.problem_20 import FactorialDigitSum
 from project_euler.problem_21 import AmicableNumbers
 from project_euler.problem_22 import NameScores
 from project_euler.problem_23 import NonAbundantSums
+from project_euler.problem_24 import LexicographicPermutations
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -188,8 +189,16 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(False, n.abundant(25))
         self.assertEquals(False, n.abundant(2498))
         self.assertEquals(True, n.abundant(24444))
-        # self.assertEquals(4179871, n.find())  # runs long: > 20 seconds on MacBook Air
 
+    def test_problem_24(self):
+        l = LexicographicPermutations
+        self.assertEquals('0123456789', l().find(1))
+        self.assertEquals('0123456798', l().find(2))
+        self.assertEquals('0123456879', l().find(3))
+        self.assertEquals('0123456897', l().find(4))
+        self.assertEquals('0123456978', l().find(5))
+        self.assertEquals('0123457896', l().find(10))
+        self.assertEquals('0124658793', l().find(1000))
 
 if __name__ == '__main__':
     unittest.main()
