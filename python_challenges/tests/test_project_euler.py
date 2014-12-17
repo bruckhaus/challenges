@@ -23,6 +23,7 @@ from project_euler.problem_21 import AmicableNumbers
 from project_euler.problem_22 import NameScores
 from project_euler.problem_23 import NonAbundantSums
 from project_euler.problem_24 import LexicographicPermutations
+from project_euler.problem_25 import ThousandDigitFibonacciNumber
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -199,6 +200,15 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals('0123456978', l().find(5))
         self.assertEquals('0123457896', l().find(10))
         self.assertEquals('0124658793', l().find(1000))
+
+    def test_problem_25(self):
+        t = ThousandDigitFibonacciNumber
+        self.assertEquals(1, t.find(1))
+        self.assertEquals(7, t.find(2))
+        self.assertEquals(12, t.find(3))
+        self.assertEquals(45, t.find(10))
+        self.assertEquals(476, t.find(100))
+        self.assertEquals(4782, t.find(1000))
 
 if __name__ == '__main__':
     unittest.main()
