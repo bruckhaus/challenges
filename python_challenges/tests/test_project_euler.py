@@ -24,6 +24,7 @@ from project_euler.problem_22 import NameScores
 from project_euler.problem_23 import NonAbundantSums
 from project_euler.problem_24 import LexicographicPermutations
 from project_euler.problem_25 import ThousandDigitFibonacciNumber
+from project_euler.problem_26 import ReciprocalCycles
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -209,6 +210,13 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(45, t.find(10))
         self.assertEquals(476, t.find(100))
         self.assertEquals(4782, t.find(1000))
+
+    def test_problem_26(self):
+        r = ReciprocalCycles
+        self.assertEquals(7, r.find(10))
+        self.assertEquals(97, r.find(100))
+        self.assertEquals(499, r.find(500))
+        self.assertEquals(983, r.find(1000))
 
 if __name__ == '__main__':
     unittest.main()
