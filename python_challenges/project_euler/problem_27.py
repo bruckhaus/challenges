@@ -70,7 +70,6 @@ class QuadraticPrimes:
             print "best coefficients:", self.coefficients, ", length:", len(self.series), ", series:", self.series
 
 
-
 if __name__ == '__main__':
     q = QuadraticPrimes().find(1000)
     print "The product of the coefficients that produce the maximum number of primes is", q
