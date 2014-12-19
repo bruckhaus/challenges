@@ -25,6 +25,7 @@ from project_euler.problem_23 import NonAbundantSums
 from project_euler.problem_24 import LexicographicPermutations
 from project_euler.problem_25 import ThousandDigitFibonacciNumber
 from project_euler.problem_26 import ReciprocalCycles
+from project_euler.problem_27 import QuadraticPrimes
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -217,6 +218,13 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(97, r.find(100))
         self.assertEquals(499, r.find(500))
         self.assertEquals(983, r.find(1000))
+
+    def test_problem_27(self):
+        q = QuadraticPrimes()
+        self.assertEquals(0, q.find(2))
+        self.assertEquals(-21, q.find(10))
+        self.assertEquals(-235, q.find(50))
+        self.assertEquals(-1455, q.find(100))
 
 if __name__ == '__main__':
     unittest.main()
