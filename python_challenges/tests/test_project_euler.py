@@ -27,6 +27,7 @@ from project_euler.problem_25 import ThousandDigitFibonacciNumber
 from project_euler.problem_26 import ReciprocalCycles
 from project_euler.problem_27 import QuadraticPrimes
 from project_euler.problem_28 import NumberSpiralDiagonals
+from project_euler.problem_29 import DistinctPowers
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -240,6 +241,15 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(101, n(5).diagonal_sum())
         self.assertEquals(89801, n(51).diagonal_sum())
         self.assertEquals(692101, n(101).diagonal_sum())
+
+    def test_problem_29(self):
+        d = DistinctPowers
+        self.assertEquals(0, d.find(1))
+        self.assertEquals(1, d.find(2))
+        self.assertEquals(4, d.find(3))
+        self.assertEquals(15, d.find(5))
+        self.assertEquals(69, d.find(10))
+        self.assertEquals(9183, d.find(100))
 
 if __name__ == '__main__':
     unittest.main()
