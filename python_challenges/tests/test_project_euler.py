@@ -26,6 +26,7 @@ from project_euler.problem_24 import LexicographicPermutations
 from project_euler.problem_25 import ThousandDigitFibonacciNumber
 from project_euler.problem_26 import ReciprocalCycles
 from project_euler.problem_27 import QuadraticPrimes
+from project_euler.problem_28 import NumberSpiralDiagonals
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -225,6 +226,13 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(-21, q.find(10))
         self.assertEquals(-235, q.find(50))
         self.assertEquals(-1455, q.find(100))
+
+    def test_problem_28(self):
+        n = NumberSpiralDiagonals
+        self.assertEquals(25, n(3).diagonal_sum())
+        self.assertEquals(101, n(5).diagonal_sum())
+        self.assertEquals(89801, n(51).diagonal_sum())
+        self.assertEquals(692101, n(101).diagonal_sum())
 
 if __name__ == '__main__':
     unittest.main()
