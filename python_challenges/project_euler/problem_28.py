@@ -20,10 +20,10 @@ class NumberSpiralDiagonals:
 
     def __init__(self, n):
         self.size = n
-        self.spiral = [[]]
-        self.x = self.size - 1
-        self.y = 0
-        self.direction = (0, -1)
+        self.spiral = None
+        self.x = None
+        self.y = None
+        self.direction = None
         self.create_spiral()
         self.populate_spiral()
 
@@ -32,6 +32,9 @@ class NumberSpiralDiagonals:
         self.spiral = [x[:] for x in [[0] * n] * n]
 
     def populate_spiral(self):
+        self.x = self.size - 1
+        self.y = 0
+        self.direction = (0, -1)
         i = self.size * self.size
         while i > 0:
             self.spiral[self.y][self.x] = i
@@ -39,16 +42,15 @@ class NumberSpiralDiagonals:
             self.move()
 
     def move(self):
-        if self.direction_valid():
-            pass
-        elif self.direction == (0, -1):
-            self.direction = (1, 0)
-        elif self.direction == (1, 0):
-            self.direction = (0, 1)
-        elif self.direction == (0, 1):
-            self.direction = (-1, 0)
-        else:
-            self.direction = (0, -1)
+        if not self.direction_valid():
+            if self.direction == (0, -1):
+                self.direction = (1, 0)
+            elif self.direction == (1, 0):
+                self.direction = (0, 1)
+            elif self.direction == (0, 1):
+                self.direction = (-1, 0)
+            else:
+                self.direction = (0, -1)
         self.y += self.direction[0]
         self.x += self.direction[1]
 

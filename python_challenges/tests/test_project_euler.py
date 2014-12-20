@@ -229,6 +229,13 @@ class TestProjectEuler(unittest.TestCase):
 
     def test_problem_28(self):
         n = NumberSpiralDiagonals
+        # --- test spiral creation:
+        spiral = n(3)
+        spiral.create_spiral()
+        self.assertEquals([[0, 0, 0], [0, 0, 0], [0, 0, 0]], spiral.spiral)
+        spiral.populate_spiral()
+        self.assertEquals([[7, 8, 9], [6, 1, 2], [5, 4, 3]], spiral.spiral)
+        # --- test spiral creation and sum of diagonal:
         self.assertEquals(25, n(3).diagonal_sum())
         self.assertEquals(101, n(5).diagonal_sum())
         self.assertEquals(89801, n(51).diagonal_sum())
