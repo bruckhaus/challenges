@@ -28,6 +28,7 @@ from project_euler.problem_26 import ReciprocalCycles
 from project_euler.problem_27 import QuadraticPrimes
 from project_euler.problem_28 import NumberSpiralDiagonals
 from project_euler.problem_29 import DistinctPowers
+from project_euler.problem_30 import DigitFifthPowers
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -250,6 +251,13 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(15, d.find(5))
         self.assertEquals(69, d.find(10))
         self.assertEquals(9183, d.find(100))
+
+    def test_problem_30(self):
+        d = DigitFifthPowers
+        self.assertEquals(0, d.find(9))
+        self.assertEquals(0, d.find(99))
+        self.assertEquals(0, d.find(999))
+        self.assertEquals(8301, d.find(9999))
 
 if __name__ == '__main__':
     unittest.main()
