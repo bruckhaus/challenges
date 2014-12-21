@@ -2,9 +2,9 @@ __author__ = 'tilmannbruckhaus'
 
 
 class Pandigital:
-    def __init__(self):
-        self.p = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        self.N = 10
+    def __init__(self, digits):
+        self.p = digits
+        self.N = len(self.p)
 
     def find(self, n):
         for i in range(n - 1):
@@ -31,6 +31,15 @@ class Pandigital:
         swap = self.p[j]
         self.p[j] = self.p[i]
         self.p[i] = swap
+
+    def next(self):
+        if not self.has_next():
+            return False
+        self.step()
+        return self.get()
+
+    def has_next(self):
+        return self.p != [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 
     def get(self):
         return ''.join([str(d) for d in self.p])
