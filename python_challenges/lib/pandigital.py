@@ -39,7 +39,10 @@ class Pandigital:
         return self.get()
 
     def has_next(self):
-        return self.p != [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+        for i in range(self.N - 1):
+            if self.p[i] < self.p[i + 1]:
+                return True
+        return False
 
     def get(self):
         return ''.join([str(d) for d in self.p])

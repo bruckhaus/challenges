@@ -30,6 +30,7 @@ from project_euler.problem_28 import NumberSpiralDiagonals
 from project_euler.problem_29 import DistinctPowers
 from project_euler.problem_30 import DigitFifthPowers
 from project_euler.problem_31 import CoinSum
+from project_euler.problem_32 import PandigitalProducts
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -268,6 +269,15 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(4, c.find(5))
         self.assertEquals(11, c.find(10))
         self.assertEquals(451, c.find(50))
+
+    def test_problem_32(self):
+        p = PandigitalProducts
+        self.assertEquals(0, p([1]).find())
+        self.assertEquals(0, p([1, 2]).find())
+        self.assertEquals(0, p([1, 2, 3]).find())
+        self.assertEquals(12, p([1, 2, 3, 4]).find())
+        self.assertEquals(52, p([1, 2, 3, 4, 5]).find())
+        self.assertEquals(162, p([1, 2, 3, 4, 5, 6]).find())
 
 if __name__ == '__main__':
     unittest.main()
