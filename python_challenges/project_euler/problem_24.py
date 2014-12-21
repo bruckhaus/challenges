@@ -29,8 +29,7 @@ class LexicographicPermutations:
     def find(steps):
         p = Pandigital()
         [p.step() for _ in range(steps - 1)]
-        result = ''.join([str(d) for d in p.p])
-        return result
+        return p.get()
 
 
 if __name__ == '__main__':

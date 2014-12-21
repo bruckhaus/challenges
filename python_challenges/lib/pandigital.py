@@ -9,7 +9,7 @@ class Pandigital:
     def find(self, n):
         for i in range(n - 1):
             self.step()
-        return self.show()
+        return self.get()
 
     def step(self):
         # The algorithm is described in E. W. Dijkstra, A Discipline of Programming, Prentice-Hall, 1997, p. 71
@@ -32,8 +32,5 @@ class Pandigital:
         self.p[j] = self.p[i]
         self.p[i] = swap
 
-    def show(self):
-        s = ''
-        for i in range(self.N):
-            s += str(self.p[i])
-        return s
+    def get(self):
+        return ''.join([str(d) for d in self.p])
