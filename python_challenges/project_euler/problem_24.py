@@ -1,5 +1,14 @@
 __author__ = 'tilmannbruckhaus'
 
+import os
+import sys
+
+current_path = os.path.dirname(os.path.abspath(__file__))
+lib_path = os.path.join(current_path, '..')
+sys.path.append(lib_path)
+
+from lib.pandigital import Pandigital
+
 
 class LexicographicPermutations:
     # Lexicographic permutations
@@ -14,40 +23,14 @@ class LexicographicPermutations:
     # What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9?
 
     def __init__(self):
-        self.p = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        self.N = 10
+        pass
 
-    def find(self, n):
-        for i in range(n - 1):
-            self.step()
-        return self.show()
-
-    def step(self):
-        # The algorithm is described in E. W. Dijkstra, A Discipline of Programming, Prentice-Hall, 1997, p. 71
-        i = self.N - 1
-        while self.p[i-1] >= self.p[i]:
-            i -= 1
-        j = self.N
-        while self.p[j - 1] <= self.p[i - 1]:
-            j -= 1
-        self.swap(i-1, j-1)  # swap values at positions (i-1) and (j-1)
-        i += 1
-        j = self.N
-        while i < j:
-            self.swap(i-1, j-1)
-            i += 1
-            j -= 1
-
-    def swap(self, i, j):
-        swap = self.p[j]
-        self.p[j] = self.p[i]
-        self.p[i] = swap
-
-    def show(self):
-        s = ''
-        for i in range(self.N):
-            s += str(self.p[i])
-        return s
+    @staticmethod
+    def find(steps):
+        p = Pandigital()
+        [p.step() for _ in range(steps - 1)]
+        result = ''.join([str(d) for d in p.p])
+        return result
 
 
 if __name__ == '__main__':
