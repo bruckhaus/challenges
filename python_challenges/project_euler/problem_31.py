@@ -36,7 +36,7 @@ class CoinSum:
     def illegal(this_coin, last_coin):
         return (this_coin > -1) and \
                (last_coin > -1) and \
-               (this_coin < last_coin)
+               (this_coin > last_coin)
 
 
 if __name__ == '__main__':
