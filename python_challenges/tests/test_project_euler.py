@@ -29,6 +29,7 @@ from project_euler.problem_27 import QuadraticPrimes
 from project_euler.problem_28 import NumberSpiralDiagonals
 from project_euler.problem_29 import DistinctPowers
 from project_euler.problem_30 import DigitFifthPowers
+from project_euler.problem_31 import CoinSum
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -258,6 +259,15 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(0, d.find(99))
         self.assertEquals(0, d.find(999))
         self.assertEquals(8301, d.find(9999))
+
+    def test_problem_31(self):
+        c = CoinSum
+        self.assertEquals(1, c.find(1))
+        self.assertEquals(2, c.find(2))
+        self.assertEquals(2, c.find(3))
+        self.assertEquals(4, c.find(5))
+        self.assertEquals(11, c.find(10))
+        self.assertEquals(451, c.find(50))
 
 if __name__ == '__main__':
     unittest.main()
