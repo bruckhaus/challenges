@@ -31,6 +31,7 @@ from project_euler.problem_29 import DistinctPowers
 from project_euler.problem_30 import DigitFifthPowers
 from project_euler.problem_31 import CoinSum
 from project_euler.problem_32 import PandigitalProducts
+from project_euler.problem_33 import DigitCancellingFractions
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -278,6 +279,20 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(12, p([1, 2, 3, 4]).find())
         self.assertEquals(52, p([1, 2, 3, 4, 5]).find())
         self.assertEquals(162, p([1, 2, 3, 4, 5, 6]).find())
+
+    def test_problem_33(self):
+        d = DigitCancellingFractions()
+        self.assertEquals(100, d.find())
+        self.assertEquals([(16, 64), (19, 95), (26, 65), (49, 98)], d.find_fractions())
+        self.assertEquals(True, d.is_curious((16, 64)))
+        self.assertEquals(False, d.is_curious((20, 30)))
+        self.assertEquals(False, d.is_curious((22, 44)))
+        self.assertEquals(1, d.get_first_as_int("1"))
+        self.assertEquals(2, d.get_first_as_int("23"))
+        self.assertEquals(True, d.one_set_empty(set(), set()))
+        self.assertEquals(True, d.one_set_empty(set(), {2}))
+        self.assertEquals(True, d.one_set_empty({1}, set()))
+        self.assertEquals(False, d.one_set_empty({1}, {2}))
 
 if __name__ == '__main__':
     unittest.main()
