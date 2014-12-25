@@ -32,6 +32,7 @@ from project_euler.problem_30 import DigitFifthPowers
 from project_euler.problem_31 import CoinSum
 from project_euler.problem_32 import PandigitalProducts
 from project_euler.problem_33 import DigitCancellingFractions
+from project_euler.problem_34 import DigitFactorials
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -293,6 +294,12 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(True, d.one_set_empty(set(), {2}))
         self.assertEquals(True, d.one_set_empty({1}, set()))
         self.assertEquals(False, d.one_set_empty({1}, {2}))
+
+    def test_problem_34(self):
+        d = DigitFactorials
+        self.assertEquals(0, d.find(100))
+        self.assertEquals(145, d.find(1000))
+        self.assertEquals(40730, d.find(50000))
 
 if __name__ == '__main__':
     unittest.main()
