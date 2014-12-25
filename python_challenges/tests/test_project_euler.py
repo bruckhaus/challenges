@@ -33,6 +33,7 @@ from project_euler.problem_31 import CoinSum
 from project_euler.problem_32 import PandigitalProducts
 from project_euler.problem_33 import DigitCancellingFractions
 from project_euler.problem_34 import DigitFactorials
+from project_euler.p35_circular_primes import CircularPrimes
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -300,6 +301,14 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(0, d.find(100))
         self.assertEquals(145, d.find(1000))
         self.assertEquals(40730, d.find(50000))
+
+    def test_problem_35(self):
+        c = CircularPrimes
+        self.assertEquals(4, c.find(10))
+        self.assertEquals(13, c.find(100))
+        self.assertEquals(25, c.find(1000))
+        self.assertEquals(33, c.find(10000))
+
 
 if __name__ == '__main__':
     unittest.main()
