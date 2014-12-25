@@ -1,5 +1,5 @@
 import unittest
-from project_euler.problem_1 import SumOfMultiples
+from project_euler.p001_sum_of_multiples import SumOfMultiples
 from project_euler.problem_2 import Fibonacci
 from project_euler.problem_3 import LargestPrimeFactor
 from project_euler.problem_4 import LargestPalindrome
@@ -33,7 +33,8 @@ from project_euler.problem_31 import CoinSum
 from project_euler.problem_32 import PandigitalProducts
 from project_euler.problem_33 import DigitCancellingFractions
 from project_euler.problem_34 import DigitFactorials
-from project_euler.p35_circular_primes import CircularPrimes
+from project_euler.p035_circular_primes import CircularPrimes
+from project_euler.p036_double_base_palindromes import DoubleBasePalindrome
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -308,6 +309,13 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(13, c.find(100))
         self.assertEquals(25, c.find(1000))
         self.assertEquals(33, c.find(10000))
+
+    def test_problem_36(self):
+        d = DoubleBasePalindrome
+        self.assertEquals(25, d.find(10))
+        self.assertEquals(157, d.find(100))
+        self.assertEquals(1772, d.find(1000))
+        self.assertEquals(18228, d.find(10000))
 
 
 if __name__ == '__main__':
