@@ -9,7 +9,7 @@ __author__ = 'tilmannbruckhaus'
 # find the sum of the even-valued terms.
 
 
-class Fibonacci:
+class EvenFibonacci:
     sequence = {}
     prepared_offset = 0
 
@@ -38,6 +38,6 @@ class Fibonacci:
         return fibonacci_sum
 
 if __name__ == '__main__':
-    result = Fibonacci().even_sum(4000000)
+    result = EvenFibonacci().even_sum(4000000)
     print "The sum of the even-valued terms in the Fibonacci sequence whose values doe not exceed four million is", \
         result

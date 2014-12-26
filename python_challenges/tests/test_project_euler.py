@@ -1,38 +1,38 @@
 import unittest
 from project_euler.p001_sum_of_multiples import SumOfMultiples
-from project_euler.problem_2 import Fibonacci
-from project_euler.problem_3 import LargestPrimeFactor
-from project_euler.problem_4 import LargestPalindrome
-from project_euler.problem_5 import SmallestMultiple
-from project_euler.problem_6 import SumSquareDifference
-from project_euler.problem_7 import TenThousandFirstPrime
-from project_euler.problem_8 import LargestProductInSeries
-from project_euler.problem_9 import SpecialPythagoreanTriplet
-from project_euler.problem_10 import SummationOfPrimes
-from project_euler.problem_11 import LargestProductInAGrid
-from project_euler.problem_12 import HighlyDivisible
-from project_euler.problem_13 import LargeSum
-from project_euler.problem_14 import LongestCollatzSequence
-from project_euler.problem_15 import LatticePaths
-from project_euler.problem_16 import PowerDigitSum
-from project_euler.problem_17 import NumberLetterCounts
-from project_euler.problem_18 import MaximumPathSum
-from project_euler.problem_19 import CountingSundays
-from project_euler.problem_20 import FactorialDigitSum
-from project_euler.problem_21 import AmicableNumbers
-from project_euler.problem_22 import NameScores
-from project_euler.problem_23 import NonAbundantSums
-from project_euler.problem_24 import LexicographicPermutations
-from project_euler.problem_25 import ThousandDigitFibonacciNumber
-from project_euler.problem_26 import ReciprocalCycles
-from project_euler.problem_27 import QuadraticPrimes
-from project_euler.problem_28 import NumberSpiralDiagonals
-from project_euler.problem_29 import DistinctPowers
-from project_euler.problem_30 import DigitFifthPowers
-from project_euler.problem_31 import CoinSum
-from project_euler.problem_32 import PandigitalProducts
-from project_euler.problem_33 import DigitCancellingFractions
-from project_euler.problem_34 import DigitFactorials
+from project_euler.p002_even_fibonacci import EvenFibonacci
+from project_euler.p003_largest_prime_factor import LargestPrimeFactor
+from project_euler.p004_largest_palindrome import LargestPalindrome
+from project_euler.p005_smallest_multiple import SmallestMultiple
+from project_euler.p006_sum_square_difference import SumSquareDifference
+from project_euler.p007_ten_thousand_first_prime import TenThousandFirstPrime
+from project_euler.p008_largest_product_in_series import LargestProductInSeries
+from project_euler.p009_special_pythagorean_triple import SpecialPythagoreanTriplet
+from project_euler.p010_summation_of_primes import SummationOfPrimes
+from project_euler.p011_largest_product_in_a_grid import LargestProductInAGrid
+from project_euler.p012_highly_divisible import HighlyDivisible
+from project_euler.p013_large_sum import LargeSum
+from project_euler.p014_longest_collatz_sequence import LongestCollatzSequence
+from project_euler.p015_lattice_paths import LatticePaths
+from project_euler.p016_power_digit_sum import PowerDigitSum
+from project_euler.p017_number_letter_counts import NumberLetterCounts
+from project_euler.p018_maximum_path_sum import MaximumPathSum
+from project_euler.p019_counting_sundays import CountingSundays
+from project_euler.p020_factorial_digit_sum import FactorialDigitSum
+from project_euler.p021_amicable_numbers import AmicableNumbers
+from project_euler.p022_name_scores import NameScores
+from project_euler.p023_non_abundant_sums import NonAbundantSums
+from project_euler.p024_lexicographic_permutations import LexicographicPermutations
+from project_euler.p025_thousand_digit_fibonacci_number import ThousandDigitFibonacciNumber
+from project_euler.p026_reciprocal_cycles import ReciprocalCycles
+from project_euler.p027_quadratic_primes import QuadraticPrimes
+from project_euler.p028_number_spiral_diagonals import NumberSpiralDiagonals
+from project_euler.p029_distinct_powers import DistinctPowers
+from project_euler.p030_digit_fifth_powers import DigitFifthPowers
+from project_euler.p031_coin_sum import CoinSum
+from project_euler.p032_pandigital_products import PandigitalProducts
+from project_euler.p033_digit_cancelling_fractions import DigitCancellingFractions
+from project_euler.p034_digit_factorials import DigitFactorials
 from project_euler.p035_circular_primes import CircularPrimes
 from project_euler.p036_double_base_palindromes import DoubleBasePalindrome
 
@@ -44,7 +44,7 @@ class TestProjectEuler(unittest.TestCase):
             self.assertEquals(fixture[1], SumOfMultiples.sum_of_multiples_of_3_or_5(fixture[0]))
 
     def test_problem2(self):
-        self.assertEquals(4613732, Fibonacci().even_sum(4000000))
+        self.assertEquals(4613732, EvenFibonacci().even_sum(4000000))
 
     def test_problem_3(self):
         fixtures = [[2, 1],
