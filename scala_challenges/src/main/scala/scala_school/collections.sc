@@ -41,6 +41,7 @@ trait Option[T] {
 
   def getOrElse(t: T): T
 }
+
 val numberMap = Map(1 -> "one", 2 -> "two")
 val r1 = numberMap.get(2)
 val r2 = numberMap.get(3)
@@ -52,9 +53,9 @@ val result = if (r2.isDefined) {
 }
 val result2 = r2.getOrElse(0) // * 2
 val result3 = r1 match {
-  case Some(n) => n * 2
-  case None => 0
-}
+    case Some(n) => n * 2
+    case None => 0
+  }
 
 // map:
 numbers.map((i: Int) => i * 2)
@@ -89,3 +90,14 @@ List(List(1, 2), List(3, 4)).flatten
 val nestedNumbers = List(List(1, 2), List(3, 4))
 nestedNumbers.flatMap(x => x.map(_ * 2))
 nestedNumbers.map((x: List[Int]) => x.map(_ * 2)).flatten
+// Generalized functional combinators:
+def ourMap(numbers: List[Int], fn: Int => Int): List[Int] = {
+  numbers.foldRight(List[Int]()) { (x: Int, xs: List[Int]) =>
+  fn(x) :: xs
+  }
+}
+ourMap(numbers, timesTwo(_))
+// Map?
+val extensions = Map("Steve" -> 100, "Bob" -> 101, "Joe" -> 201)
+extensions.filter((namePhone: (String, Int)) => namePhone._2 < 200)
+extensions.filter({case (name, extension) => extension < 200})
