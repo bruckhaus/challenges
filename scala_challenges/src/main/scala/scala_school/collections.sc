@@ -60,23 +60,32 @@ val result3 = r1 match {
 numbers.map((i: Int) => i * 2)
 def timesTwo(i: Int): Int = i * 2
 numbers.map(timesTwo _)
-
 // foreach:
 numbers.foreach((i: Int) => i * 2)
 val doubled = numbers.foreach((i: Int) => i * 2)
-
 // filter:
 numbers.filter((i: Int) => i % 2 == 0)
 def isEven(i: Int): Boolean = i % 2 == 0
 numbers.filter(isEven _)
 numbers.filter(isEven)
-
 // zip:
 List(1, 2, 3).zip(List('a', 'b', 'c'))
-
 // partition:
 val numbers2 = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 numbers2.partition(_ % 2 == 0)
-
 // find:
 numbers2.find((i: Int) => i > 5)
+// drop:
+numbers2.drop(5)
+numbers2.dropWhile(_ % 2 != 0)
+numbers2.dropWhile(_ <= 4)
+// foldLeft:
+numbers2.foldLeft(0)((m: Int, n: Int) => m + n)
+numbers2.foldLeft(0) { (m: Int, n: Int) => println("m:" + m + ", n:" + n); m + n}
+numbers2.foldRight(0) { (m: Int, n: Int) => println("m:" + m + ", n:" + n); m + n}
+// flatten:
+List(List(1, 2), List(3, 4)).flatten
+// flatMap:
+val nestedNumbers = List(List(1, 2), List(3, 4))
+nestedNumbers.flatMap(x => x.map(_ * 2))
+nestedNumbers.map((x: List[Int]) => x.map(_ * 2)).flatten
