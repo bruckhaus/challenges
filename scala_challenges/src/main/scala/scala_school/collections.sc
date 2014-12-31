@@ -1,6 +1,6 @@
 /**
  * Created by tilmannbruckhaus on 12/26/14.
- *
+ * See: http://twitter.github.io/scala_school/collections.html
  */
 
 // List:
