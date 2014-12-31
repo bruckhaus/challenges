@@ -4,7 +4,7 @@
  */
 
 // List:
-val numberList = List(1, 2, 3, 4)
+val numbers = List(1, 2, 3, 4)
 
 // Set:
 Set(1, 1, 2)
@@ -23,9 +23,8 @@ hostPort match {
   case (host, port) => println("any other host")
 }
 
+// Map:
 1 -> 2
-
-// Maps:
 Map(1 -> 2)
 Map("foo" -> "bar")
 Map(1 -> Map("foo" -> "bar"))
@@ -42,9 +41,6 @@ trait Option[T] {
 
   def getOrElse(t: T): T
 }
-
-val x = 9
-
 val numberMap = Map(1 -> "one", 2 -> "two")
 val r1 = numberMap.get(2)
 val r2 = numberMap.get(3)
@@ -55,14 +51,32 @@ val result = if (r2.isDefined) {
   0
 }
 val result2 = r2.getOrElse(0) // * 2
-
 val result3 = r1 match {
   case Some(n) => n * 2
   case None => 0
 }
 
 // map:
-numberList.map((i: Int) => i * 2)
-
+numbers.map((i: Int) => i * 2)
 def timesTwo(i: Int): Int = i * 2
-numberList.map(timesTwo _)
+numbers.map(timesTwo _)
+
+// foreach:
+numbers.foreach((i: Int) => i * 2)
+val doubled = numbers.foreach((i: Int) => i * 2)
+
+// filter:
+numbers.filter((i: Int) => i % 2 == 0)
+def isEven(i: Int): Boolean = i % 2 == 0
+numbers.filter(isEven _)
+numbers.filter(isEven)
+
+// zip:
+List(1, 2, 3).zip(List('a', 'b', 'c'))
+
+// partition:
+val numbers2 = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+numbers2.partition(_ % 2 == 0)
+
+// find:
+numbers2.find((i: Int) => i > 5)
