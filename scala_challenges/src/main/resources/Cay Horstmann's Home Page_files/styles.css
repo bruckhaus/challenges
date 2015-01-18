@@ -1,0 +1,251 @@
+/* Used for book sites */
+
+@font-face {
+  font-family: "MonoCondensed";
+  src: local("DejaVu Sans Mono Condensed"), url("DejaVuSansMonoCondensed.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Handwriting";
+  src: local("MarkingPen"), url("http://horstmann.com/MySlidy/MarkingPen.otf") format("opentype");
+}
+
+@import url(http://fonts.googleapis.com/css?family=Cabin:400,700,400italic,700italic);
+
+h1, h2, h3, h4 {
+  font-family: "Cabin", sans-serif;
+  font-weight: bold;
+}
+
+h1 { 
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+h2 { 
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+h3 { 
+  font-size: 1.1em;
+  font-style: italic;
+}
+
+body { 
+  font-family: sans-serif;
+}
+
+code, pre, tt { 
+  font-family: "MonoCondensed", monospace, Courier;
+}
+
+.hand {
+  font-family: "Handwriting", "Comic Sans MS", cursive;
+}
+
+.sideimage { 
+  margin-left: 1em;
+  margin-bottom: 1em;
+  float: right;
+}
+
+.quotes li { 
+  margin-bottom: 0.2em;
+}
+
+h2 { 
+  clear: both;
+  padding-top: 1em; 
+  border-color: #9090a0;
+  border-top-width: thin;
+  border-top-style: solid;
+}
+
+.author { 
+  font-family: Cabin;
+  font-size: 1.2em;
+  font-weight: bold;
+  clear: both;
+  margin-top: 1em;
+}
+
+.author a { 
+  margin-right: 1em;
+}
+
+a:link { 
+  color: #505080;
+  text-decoration: none; 
+  border-bottom: 1px dotted;
+}
+
+a:visited {
+  color: #707070;
+  text-decoration: none; 
+  border-bottom: 1px dotted;
+}
+
+a:hover {
+  color: firebrick; 
+  text-decoration: none; 
+  border-bottom: 1px solid;
+}
+
+ul { 
+  list-style-type: square;
+}
+
+li { 
+}
+
+table { 
+  border-style: none;
+  font-size: 0.9em;
+  margin-left: 2em;
+}
+
+
+tr { 
+  background: #eee;
+   border-bottom-style: solid;
+   border-bottom-width: thin;   
+  border-bottom-color: white;
+
+}
+
+tr:hover { 
+  background: #ccc;
+}
+
+th { 
+  border-style: none;
+  background: firebrick;
+  padding: 0.5em;
+  color: white;
+}
+
+td { 
+  border-style: none;
+
+  padding: 0.5em;
+}
+
+td.selected { 
+   background: #7cccc8;
+}
+
+td.gray { 
+  background: #bde4e1;
+}
+
+.covers { 
+  font-size: 1em;
+}
+
+.covers td { 
+  background: white;
+  border: 0;
+  padding: 1em;
+}
+
+form { 
+  border-color: #9090a0;
+  border-style: solid;
+  border-width: thin;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+dt { 
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+dd { 
+  margin-bottom: 0.5em;
+}
+
+.question { 
+  margin-top: 2em;
+  font-weight: bold;
+}
+
+.question:before { 
+  content: "Question: ";
+  font-style: italic;
+  margin-right: 0.5em;
+}
+
+.answer:before { 
+  content: "Answer: ";
+  font-style: italic;
+  margin-right: 0.5em;
+}
+
+pre {  clear: none;
+  background-color: #FFFEED;
+  border-color: #ccc;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  border-style: solid;
+  border-width: 1px;
+}
+
+pre strong { 
+  color: red;
+}
+
+pre em { 
+  color: gray;
+}
+
+.var, var {
+  font-style: italic;
+  font-family: serif;
+}
+
+.rm {
+  font-family: serif;
+  color: blue;
+}
+
+blockquote {
+  margin: 1em;
+  padding: 1em;
+  background: cornsilk;
+  font-family: "Cabin", sans-serif;
+}
+
+blockquote a:link, blockquote a:visited {
+  font-weight: bold;
+  color: black;
+}
+
+blockquote a:hover {
+  font-weight: bold;
+  color: firebrick; 
+}
+
+.lower-alpha, .lower { 
+ list-style: lower-alpha;
+}
+
+.upper { 
+ list-style: upper-alpha;
+}
+
+.todo:before { 
+  color: red;
+  content: "TODO: " ;
+}
+
+.todo { 
+  color: red;
+}
+
