@@ -22,8 +22,8 @@ val e6 = <li>{Text("Fred")}</li> match { case <li>{Text(t) }</li> => t}
 val parser = (new org.ccil.cowan.tagsoup.jaxp.SAXFactoryImpl).newSAXParser
 val url = "http://1bitentropy.wordpress.com/"
 val root = XML.withSAXParser(parser).load(new java.net.URL(url))
-val noAlt = root \\ "img" filter (h=>(h \ "@alt" toString) == "")
-println(noAlt.mkString("\n"))
+val noAlt = root \\ "img" filter (h=>(h \ "@alt" toString()) == "")
+println("no alt tag:\n" + noAlt.mkString("\n"))
 // 5.
 val src = root \\ "@src"
 println(src.mkString("\n"))
@@ -35,3 +35,10 @@ def makeDl(items: Map[String, String]): Elem = {
   <dl>{ items map { item => <dt>{item._1}</dt><dd>{item._2}</dd> }}</dl>
 }
 makeDl(Map("A" -> "1", "B" -> "2"))
+// 8.
+def parseDl(list: Elem): Map[String, String] = {
+  var r = Map[String, String]()
+  (list \\ "dt").zip(list \\ "dd").foreach{e => r += (e._1.text -> e._2.text)}
+  r
+}
+parseDl(<dl><dt>A</dt><dd>1</dd><dt>B</dt><dd>2</dd></dl>)
