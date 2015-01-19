@@ -28,6 +28,5 @@ println(noAlt.mkString("\n"))
 val src = root \\ "@src"
 println(src.mkString("\n"))
 // 6.
-val a = root \\ "a"
-val a2 = root \\ "a" \\ "@href"
-val a3 = root \\ "a" \\ "@title"
+val refs = root \\ "a" foreach {
+  a => println(a.text + " => " + a.attributes.get("href").mkString) }
