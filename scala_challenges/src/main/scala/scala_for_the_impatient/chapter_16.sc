@@ -14,7 +14,7 @@ val e3 = <ul>
 </ul>
 e3.getClass
 // 3.
-import scala.xml.{XML, Atom, Text}
+import scala.xml.{Elem, XML, Atom, Text}
 val e4 = <li>Fred</li> match { case <li>{Text(t)}</li> => t }
 val e5 = <li>{"Fred"}</li> match { case <li>{t: Atom[String] @unchecked }</li> => t}
 val e6 = <li>{Text("Fred")}</li> match { case <li>{Text(t) }</li> => t}
@@ -30,3 +30,8 @@ println(src.mkString("\n"))
 // 6.
 val refs = root \\ "a" foreach {
   a => println(a.text + " => " + a.attributes.get("href").mkString) }
+// 7.
+def makeDl(items: Map[String, String]): Elem = {
+  <dl>{ items map { item => <dt>{item._1}</dt><dd>{item._2}</dd> }}</dl>
+}
+makeDl(Map("A" -> "1", "B" -> "2"))
