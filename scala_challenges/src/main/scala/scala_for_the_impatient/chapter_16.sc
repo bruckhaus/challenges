@@ -14,25 +14,20 @@ val e3 = <ul>
 </ul>
 e3.getClass
 // 3.
-
-import java.net.URL
-import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver
-
-import scala.reflect.io.File
-import scala.xml.{Elem, XML, Atom, Text}
+import scala.xml.{XML, Atom, Text}
 val e4 = <li>Fred</li> match { case <li>{Text(t)}</li> => t }
 val e5 = <li>{"Fred"}</li> match { case <li>{t: Atom[String] @unchecked }</li> => t}
 val e6 = <li>{Text("Fred")}</li> match { case <li>{Text(t) }</li> => t}
 // 4.
-//val root = XML.load(new URL("http://horstmann.com/index.html"))
-//val res = new CatalogResolver
-//val doc = new factory.XMLLoader[Elem] {
-//  override def adapter = new parsing.NoBindingFactoryAdapter(){
-//    override def resolveEntity(publicId: String, systemId: String) = {
-//      res.resolveEntity(publicId, systemId)
-//    }
-//  }
-//}
-//val path = "/Users/tilmannbruckhaus/dev/bruckhaus/challenges/scala_challenges/src/main/resources/"
-//val root = XML.loadFile(path + "Cay Horstmann's Home Page.html")
-//root \\ "img"
+val parser = (new org.ccil.cowan.tagsoup.jaxp.SAXFactoryImpl).newSAXParser
+val url = "http://1bitentropy.wordpress.com/"
+val root = XML.withSAXParser(parser).load(new java.net.URL(url))
+val noAlt = root \\ "img" filter (h=>(h \ "@alt" toString) == "")
+println(noAlt.mkString("\n"))
+// 5.
+val src = root \\ "@src"
+println(src.mkString("\n"))
+// 6.
+val a = root \\ "a"
+val a2 = root \\ "a" \\ "@href"
+val a3 = root \\ "a" \\ "@title"
