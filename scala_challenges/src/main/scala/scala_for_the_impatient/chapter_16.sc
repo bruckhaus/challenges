@@ -14,7 +14,7 @@ val e3 = <ul>
 </ul>
 e3.getClass
 // 3.
-import scala.xml.{Elem, XML, Atom, Text}
+import scala.xml._
 val e4 = <li>Fred</li> match { case <li>{Text(t)}</li> => t }
 val e5 = <li>{"Fred"}</li> match { case <li>{t: Atom[String] @unchecked }</li> => t}
 val e6 = <li>{Text("Fred")}</li> match { case <li>{Text(t) }</li> => t}
@@ -42,3 +42,13 @@ def parseDl(list: Elem): Map[String, String] = {
   r
 }
 parseDl(<dl><dt>A</dt><dd>1</dd><dt>B</dt><dd>2</dd></dl>)
+// 9.
+import scala.xml.transform.{RuleTransformer, RewriteRule}
+val rule1 = new RewriteRule {
+  override def transform(n: Node) = n match {
+    case i @ <img>{_*}</img> if i.attribute("alt") == None =>
+      i.asInstanceOf[Elem] % Attribute(null, "alt", "TODO", Null)
+    case _ => n
+  }
+}
+val transformed = new RuleTransformer(rule1).transform(root)
