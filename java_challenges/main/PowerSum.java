@@ -62,7 +62,7 @@ public class PowerSum {
 
     private static void initializePowerSums(int limit) {
         for (int a = 0; a <= limit; a++){
-            for (int b = 0; a + b <= limit; b++) {
+            for (int b = a; a + b <= limit; b++) {
                 for (int p = 2; Math.pow(a, p) <= limit; p++) {
                     for (int q = 2; Math.pow(a, p) + Math.pow(b, q) <= limit; q++) {
                         int powerNumber = (int) (Math.pow(a, p) + Math.pow(b, q));
