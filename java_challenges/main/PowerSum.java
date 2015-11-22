@@ -1,4 +1,4 @@
-import java.util.Set;
+import java.util.HashSet;
 
 import static com.google.common.collect.Sets.newHashSet;
 
@@ -46,7 +46,14 @@ public class PowerSum {
             29 = 55 + 22.
      */
 
-    private static Set<Integer> powerSums = newHashSet();
+    private static HashSet powerSums = new HashSet();
+
+    public static void main(String[] args){
+        int i = 25;
+        int j = 30;
+        int sum = countPowerNumbers(i, j);
+        System.out.printf("The count of power numbers between %d and %d is %d.\n", i, j, sum);
+    }
 
     static int countPowerNumbers(int l, int r) {
         initializePowerSums(r);
