@@ -10,7 +10,7 @@ Find the sum of the only eleven primes that are both truncatable from left to ri
 NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
 */
 
-public class Problem_37_TruncatablePrimes {
+public class Euler_37_TruncatablePrimes {
     public static final int NUMBER_OF_TRUNCATABLES = 11;
     public static final int FIRST_ELIGIBLE_NUMBER = 11;
 
@@ -19,7 +19,7 @@ public class Problem_37_TruncatablePrimes {
     private static int sum = 0;
 
     public static void main(String[] args) {
-        Problem_37_TruncatablePrimes t = new Problem_37_TruncatablePrimes();
+        Euler_37_TruncatablePrimes t = new Euler_37_TruncatablePrimes();
         System.out.printf("\nThe sum of truncatable primes is %d.", t.sumTruncatables());
     }
 
