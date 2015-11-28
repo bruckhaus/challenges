@@ -20,15 +20,16 @@ public class Problem_37_TruncatablePrimesTest {
 
     @Test
     public void testChopFirstDigit() throws Exception {
-        assertEquals(23456789, Problem_37_TruncatablePrimes.chopFirstDigit(123456789));
-        assertEquals(3456789, Problem_37_TruncatablePrimes.chopFirstDigit(23456789));
-        assertEquals(456789, Problem_37_TruncatablePrimes.chopFirstDigit(3456789));
-        assertEquals(56789, Problem_37_TruncatablePrimes.chopFirstDigit(456789));
-        assertEquals(6789, Problem_37_TruncatablePrimes.chopFirstDigit(56789));
-        assertEquals(789, Problem_37_TruncatablePrimes.chopFirstDigit(6789));
-        assertEquals(89, Problem_37_TruncatablePrimes.chopFirstDigit(789));
-        assertEquals(9, Problem_37_TruncatablePrimes.chopFirstDigit(89));
-        assertEquals(0, Problem_37_TruncatablePrimes.chopFirstDigit(9));
-        assertEquals(0, Problem_37_TruncatablePrimes.chopFirstDigit(-1));
+        Problem_37_TruncatablePrimes.leftRight left = Problem_37_TruncatablePrimes.leftRight.LEFT;
+        assertEquals(23456789, Problem_37_TruncatablePrimes.chopDigit(left, 123456789));
+        assertEquals(3456789, Problem_37_TruncatablePrimes.chopDigit(left, 23456789));
+        assertEquals(456789, Problem_37_TruncatablePrimes.chopDigit(left, 3456789));
+        assertEquals(56789, Problem_37_TruncatablePrimes.chopDigit(left, 456789));
+        assertEquals(6789, Problem_37_TruncatablePrimes.chopDigit(left, 56789));
+        assertEquals(789, Problem_37_TruncatablePrimes.chopDigit(left, 6789));
+        assertEquals(89, Problem_37_TruncatablePrimes.chopDigit(left, 789));
+        assertEquals(9, Problem_37_TruncatablePrimes.chopDigit(left, 89));
+        assertEquals(0, Problem_37_TruncatablePrimes.chopDigit(left, 9));
+        assertEquals(0, Problem_37_TruncatablePrimes.chopDigit(left, -1));
     }
 }
