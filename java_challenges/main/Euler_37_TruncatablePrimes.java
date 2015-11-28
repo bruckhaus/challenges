@@ -11,8 +11,10 @@ NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
 */
 
 public class Euler_37_TruncatablePrimes {
-    public static final int NUMBER_OF_TRUNCATABLES = 11;
-    public static final int FIRST_ELIGIBLE_NUMBER = 11;
+    public enum leftRight {LEFT, RIGHT}
+
+    private static final int NUMBER_OF_TRUNCATABLES = 11;
+    private static final int FIRST_ELIGIBLE_NUMBER = 11;
 
     private static int current = FIRST_ELIGIBLE_NUMBER;
     private static int count = 0;
@@ -35,27 +37,23 @@ public class Euler_37_TruncatablePrimes {
     }
 
     public static boolean isTruncatable(int i) {
-        return isLeftTruncatable(i) && isRightTruncatable(i);
+        return isTruncatable(leftRight.LEFT, i) && isTruncatable(leftRight.RIGHT, i);
     }
 
-    private static boolean isLeftTruncatable(int number) {
+    private static boolean isTruncatable(leftRight direction, int number) {
         while (number > 0) {
             if (!Prime.isPrime(number)) return false;
-            number = chopFirstDigit(number);
+            number = chopDigit(direction, number);
         }
         return true;
     }
 
-    private static boolean isRightTruncatable(int number) {
-        while (number > 0) {
-            if (!Prime.isPrime(number)) return false;
-            number = number / 10;
-        }
-        return true;
-    }
-
-    public static int chopFirstDigit(int number) {
+    public static int chopDigit(leftRight direction, int number) {
         if (number < 10) return 0;
-        return Integer.parseInt((number + "").substring(1));
+        if (direction == leftRight.LEFT) {
+            return Integer.parseInt((number + "").substring(1));
+        } else {
+            return number / 10;
+        }
     }
 }
