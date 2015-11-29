@@ -12,13 +12,11 @@ public class Euler_41_PandigitalPrime {
         System.out.printf("\nThe largest pandigital prime is %d\n", largest);
     }
 
-    private static long findLargestPandigital() {
+    public static long findLargestPandigital() {
         long last = 0;
         while (Pandigital.hasNext()) {
             Pandigital.next();
-//            System.out.printf(".");
             if (Prime.isPrime(Pandigital.current)) {
-//                System.out.printf("\nFound prime pandigital: %d\n", Pandigital.current);
                 last = Pandigital.current;
             }
         }

@@ -42,14 +42,13 @@ public class Pandigital {
                 return Long.parseLong(new String(combo));
             }
         }
-        return number;
+        return -1;
     }
 
     public static int findPosition(long number) {
         char[] combo = ("" + number).toCharArray();
         char current = Character.MAX_VALUE;
         char max = Character.MIN_VALUE;
-        char min = Character.MAX_VALUE;
         position = combo.length;
         encountered.clear();
         while (position > 0 && current >= max) {
@@ -57,7 +56,6 @@ public class Pandigital {
             current = combo[position];
             encountered.add(current);
             if (current > max) max = current;
-            if (current < min) min = current;
         }
         if (current >= max) return -1;
         return position;
