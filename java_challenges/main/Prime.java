@@ -5,7 +5,7 @@ public class Prime {
     private static Integer last = 2;
     private static HashSet<Integer> primes = new HashSet<>(Collections.singletonList(2));
 
-    public static Boolean isPrime(Integer tested) {
+    public static Boolean isPrime(long tested) {
         if (primes.contains(tested)) return true;
         if (tested <= last) return false;
         while (last < tested) {
