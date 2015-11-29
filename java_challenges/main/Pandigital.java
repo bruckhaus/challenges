@@ -2,8 +2,8 @@ import java.util.TreeSet;
 
 public class Pandigital {
 
-    public static final long MIN_PANDIGITAL = 123456789L;
-    public static final long MAX_PANDIGITAL = 987654321L;
+    public static final long MIN_PANDIGITAL = 1234567L;
+    public static final long MAX_PANDIGITAL = 7654321L;
     public static long current = MIN_PANDIGITAL;
     private static TreeSet<Character> encountered = new TreeSet<>();
     private static int position;
@@ -16,7 +16,7 @@ public class Pandigital {
         }
     }
 
-    private static boolean hasNext() {
+    public static boolean hasNext() {
         return current < MAX_PANDIGITAL;
     }
 
@@ -63,7 +63,7 @@ public class Pandigital {
         return position;
     }
 
-    private static long next() {
+    public static long next() {
         return next(current);
     }
 
