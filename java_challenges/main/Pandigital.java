@@ -1,41 +1,39 @@
-import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.TreeSet;
 
 public class Pandigital {
 
-    public static int current = 123456789;
+    public static final long MIN_PANDIGITAL = 123456789L;
+    public static final long MAX_PANDIGITAL = 987654321L;
+    public static long current = MIN_PANDIGITAL;
     private static TreeSet<Character> encountered = new TreeSet<>();
     private static int position;
 
-    public static long next() {
-        positionToIncrease();
-        increasePosition();
-        appendInOrder();
-        return 0L;
+    public static void main(String[] args) {
+        System.out.println(current);
+        while (hasNext()) {
+            next();
+            System.out.println(current);
+        }
     }
 
-    private static long appendInOrder() {
-        return appendInOrder(current);
+    private static boolean hasNext() {
+        return current < MAX_PANDIGITAL;
     }
 
-    public static long appendInOrder(long number) {
-        number = increasePosition(number);
+    public static long next(long number) {
+        number = incrementPosition(number);
         char[] combo = ("" + number).toCharArray();
         position++;
         for (char value : encountered) {
             combo[position] = value;
             position++;
         }
-        return Long.parseLong(new String(combo));
+        current = Long.parseLong(new String(combo));
+        return current;
     }
 
-    public static long increasePosition() {
-        return increasePosition(current);
-    }
-
-    public static long increasePosition(long number) {
-        position = positionToIncrease(number);
+    public static long incrementPosition(long number) {
+        position = findPosition(number);
         char[] combo = ("" + number).toCharArray();
         for (char value : encountered) {
             if (value > combo[position]) {
@@ -47,11 +45,7 @@ public class Pandigital {
         return number;
     }
 
-    public static int positionToIncrease() {
-        return positionToIncrease(current);
-    }
-
-    public static int positionToIncrease(long number) {
+    public static int findPosition(long number) {
         char[] combo = ("" + number).toCharArray();
         char current = Character.MAX_VALUE;
         char max = Character.MIN_VALUE;
@@ -68,4 +62,17 @@ public class Pandigital {
         if (current >= max) return -1;
         return position;
     }
+
+    private static long next() {
+        return next(current);
+    }
+
+    public static long incrementPosition() {
+        return incrementPosition(current);
+    }
+
+    public static int findPosition() {
+        return findPosition(current);
+    }
+
 }
