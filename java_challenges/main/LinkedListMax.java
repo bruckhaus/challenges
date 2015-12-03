@@ -13,12 +13,12 @@ class Node {
     }
 }
 
-class List {
+class LinkedList {
 
     private Node first;
     private Node last;
 
-    public List(int value) {
+    public LinkedList(int value) {
         Node n = new Node(value);
         first = n;
         last = n;
