@@ -6,7 +6,7 @@ public class ListTest {
 
     @Test
     public void testMax() throws Exception {
-        List l = new List(19);
+        LinkedList l = new LinkedList(19);
         assertEquals(19, l.max());
         l.append(18);
         assertEquals(19, l.max());
