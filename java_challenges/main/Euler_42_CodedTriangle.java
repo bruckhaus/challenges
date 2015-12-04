@@ -13,9 +13,10 @@ public class Euler_42_CodedTriangle {
     // containing nearly two-thousand common English words, how many are triangle words?
 
     public static void main(String[] args) throws IOException {
-        int count = 0;
+        int count;
         count = getCount();
-        System.out.println("count = " + count);
+        System.out.printf(
+                "The count of triangle numbers among the provided list of common English words is %d.", count);
     }
 
     public static int getCount() throws IOException {

@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -31,17 +32,32 @@ public class WordsTest {
     }
 
     @Test
-    public void testGetWords2() throws Exception {
-        String line = "\"SOCCER\",\"THE\",\"BEAUTIFUL\",\"GAME\"";
-        ArrayList<String> input = new ArrayList<>();
-        input.add(line);
-        String[] result = Words.getWords2(input);
-        String[] expected = new String[] {"SOCCER", "THE", "BEAUTIFUL", "GAMEX"};
-        assertArrayEquals(expected, result);
+    public void testGetWords() throws Exception {
+        ArrayList<String> inputList = getInputList();
+        ArrayList<String> expected = getExpectedList();
+        ArrayList<String> result = Words.getWords(inputList);
+        assertArrayEquals(expected.toArray(), result.toArray());
     }
 
     @Test
-    public void testGetWords() throws Exception {
+    public void testGetWordsStateMachine() throws Exception {
+        ArrayList<String> inputList = getInputList();
+        ArrayList<String> expected = getExpectedList();
+        ArrayList<String> result = Words.getWordsStateMachine(inputList);
+        assertArrayEquals(expected.toArray(), result.toArray());
+    }
 
+    private ArrayList<String> getInputList() {
+        ArrayList<String> inputList = new ArrayList<>();
+        inputList.add("\"SOCCER\",\"THE\",\"BEAUTIFUL\",\"GAME\"");
+        inputList.add("\"TO\",\"BE\",\"OR\",\"NOT\",\"TO\",\"BE\"");
+        return inputList;
+    }
+
+    private ArrayList<String> getExpectedList() {
+        ArrayList<String> expected = new ArrayList<>();
+        String[] expectedStrings = {"SOCCER", "THE", "BEAUTIFUL", "GAME", "TO", "BE", "OR", "NOT", "TO", "BE"};
+        expected.addAll(Arrays.asList(expectedStrings));
+        return expected;
     }
 }

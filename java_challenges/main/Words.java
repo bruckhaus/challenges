@@ -1,7 +1,10 @@
+import com.sun.deploy.util.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Words {
@@ -35,12 +38,16 @@ public class Words {
 
     private enum States {START, OPEN_QUOTE, WORD, CLOSE_QUOTE, COMMA}
 
-    public static String[] getWords2(List<String> lines) {
-        String delimiters = ",\"";
-        return lines.get(0).split(delimiters);
+    public static ArrayList<String> getWords(List<String> lines) {
+        ArrayList<String> result = new ArrayList<>();
+        for (String line : lines) {
+            String[] strings = StringUtils.splitString(line, ",\"");
+            Collections.addAll(result, strings);
+        }
+        return result;
     }
 
-    public static ArrayList<String> getWords(List<String> lines) {
+    public static ArrayList<String> getWordsStateMachine(List<String> lines) {
         // use a state machine for practice, assume input is well-formed:
         ArrayList<String> words = new ArrayList<>();
         String word = "";
@@ -76,6 +83,9 @@ public class Words {
                         switch (c) {
                             case ',':
                                 state = States.COMMA;
+                                break;
+                            case '"':
+                                state = States.OPEN_QUOTE;
                                 break;
                         }
                         break;
