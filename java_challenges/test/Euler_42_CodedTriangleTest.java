@@ -6,6 +6,6 @@ public class Euler_42_CodedTriangleTest {
 
     @Test
     public void testGetCount() throws Exception {
-        assertEquals(-1, Euler_42_CodedTriangle.getCount());
+        assertEquals(162, Euler_42_CodedTriangle.getCount());
     }
 }

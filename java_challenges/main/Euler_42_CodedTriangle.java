@@ -22,7 +22,6 @@ public class Euler_42_CodedTriangle {
         int count = 0;
         for (String word : Words.words()) {
             int code = Words.wordCode(word);
-            System.out.printf("word = %s, code = %d\n", word, code);
             if (TriangleNumbers.isTriangleNumber(code)) count++;
         }
         return count;
