@@ -14,8 +14,6 @@ public class Euler_43_SubstringDivisibility {
 //    d8d9d10=289 is divisible by 17
 //    Find the sum of all 0 to 9 pandigital numbers with this property.
 
-    private static long sum = 0;
-    private static int[] indices = {2, 3, 4, 5, 6, 7, 8};
     private static int[] divisors = {2, 3, 5, 7, 11, 13, 17};
 
     public static void main(String[] args) {
@@ -24,32 +22,35 @@ public class Euler_43_SubstringDivisibility {
     }
 
     public static long sumSubStringDivisibles() {
+        Pandigital.setLength(10);
+        long sum = 0;
         while (Pandigital.hasNext()) {
-            updateSum();
+            if (isSubStringDivisible()) sum += Pandigital.current;
             Pandigital.next();
         }
         return sum;
     }
 
-    private static void updateSum() {
-        if (isSubStringDivisible()) sum += Pandigital.current;
-    }
-
     public static boolean isSubStringDivisible() {
         int substringNumber;
-        for (int index : indices) {
-            substringNumber = getSubstringNumber(index);
+        for (int index = 0; index < divisors.length; index++) {
+            substringNumber = getSubstringNumber(index + 1);
             if (substringNumber % divisors[index] != 0) return false;
         }
         return true;
     }
 
-    public static int getSubstringNumber(int index) {
+    public static int getSubstringNumber(int offset) {
         String pandigitalString = "" + Pandigital.current;
         String substring = "";
-        for (int position = index; position <= index + 2; position++) {
-            substring = substring + pandigitalString.charAt(position - 1);
+        for (int i = offset; i <= offset + 2; i++) {
+            substring = substring + pandigitalString.charAt(i);
         }
         return Integer.parseInt(substring);
+    }
+
+    public static boolean isSubStringDivisible(long number) {
+        Pandigital.setCurrent(number);
+        return isSubStringDivisible();
     }
 }

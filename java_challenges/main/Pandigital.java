@@ -2,9 +2,10 @@ import java.util.TreeSet;
 
 public class Pandigital {
 
-    public static final long MIN_PANDIGITAL = 1234567L;
-    public static final long MAX_PANDIGITAL = 7654321L;
-    public static long current = MIN_PANDIGITAL;
+    private static int minDigit = 1;
+    private static long minPandigital = 123456789L;
+    private static long maxPandigital = 987654321L;
+    public static long current = minPandigital;
     private static TreeSet<Character> encountered = new TreeSet<>();
     private static int position;
 
@@ -16,8 +17,26 @@ public class Pandigital {
         }
     }
 
+    public static void setLength(int length) {
+        if (length == 10) {
+            minDigit = 0;
+            minPandigital = 1023456789L;
+            maxPandigital = 9876543210L;
+        } else {
+            minPandigital = 0;
+            maxPandigital = 0;
+            for (int j = minDigit; j <= length; j++) minPandigital = minPandigital * 10 + j;
+            for (int j = length; j >= minDigit; j--) maxPandigital = maxPandigital * 10 + j;
+        }
+        current = minPandigital;
+    }
+
+    public static void setCurrent(long number) {
+        current = number;
+    }
+
     public static boolean hasNext() {
-        return current < MAX_PANDIGITAL;
+        return current < maxPandigital;
     }
 
     public static long next(long number) {
