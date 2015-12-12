@@ -1,4 +1,5 @@
 import org.junit.Test;
+import sun.nio.cs.ext.EUC_CN;
 
 import static org.junit.Assert.*;
 
@@ -38,14 +39,14 @@ public class Euler_45_TriangularTest {
         assert(Euler_45_Triangular.done(0));
         assert(!Euler_45_Triangular.done(1));
         assertEquals(1, Euler_45_Triangular.triangular);
-        assertEquals(1, Euler_45_Triangular.pentagonalValue());
+        assertEquals(1, Euler_45_Triangular.pentagonal.current());
         assertEquals(1, Euler_45_Triangular.hexagonal);
         Euler_45_Triangular.next(1);
         assert(Euler_45_Triangular.done(1));
         assert(Euler_45_Triangular.done(40754));
         assert(!Euler_45_Triangular.done(40755));
         assertEquals(40755, Euler_45_Triangular.triangular);
-        assertEquals(40755, Euler_45_Triangular.pentagonalValue());
+        assertEquals(40755, Euler_45_Triangular.pentagonal.current());
         assertEquals(40755, Euler_45_Triangular.hexagonal);
     }
 }

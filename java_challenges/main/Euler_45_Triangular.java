@@ -12,7 +12,7 @@ public class Euler_45_Triangular {
     private static long hexagonalIndex = 1;
     public static long triangular = 1;
     public static long hexagonal = 1;
-    private static Pentagonal pentagonal = new Pentagonal();
+    public static Pentagonal pentagonal = new Pentagonal();
 
     public static void main(String[] args) {
         long next = Euler_45_Triangular.next(GIVEN);
@@ -51,10 +51,6 @@ public class Euler_45_Triangular {
         return triangular > given &&
                 triangular == pentagonal.current() &&
                 triangular == hexagonal;
-    }
-
-    public static long pentagonalValue() {
-        return pentagonal.current();
     }
 
     public static void reset() {
