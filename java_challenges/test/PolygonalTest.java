@@ -48,6 +48,7 @@ public class PolygonalTest {
         assertEquals(22, pentagonal.next());
         assertEquals(35, pentagonal.next());
     }
+
     @Test
     public void testHexagonal() throws Exception {
         Hexagonal hexagonal = new Hexagonal();

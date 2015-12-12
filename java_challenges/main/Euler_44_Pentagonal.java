@@ -9,9 +9,9 @@ public class Euler_44_Pentagonal {
     // for which their sum and difference are pentagonal
     // and D = |Pk − Pj| is minimised; what is the value of D?
 
+    private static Pentagonal pentagonal1 = new Pentagonal();
+    private static Pentagonal pentagonal2 = new Pentagonal();
     private static long minDifference = Long.MAX_VALUE;
-    private static long pentagonal1 = 1;
-    private static long pentagonal2 = 1;
     private static long lastPentagonal = 1;
 
     public static void main(String[] args) {
@@ -23,19 +23,25 @@ public class Euler_44_Pentagonal {
     private static long minSpecialPentagonalPairDiff() {
         long nextDifference;
         while (true) {
-//            pentagonal1 = Pentagonal.next();
-            nextDifference = pentagonal1 - lastPentagonal;
-            if (nextDifference > minDifference) return minDifference;
-//            Pentagonal.reset();
-            while (true) {
-//                pentagonal2 = Pentagonal.next();
-                if (isSpecialPair()) minDifference = Math.min(minDifference, pentagonal1 - pentagonal2);
+            pentagonal1.next();
+            nextDifference = pentagonal1.current() - lastPentagonal;
+            System.out.print("nextDifference = " + nextDifference);
+            System.out.println(", pentagonal1 = " + pentagonal1.current());
+            pentagonal2.reset();
+            while (pentagonal2.current() < pentagonal1.current()) {
+                pentagonal2.next();
+                if (isSpecialPair()) {
+                    minDifference = Math.min(minDifference, pentagonal1.current() - pentagonal2.current());
+                }
+                if (nextDifference > minDifference) return minDifference;
             }
-            //lastPentagonal = pentagonal1;
+            lastPentagonal = pentagonal1.current();
         }
     }
 
     private static boolean isSpecialPair() {
-        return pentagonal1 != pentagonal2;
+        return pentagonal1.current() != pentagonal2.current() &&
+                pentagonal1.isPentagonal(pentagonal1.current() + pentagonal2.current()) &&
+                pentagonal1.isPentagonal(pentagonal1.current() - pentagonal2.current());
     }
 }

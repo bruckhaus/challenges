@@ -1,5 +1,4 @@
 import org.junit.Test;
-import sun.nio.cs.ext.EUC_CN;
 
 import static org.junit.Assert.*;
 

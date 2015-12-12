@@ -11,14 +11,26 @@ public abstract class Polygonal {
         return current;
     }
 
-    public abstract long next();
-
     public void incrementIndex() {
         index++;
+    }
+
+    public abstract long next();
+
+    public boolean isPentagonal(long number) {
+        long savedIndex = index;
+        long savedCurrent = current;
+        reset();
+        while (current() <= number) next();
+        boolean result = current() == number;
+        index = savedIndex;
+        current = savedCurrent;
+        return result;
     }
 }
 
 class Triangular extends Polygonal {
+    @Override
     public long next() {
         incrementIndex();
         current = index * (index + 1) / 2;
@@ -27,6 +39,7 @@ class Triangular extends Polygonal {
 }
 
 class Pentagonal extends Polygonal {
+    @Override
     public long next() {
         incrementIndex();
         current = index * (3 * index - 1) / 2;
@@ -35,10 +48,10 @@ class Pentagonal extends Polygonal {
 }
 
 class Hexagonal extends Pentagonal {
+    @Override
     public long next() {
         incrementIndex();
         current = index * (2 * index - 1);
         return current;
     }
 }
-
