@@ -6,32 +6,35 @@ public class PentagonalTest {
 
     @Test
     public void testReset() throws Exception {
-        Pentagonal.reset();
-        assertEquals(0, Pentagonal.current());
-        Pentagonal.next();
-        Pentagonal.next();
-        assertEquals(5, Pentagonal.current());
-        Pentagonal.reset();
-        assertEquals(0, Pentagonal.current());
+        Pentagonal p = new Pentagonal();
+        p.reset();
+        assertEquals(0, p.current());
+        p.next();
+        p.next();
+        assertEquals(5, p.current());
+        p.reset();
+        assertEquals(0, p.current());
     }
 
     @Test
     public void testCurrent() throws Exception {
-        Pentagonal.reset();
-        assertEquals(0, Pentagonal.current());
-        Pentagonal.next();
-        assertEquals(1, Pentagonal.current());
-        Pentagonal.next();
-        assertEquals(5, Pentagonal.current());
+        Pentagonal p = new Pentagonal();
+        p.reset();
+        assertEquals(0, p.current());
+        p.next();
+        assertEquals(1, p.current());
+        p.next();
+        assertEquals(5, p.current());
     }
 
     @Test
     public void testNext() throws Exception {
-        Pentagonal.reset();
-        assertEquals(1, Pentagonal.next());
-        assertEquals(5, Pentagonal.next());
-        assertEquals(12, Pentagonal.next());
-        assertEquals(22, Pentagonal.next());
-        assertEquals(35, Pentagonal.next());
+        Pentagonal p = new Pentagonal();
+        p.reset();
+        assertEquals(1, p.next());
+        assertEquals(5, p.next());
+        assertEquals(12, p.next());
+        assertEquals(22, p.next());
+        assertEquals(35, p.next());
     }
 }
