@@ -8,11 +8,9 @@ public class Euler_45_Triangular {
     //    Find the next triangle number that is also pentagonal and hexagonal.
 
     public static final int GIVEN = 40755;
-    private static long triangularIndex = 1;
-    private static long hexagonalIndex = 1;
-    public static long triangular = 1;
-    public static long hexagonal = 1;
+    public static Triangular triangular = new Triangular();
     public static Pentagonal pentagonal = new Pentagonal();
+    public static Hexagonal hexagonal = new Hexagonal();
 
     public static void main(String[] args) {
         long next = Euler_45_Triangular.next(GIVEN);
@@ -24,40 +22,26 @@ public class Euler_45_Triangular {
 
     public static long next(long given) {
         while (!done(given)) {
-            if (triangular < pentagonal.current() || triangular < hexagonal) {
-                nextTriangular();
-            } else if (pentagonal.current() < hexagonal) {
+            if (triangular.current() < pentagonal.current() || triangular.current() < hexagonal.current()) {
+                triangular.next();
+            } else if (pentagonal.current() < hexagonal.current()) {
                 pentagonal.next();
             } else {
-                next_hexagonal();
+                hexagonal.next();
             }
         }
-        return triangular;
-    }
-
-    public static long nextTriangular() {
-        triangularIndex++;
-        triangular = triangularIndex * (triangularIndex + 1) / 2;
-        return triangular;
-    }
-
-    public static long next_hexagonal() {
-        hexagonalIndex++;
-        hexagonal = hexagonalIndex * (2 * hexagonalIndex - 1);
-        return hexagonal;
+        return triangular.current();
     }
 
     public static boolean done(long given) {
-        return triangular > given &&
-                triangular == pentagonal.current() &&
-                triangular == hexagonal;
+        return triangular.current() > given &&
+                triangular.current() == pentagonal.current() &&
+                triangular.current() == hexagonal.current();
     }
 
     public static void reset() {
+        triangular.reset();
         pentagonal.reset();
-        triangularIndex = 0;
-        hexagonalIndex = 0;
-        triangular = 0;
-        hexagonal = 0;
+        hexagonal.reset();
     }
 }

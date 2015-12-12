@@ -18,11 +18,27 @@ public abstract class Polygonal {
     }
 }
 
-class Pentagonal extends Polygonal {
+class Triangular extends Polygonal {
+    public long next() {
+        incrementIndex();
+        current = index * (index + 1) / 2;
+        return current;
+    }
+}
 
+class Pentagonal extends Polygonal {
     public long next() {
         incrementIndex();
         current = index * (3 * index - 1) / 2;
         return current;
     }
 }
+
+class Hexagonal extends Pentagonal {
+    public long next() {
+        incrementIndex();
+        current = index * (2 * index - 1);
+        return current;
+    }
+}
+
