@@ -1,16 +1,20 @@
 public class Pentagonal {
-    public static long findNext() {
-        return 0;
+
+    private static long index = 0;
+    private static long current = 0;
+
+    public static void reset() {
+        index = 0;
+        current = 0;
     }
 
-    public static boolean hasNext() {
-        return false;
+    public static long current() {
+        return current;
     }
 
-    public static long getNext() {
-        return 0;
-    }
-
-    public static void resetNext() {
+    public static long next() {
+        index++;
+        current = index * (3 * index - 1) / 2;
+        return current;
     }
 }

@@ -25,15 +25,15 @@ public class Euler_44_Pentagonal {
     private static long minSpecialPentagonalPairDiff() {
         long nextDifference;
         while (true) {
-            pentagonal1 = Pentagonal.findNext();
+            pentagonal1 = Pentagonal.next();
             nextDifference = pentagonal1 - lastPentagonal;
             if (nextDifference > minDifference) return minDifference;
-            Pentagonal.resetNext();
-            while (Pentagonal.hasNext()) {
-                pentagonal2 = Pentagonal.getNext();
+            Pentagonal.reset();
+            while (true) {
+                pentagonal2 = Pentagonal.next();
                 if (isSpecialPair()) minDifference = Math.min(minDifference, pentagonal1 - pentagonal2);
             }
-            lastPentagonal = pentagonal1;
+            //lastPentagonal = pentagonal1;
         }
     }
 

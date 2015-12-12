@@ -21,16 +21,6 @@ public class Euler_45_TriangularTest {
     }
 
     @Test
-    public void testNext_pentagonal() throws Exception {
-        Euler_45_Triangular.reset();
-        assertEquals(1, Euler_45_Triangular.nextPentagonal());
-        assertEquals(5, Euler_45_Triangular.nextPentagonal());
-        assertEquals(12, Euler_45_Triangular.nextPentagonal());
-        assertEquals(22, Euler_45_Triangular.nextPentagonal());
-        assertEquals(35, Euler_45_Triangular.nextPentagonal());
-    }
-
-    @Test
     public void testNext_hexagonal() throws Exception {
         Euler_45_Triangular.reset();
         assertEquals(1, Euler_45_Triangular.next_hexagonal());
@@ -48,14 +38,14 @@ public class Euler_45_TriangularTest {
         assert(Euler_45_Triangular.done(0));
         assert(!Euler_45_Triangular.done(1));
         assertEquals(1, Euler_45_Triangular.triangular);
-        assertEquals(1, Euler_45_Triangular.pentagonal);
+        assertEquals(1, Pentagonal.current());
         assertEquals(1, Euler_45_Triangular.hexagonal);
         Euler_45_Triangular.next(1);
         assert(Euler_45_Triangular.done(1));
         assert(Euler_45_Triangular.done(40754));
         assert(!Euler_45_Triangular.done(40755));
         assertEquals(40755, Euler_45_Triangular.triangular);
-        assertEquals(40755, Euler_45_Triangular.pentagonal);
+        assertEquals(40755, Pentagonal.current());
         assertEquals(40755, Euler_45_Triangular.hexagonal);
     }
 }
