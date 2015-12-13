@@ -2,9 +2,12 @@ public abstract class Polygonal {
     protected long index = 0;
     protected long current = 0;
 
-    public void reset() {
+    public abstract long function(long index);
+
+    public long reset() {
         index = 0;
         current = 0;
+        return current;
     }
 
     public long current() {
@@ -15,43 +18,33 @@ public abstract class Polygonal {
         index++;
     }
 
-    public abstract long next();
+    public long next() {
+        incrementIndex();
+        current = function(index);
+        return current;
+    }
 
-    public boolean isPentagonal(long number) {
-        long savedIndex = index;
-        long savedCurrent = current;
-        reset();
-        while (current() <= number) next();
-        boolean result = current() == number;
-        index = savedIndex;
-        current = savedCurrent;
-        return result;
+    public boolean isPolygonal(long number) {
+        long index = 1;
+        while (function(index) < number) index++;
+        return function(index) == number;
     }
 }
 
 class Triangular extends Polygonal {
-    @Override
-    public long next() {
-        incrementIndex();
-        current = index * (index + 1) / 2;
-        return current;
+    public long function(long index) {
+        return index * (index + 1) / 2;
     }
 }
 
 class Pentagonal extends Polygonal {
-    @Override
-    public long next() {
-        incrementIndex();
-        current = index * (3 * index - 1) / 2;
-        return current;
+    public long function(long index) {
+        return index * (3 * index - 1) / 2;
     }
 }
 
 class Hexagonal extends Pentagonal {
-    @Override
-    public long next() {
-        incrementIndex();
-        current = index * (2 * index - 1);
-        return current;
+    public long function(long index) {
+        return index * (2 * index - 1);
     }
 }

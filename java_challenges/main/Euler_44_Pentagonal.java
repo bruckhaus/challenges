@@ -9,11 +9,6 @@ public class Euler_44_Pentagonal {
     // for which their sum and difference are pentagonal
     // and D = |Pk − Pj| is minimised; what is the value of D?
 
-    private static Pentagonal pentagonal1 = new Pentagonal();
-    private static Pentagonal pentagonal2 = new Pentagonal();
-    private static long minDifference = Long.MAX_VALUE;
-    private static long lastPentagonal = 1;
-
     public static void main(String[] args) {
         long result = minSpecialPentagonalPairDiff();
         System.out.printf(
@@ -21,27 +16,39 @@ public class Euler_44_Pentagonal {
     }
 
     private static long minSpecialPentagonalPairDiff() {
-        long nextDifference;
+        Pentagonal pentagonal1 = new Pentagonal();
+        Pentagonal pentagonal2 = new Pentagonal();
+        long min = Long.MAX_VALUE;
+        long step = 0;
+        long p1 = 0;
+        long p2 = 0;
+        long last = 0;
+        long delta = 0;
+        pentagonal1.reset();
         while (true) {
-            pentagonal1.next();
-            nextDifference = pentagonal1.current() - lastPentagonal;
-            System.out.print("nextDifference = " + nextDifference);
-            System.out.println(", pentagonal1 = " + pentagonal1.current());
-            pentagonal2.reset();
-            while (pentagonal2.current() < pentagonal1.current()) {
-                pentagonal2.next();
-                if (isSpecialPair()) {
-                    minDifference = Math.min(minDifference, pentagonal1.current() - pentagonal2.current());
+            step++;
+            p1 = pentagonal1.next();
+            delta = p1 - last;
+            System.out.print("step = " + step);
+            System.out.print(", delta = " + delta);
+            System.out.println(", p1 = " + p1);
+            p2 = pentagonal2.reset();
+            while (p2 < p1) {
+                p2 = pentagonal2.next();
+                if (isSpecialPair(p1, p2)) {
+                    min = Math.min(min, p1 - p2);
+                    return min;
                 }
-                if (nextDifference > minDifference) return minDifference;
+//                if (delta > min) return min;
             }
-            lastPentagonal = pentagonal1.current();
+            last = p1;
         }
     }
 
-    private static boolean isSpecialPair() {
-        return pentagonal1.current() != pentagonal2.current() &&
-                pentagonal1.isPentagonal(pentagonal1.current() + pentagonal2.current()) &&
-                pentagonal1.isPentagonal(pentagonal1.current() - pentagonal2.current());
+    public static boolean isSpecialPair(long p1, long p2) {
+        Pentagonal p = new Pentagonal();
+        return p1 != p2 &&
+                p.isPolygonal(p1 + p2) &&
+                p.isPolygonal(Math.abs(p1 - p2));
     }
 }

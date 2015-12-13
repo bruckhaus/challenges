@@ -59,4 +59,26 @@ public class PolygonalTest {
         assertEquals(28, hexagonal.next());
         assertEquals(45, hexagonal.next());
     }
+
+    @Test
+    public void testFunction() throws Exception {
+        Triangular triangular = new Triangular();
+        Pentagonal pentagonal = new Pentagonal();
+        Hexagonal hexagonal = new Hexagonal();
+        assertEquals(7626, triangular.function(123));
+        assertEquals(82017, pentagonal.function(234));
+        assertEquals(1560090, pentagonal.function(1020));
+        assertEquals(7042750, pentagonal.function(2167));
+        assertEquals(415416, hexagonal.function(456));
+    }
+
+    @Test
+    public void testIsPolygonal() throws Exception {
+        Triangular triangular = new Triangular();
+        Pentagonal pentagonal = new Pentagonal();
+        Hexagonal hexagonal = new Hexagonal();
+        assert(triangular.isPolygonal(7626));
+        assert(pentagonal.isPolygonal(82017));
+        assert(hexagonal.isPolygonal(415416));
+    }
 }
