@@ -9,40 +9,40 @@ public class Euler_44_Pentagonal {
     // for which their sum and difference are pentagonal
     // and D = |Pk − Pj| is minimised; what is the value of D?
 
+    public static final long NOT_FOUND = Long.MAX_VALUE;
+
     public static void main(String[] args) {
-        long result = minSpecialPentagonalPairDiff();
+        long result = minPairDiff(false);
         System.out.printf(
                 "The minimal difference between special pairs of pentagonal numbers is %d.", result);
     }
 
-    private static long minSpecialPentagonalPairDiff() {
-        Pentagonal pentagonal1 = new Pentagonal();
-        Pentagonal pentagonal2 = new Pentagonal();
-        long min = Long.MAX_VALUE;
-        long step = 0;
-        long p1 = 0;
-        long p2 = 0;
-        long last = 0;
+    public static long minPairDiff(boolean heuristic) {
+        long min = NOT_FOUND;
+        long value = 0;
+        long lastValue = 0;
         long delta = 0;
-        pentagonal1.reset();
+        Pentagonal pentagonal = new Pentagonal();
+        pentagonal.reset();
         while (true) {
-            step++;
-            p1 = pentagonal1.next();
-            delta = p1 - last;
-            System.out.print("step = " + step);
-            System.out.print(", delta = " + delta);
-            System.out.println(", p1 = " + p1);
-            p2 = pentagonal2.reset();
-            while (p2 < p1) {
-                p2 = pentagonal2.next();
-                if (isSpecialPair(p1, p2)) {
-                    min = Math.min(min, p1 - p2);
-                    return min;
-                }
-//                if (delta > min) return min;
-            }
-            last = p1;
+            value = pentagonal.next();
+            min = searchMin(min, value);
+            if (min != NOT_FOUND && heuristic) return min;
+            delta = value - lastValue;
+            if (delta > min) return min;
+            lastValue = value;
         }
+    }
+
+    private static long searchMin(long min, long limit) {
+        Pentagonal pentagonal = new Pentagonal();
+        long value;
+        value = pentagonal.reset();
+        while (value < limit) {
+            value = pentagonal.next();
+            if (isSpecialPair(limit, value)) min = Math.min(min, limit - value);
+        }
+        return min;
     }
 
     public static boolean isSpecialPair(long p1, long p2) {

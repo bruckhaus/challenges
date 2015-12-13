@@ -9,4 +9,9 @@ public class Euler_44_PentagonalTest {
         assert (!Euler_44_Pentagonal.isSpecialPair(70, 22));
         assert (Euler_44_Pentagonal.isSpecialPair(7042750, 1560090));
     }
+
+    @Test
+    public void testMinPairDiff() throws Exception {
+        assertEquals(5482660, Euler_44_Pentagonal.minPairDiff(true));
+    }
 }
