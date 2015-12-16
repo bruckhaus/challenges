@@ -25,7 +25,7 @@ public class PanDigitalPrime {
     }
 
     private String checkPrime(long p) {
-        if (Prime.isPrime(p)) {
+        if (PrimeChecker.isPrime(p)) {
             if (p > maxPrime) maxPrime = p;
             return " *";
         } else return "";

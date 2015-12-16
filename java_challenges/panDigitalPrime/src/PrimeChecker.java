@@ -1,4 +1,4 @@
-public class Prime {
+public class PrimeChecker {
 
     public static boolean isPrime(long p) {
         p = Math.abs(p);
