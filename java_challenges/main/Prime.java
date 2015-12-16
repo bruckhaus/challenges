@@ -21,4 +21,15 @@ public class Prime {
         }
         return true;
     }
+
+    public static long next() {
+        long result = last;
+        while (true) {
+            last++;
+            if (isPrime(last)) {
+                primes.add(last);
+                return result;
+            }
+        }
+    }
 }

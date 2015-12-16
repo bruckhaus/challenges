@@ -19,6 +19,14 @@ public class Euler_46_Goldbach {
     }
 
     private static int findSmallest() {
+//        loop over primes
+        while (true) {
+            long p = Prime.next();
+        }
+//        generate numbers
+        
+//        check if any missing
+//        track largest checked
         return -1;
     }
 }
