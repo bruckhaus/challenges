@@ -2,8 +2,9 @@ import java.util.Collections;
 import java.util.HashSet;
 
 public class Prime {
-    private static long last = 2L;
-    private static HashSet<Long> primes = new HashSet<>(Collections.singletonList(2L));
+    private static long current = 2;
+    private static long last = 2;
+    public static HashSet<Long> primes = new HashSet<>(Collections.singletonList(2L));
 
     public static Boolean isPrime(long tested) {
         if (primes.contains(tested)) return true;
@@ -23,13 +24,15 @@ public class Prime {
     }
 
     public static long next() {
-        long result = last;
-        while (true) {
-            last++;
-            if (isPrime(last)) {
-                primes.add(last);
-                return result;
-            }
-        }
+        current++;
+        while (!isPrime(current)) current++;
+        return current;
+    }
+
+    public static void reset() {
+        current = 2;
+        last = 2;
+        primes.clear();
+        primes.add(2L);
     }
 }
