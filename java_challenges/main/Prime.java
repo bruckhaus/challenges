@@ -1,5 +1,7 @@
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Prime {
     private static long current = 2;
@@ -34,5 +36,19 @@ public class Prime {
         last = 2;
         primes.clear();
         primes.add(2L);
+    }
+
+    public static Set<Long> getFactorSet(long l) {
+        Set<Long> factorSet = new TreeSet<>();
+        long candidate = 2;
+        while (l > 1) {
+            if (l % candidate == 0) {
+                factorSet.add(candidate);
+                l /= candidate;
+            } else {
+                candidate++;
+            }
+        }
+        return factorSet;
     }
 }
