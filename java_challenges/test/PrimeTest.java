@@ -29,4 +29,21 @@ public class PrimeTest {
             assertEquals(String.format("%d is not prime but method returns true", i), false, Prime.isPrime(i));
         }
     }
+
+    @Test
+    public void testGetFactorSet() throws Exception {
+        checkPrimeFactorSet(new Long[]{2L, 7L}, 14);
+        checkPrimeFactorSet(new Long[]{3L, 5L}, 15);
+        checkPrimeFactorSet(new Long[]{2L, 7L, 23L}, 644);
+        checkPrimeFactorSet(new Long[]{3L, 5L, 43L}, 645);
+        checkPrimeFactorSet(new Long[]{2L, 17L, 19L}, 646);
+        checkPrimeFactorSet(new Long[]{3L, 7L, 13L, 491L}, 134043);
+        checkPrimeFactorSet(new Long[]{2L, 23L, 31L, 47L}, 134044);
+        checkPrimeFactorSet(new Long[]{5L, 17L, 19L, 83L}, 134045);
+        checkPrimeFactorSet(new Long[]{2L, 3L, 11L, 677L}, 134046);
+    }
+
+    private void checkPrimeFactorSet(Long[] factors, int number) {
+        assertArrayEquals(factors, Prime.getFactorSet(number).toArray());
+    }
 }
