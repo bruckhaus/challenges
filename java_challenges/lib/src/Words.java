@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Words {
 
-    public static final String RESOURCES_P042_WORDS_TXT = "./resources/p042_words.txt";
+    public static final String RESOURCES_P042_WORDS_TXT = "../lib/resources/p042_words.txt";
 
     public static int letterCode(char c) {
         return c - 'A' + 1;

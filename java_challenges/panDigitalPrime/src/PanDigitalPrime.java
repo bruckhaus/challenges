@@ -1,34 +1,36 @@
 public class PanDigitalPrime {
 
-    private int maxLength;
     private PanDigital panDigital;
     private long maxPrime = -1;
-
-    public PanDigitalPrime(int length) {
-        maxLength = length;
-        panDigital = new PanDigital(maxLength);
-        maxPrime();
-    }
+    public static boolean outputToStdout = false;
 
     public static void main(String[] args) {
-        new PanDigitalPrime(4).maxPrime();
+        PanDigitalPrime.outputToStdout();
+        int length = 4;
+        long solution = new PanDigitalPrime(length).maxPrime();
+        System.out.printf("The maximum pandigital prime of length up to %d is %,d.\n", length, solution);
+    }
+
+    public PanDigitalPrime(int length) {
+        panDigital = new PanDigital(length);
     }
 
     public long maxPrime() {
         long p = panDigital.get();
         while (p != -1) {
-            System.out.println(p + checkPrime(p));
+            Boolean isPrime = Prime.checkPrime(p);
+            if (isPrime && p > maxPrime) maxPrime = p;
+            if (outputToStdout) System.out.println(p + markPrime(isPrime));
             p = panDigital.next();
         }
-        System.out.println("The maximum pandigital prime of length up to " + maxLength + " is " + maxPrime + ".");
         return maxPrime;
     }
 
-    private String checkPrime(long p) {
-        if (PrimeChecker.isPrime(p)) {
-            if (p > maxPrime) maxPrime = p;
-            return " *";
-        } else return "";
+    private String markPrime(boolean prime) {
+        return prime ? " *" : "";
     }
 
+    private static void outputToStdout() {
+        outputToStdout = true;
+    }
 }
