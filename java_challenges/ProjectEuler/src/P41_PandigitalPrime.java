@@ -7,15 +7,15 @@ public class P41_PandigitalPrime {
     // Solution: The largest pandigital prime is 7652413
 
     public static void main(String[] args) {
-        long largest = P41_PandigitalPrime.findLargestPandigital();
+        long largest = P41_PandigitalPrime.findLargestPandigitalPrime();
         System.out.printf("\nThe largest pandigital prime is %d\n", largest);
     }
 
-    public static long findLargestPandigital() {
+    public static long findLargestPandigitalPrime() {
         long last = 0;
         while (Pandigital.hasNext()) {
             Pandigital.next();
-            if (Prime.isPrime(Pandigital.current)) {
+            if (Prime.checkPrime(Pandigital.current)) {
                 last = Pandigital.current;
             }
         }
