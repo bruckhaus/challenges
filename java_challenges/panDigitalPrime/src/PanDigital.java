@@ -50,7 +50,6 @@ public class PanDigital {
             result += ", " + p;
             p = next();
         }
-        System.out.println(result);
         return result;
     }
 
