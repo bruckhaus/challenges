@@ -8,7 +8,7 @@ public class Board {
         disks = count;
     }
 
-    public void show(Hanoi hanoi) {
+    public void show(Hanoi hanoi) throws InterruptedException {
         String pegs = pegs(hanoi);
         CharacterDisplay.render(pegs, disks);
         wait_seconds(1.2);
@@ -44,8 +44,7 @@ public class Board {
         return slot;
     }
 
-    private void wait_seconds(double seconds) {
-        long started = System.currentTimeMillis();
-        while (System.currentTimeMillis() < started + 1000 * seconds) {}
+    private void wait_seconds(double seconds) throws InterruptedException {
+        Thread.sleep((long) (1000 * seconds));
     }
 }
