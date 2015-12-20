@@ -20,14 +20,19 @@ public class PandigitalTest {
 
     @Test
     public void testIncrementPosition() throws Exception {
-        assertEquals(123456799, Pandigital.incrementPosition(123456789L));
-        assertEquals(123569876, Pandigital.incrementPosition(123549876L));
-        assertEquals(987655321, Pandigital.incrementPosition(987645321L));
-        assertEquals(133, Pandigital.incrementPosition(123));
-        assertEquals(232, Pandigital.incrementPosition(132));
-        assertEquals(233, Pandigital.incrementPosition(213));
-        assertEquals(331, Pandigital.incrementPosition(231));
-        assertEquals(322, Pandigital.incrementPosition(312));
+        assertEquals(123456799, checkIncrementPosition(123456789L));
+        assertEquals(123569876, checkIncrementPosition(123549876L));
+        assertEquals(987655321, checkIncrementPosition(987645321L));
+        assertEquals(133, checkIncrementPosition(123));
+        assertEquals(232, checkIncrementPosition(132));
+        assertEquals(233, checkIncrementPosition(213));
+        assertEquals(331, checkIncrementPosition(231));
+        assertEquals(322, checkIncrementPosition(312));
+    }
+
+    private long checkIncrementPosition(long pandigital) {
+        Pandigital.findPosition(pandigital);
+        return Pandigital.incrementPosition(pandigital);
     }
 
     @Test
