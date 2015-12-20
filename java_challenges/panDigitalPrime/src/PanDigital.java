@@ -1,15 +1,10 @@
-/*  http://projecteuler.net/problem=41
-    Pandigital prime
-    Problem 41
-    We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once.
-    For example, 2143 is a 4-digit pandigital and is also prime.
-    What is the largest n-digit pandigital prime that exists?
- */
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PanDigital {
+    // Project Euler - Problem 41 - Pandigital prime - http://projecteuler.net/problem=41
+    // We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once.
+    // For example, 2143 is a 4-digit pandigital and is also prime.
 
     private int length = 1;
     private int maxLength = -1;
