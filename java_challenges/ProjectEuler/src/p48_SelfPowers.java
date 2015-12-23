@@ -2,24 +2,38 @@ import java.math.BigInteger;
 
 public class P48_SelfPowers {
     // Project Euler - Problem 48 - Self powers
-    // The series, 11 + 22 + 33 + ... + 1010 = 10405071317.
-    // Find the last ten digits of the series, 11 + 22 + 33 + ... + 10001000.
+    // The series, 1^1 + 2^2 + 3^3 + ... + 10^10 = 10405071317.
+    // Find the last ten digits of the series, 1^1 + 2^2 + 3^3 + ... + 1000^1000.
+
+    private static final int LIMIT = 1000;
+    private static final int DIGITS = 10;
 
     public static void main(String[] args) {
-        long last10 = P48_SelfPowers.findLast10();
-        System.out.printf("The last ten digits of the series, 1^1 + 2^2 + 3^3 + ... + 1000^1000 = %,d\n", last10);
+        long solution = P48_SelfPowers.getSelfPowerSumLast(LIMIT, DIGITS);
+        String message = "The last ten digits of the series, 1^1 + 2^2 + 3^3 + ... + 1000^1000 is ";
+        System.out.printf(message + "%,d\n", solution);
     }
 
-    private static long findLast10() {
-        BigInteger result = new BigInteger("0");
-        for (int i = 1; i <= 1000; i++) {
-            BigInteger power = new BigInteger(i + "");
-            power = power.pow(i);
-            result = result.add(power);
-        }
-        String stringResult = "" + result;
-        int len = stringResult.length();
-        String last10 = stringResult.substring(len - 10);
-        return Long.parseLong(last10);
+    public static long getSelfPowerSumLast(int limit, int digits) {
+        BigInteger selfPowerSum = getSelfPowerSum(limit);
+        return getLast(selfPowerSum, digits);
+    }
+
+    public static BigInteger getSelfPowerSum(int limit) {
+        BigInteger sum = new BigInteger("0");
+        for (int i = 1; i <= limit; i++) sum = sum.add(getSelfPower(i));
+        return sum;
+    }
+
+    public static BigInteger getSelfPower(int i) {
+        BigInteger iAsBigInteger = new BigInteger(i + "");
+        return iAsBigInteger.pow(i);
+    }
+
+    public static long getLast(BigInteger bigInteger, int digits) {
+        String stringInteger = "" + bigInteger;
+        int length = stringInteger.length();
+        String lastDigits = stringInteger.substring(length - digits);
+        return Long.parseLong(lastDigits);
     }
 }
