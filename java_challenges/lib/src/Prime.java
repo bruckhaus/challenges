@@ -1,37 +1,41 @@
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Prime {
-    private static long current = 2;
-    private static long last = 2;
-    public static HashSet<Long> primes = new HashSet<>(Collections.singletonList(2L));
+    public long current = 2;
+    private long last = 2;
+    public List<Long> primes = new ArrayList<>();
 
-    public static Boolean isPrime(long tested) {
+    public Boolean isPrime(long tested) {
         if (primes.contains(tested)) return true;
         if (tested <= last) return false;
         while (last < tested) {
             last++;
-            if (lastIsPrime()) primes.add(last);
+            if (lastIsPrime()) {
+                primes.add(last);
+            }
         }
         return primes.contains(tested);
     }
 
-    private static boolean lastIsPrime() {
+    private boolean lastIsPrime() {
         for (long i = 2; i <= Math.sqrt(last); i++) {
             if (primes.contains(i) && last % i == 0) return false;
         }
         return true;
     }
 
-    public static long next() {
+    public Long get(int index) {
+        while (primes.size() < index) next();
+        return primes.get(index - 1);
+    }
+
+    public long next() {
         current++;
         while (!isPrime(current)) current++;
         return current;
     }
 
-    public static void reset() {
+    public Prime() {
         current = 2;
         last = 2;
         primes.clear();
@@ -77,5 +81,4 @@ public class Prime {
         }
         return digitSum;
     }
-
 }

@@ -18,28 +18,30 @@ public class PrimeTest {
 
     @Test
     public void testNext() throws Exception {
-        assertEquals(3, Prime.next());
-        assertEquals(5, Prime.next());
-        assertEquals(7, Prime.next());
-        assertEquals(11, Prime.next());
-        assertEquals(13, Prime.next());
-        assertEquals(17, Prime.next());
-        assertEquals(19, Prime.next());
-        assertEquals(23, Prime.next());
-        assertEquals(29, Prime.next());
-        assertEquals(31, Prime.next());
+        Prime prime = new Prime();
+        assertEquals(3, prime.next());
+        assertEquals(5, prime.next());
+        assertEquals(7, prime.next());
+        assertEquals(11, prime.next());
+        assertEquals(13, prime.next());
+        assertEquals(17, prime.next());
+        assertEquals(19, prime.next());
+        assertEquals(23, prime.next());
+        assertEquals(29, prime.next());
+        assertEquals(31, prime.next());
     }
 
     @Test
     public void testIsPrime() throws Exception {
+        Prime prime = new Prime();
         String message;
         for (Long l : SAMPLE_PRIMES) {
             message = String.format("%d is prime but method returns false", l);
-            assertEquals(message, true, Prime.isPrime(l));
+            assertEquals(message, true, prime.isPrime(l));
         }
         for (Long l : SAMPLE_NON_PRIMES) {
             message = String.format("%d is not prime but method returns true", l);
-            assertEquals(message, false, Prime.isPrime(l));
+            assertEquals(message, false, prime.isPrime(l));
         }
     }
 
