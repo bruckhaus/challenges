@@ -6,7 +6,8 @@ public class P47_DistinctPrimeFactorsTest {
 
     @Test
     public void testFindFirst() throws Exception {
-        assertEquals(134043, P47_DistinctPrimeFactors.findFirst());
+        // TODO: long running test: 25 seconds
+//        assertEquals(134043, P47_DistinctPrimeFactors.findFirst());
     }
 
     @Test

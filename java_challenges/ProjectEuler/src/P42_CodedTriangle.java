@@ -22,6 +22,7 @@ public class P42_CodedTriangle {
     public static int getCount() throws IOException {
         Triangular triangular = new Triangular();
         int count = 0;
+        // TODO: Exception in thread "main" java.io.FileNotFoundException: ../lib/resources/p042_words.txt (No such file or directory)
         for (String word : Words.words()) {
             int code = Words.wordCode(word);
             if (triangular.isPolygonal(code)) count++;
