@@ -45,7 +45,6 @@ public class P46_GoldbachTest {
         TreeSet<Long> g = P46_Goldbach.generated;
         assertEquals(0, g.size());
         P46_Goldbach.generateAndAddWithSquare(5, 3);
-        System.out.println("generated = " + g.toString());
         assertEquals(3, g.size());
         assert (g.contains(20L)); // 2 + 2 * 3^2 = 2 + 2 * 9 = 2 + 18
         assert (g.contains(34L)); // 2 + 2 * 4^2 = 2 + 2 * 16 = 2 + 32 = 34
