@@ -38,7 +38,7 @@ public class P37_TruncatablePrimes {
 
     private static boolean isTruncatable(leftRight direction, int number) {
         while (number > 0) {
-            if (!Prime.isPrime(number)) return false;
+            if (!Prime.checkPrime(number)) return false;
             number = chopDigit(direction, number);
         }
         return true;

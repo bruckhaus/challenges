@@ -23,6 +23,7 @@ public class P46_Goldbach {
     private static final long NOT_FOUND = Long.MIN_VALUE;
     public static TreeSet<Long> generated = new TreeSet<>();
     private static long lastPrime = 0;
+    private static Prime primes = new Prime();
 
     public static long findSmallest() {
         long prime = 2;
@@ -32,7 +33,7 @@ public class P46_Goldbach {
             missing = searchMissing(prime);
             if (missing != NOT_FOUND) return missing;
             lastPrime = prime;
-            prime = Prime.next();
+            prime = primes.next();
         }
     }
 
@@ -52,7 +53,7 @@ public class P46_Goldbach {
     }
 
     public static void generateAndAddWithSquare(long prime, long last) {
-        for (long previousPrime : Prime.primes) {
+        for (long previousPrime : primes.primes) {
             for (long i = last; i <= prime; i++) {
                 generateAndAdd(previousPrime, i);
             }
@@ -72,7 +73,7 @@ public class P46_Goldbach {
     }
 
     private static boolean isMissing(long i) {
-        return !Prime.isPrime(i) && !generated.contains(i);
+        return !primes.isPrime(i) && !generated.contains(i);
     }
 
     private static long getLastChecked() {
@@ -82,6 +83,6 @@ public class P46_Goldbach {
     public static void reset() {
         generated.clear();
         lastPrime = 0;
-        Prime.reset();
+        primes = new Prime();
     }
 }
