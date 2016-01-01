@@ -19,12 +19,11 @@ public class P42_CodedTriangle {
                 "The count of triangle numbers among the provided list of common English words is %d.", count);
     }
 
-    public static int getCount() throws IOException {
+    static int getCount() throws IOException {
         Triangular triangular = new Triangular();
         int count = 0;
-        // TODO: Exception in thread "main" java.io.FileNotFoundException: ../lib/resources/p042_words.txt (No such file or directory)
-        for (String word : Words.words()) {
-            int code = Words.wordCode(word);
+        for (Object word : Words.words()) {
+            int code = Words.wordCode(String.valueOf(word));
             if (triangular.isPolygonal(code)) count++;
         }
         return count;

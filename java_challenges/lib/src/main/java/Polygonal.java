@@ -1,10 +1,10 @@
-public abstract class Polygonal {
-    protected long index = 0;
+abstract class Polygonal {
+    private long index = 0;
     protected long current = 0;
 
     public abstract long function(long index);
 
-    public long reset() {
+    long reset() {
         index = 0;
         current = 0;
         return current;
@@ -14,17 +14,13 @@ public abstract class Polygonal {
         return current;
     }
 
-    public void incrementIndex() {
-        index++;
-    }
-
     public long next() {
-        incrementIndex();
+        index++;
         current = function(index);
         return current;
     }
 
-    public boolean isPolygonal(long number) {
+    boolean isPolygonal(long number) {
         long index = 1;
         while (function(index) < number) index++;
         return function(index) == number;
