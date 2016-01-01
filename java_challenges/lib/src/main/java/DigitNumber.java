@@ -1,8 +1,8 @@
 import java.util.List;
 
-public class DigitNumber {
+class DigitNumber {
 
-    public static long replaceDigits(long number, List replacements) {
+    static long replaceDigits(long number, List replacements) {
         long temp = number;
         for (Object item : replacements) {
             int[] replacement = (int[]) item;
@@ -17,5 +17,13 @@ public class DigitNumber {
         char[] chars = ("" + number).toCharArray();
         chars[position] = (char) ('0' + newValue);
         return Long.parseLong(String.valueOf(chars));
+    }
+
+    public static boolean hasNextCombination(long prime, List<int[]> replacements) {
+        return false;
+    }
+
+    public static List<int[]> getNextCombination(long prime, List<int[]> replacements) {
+        return null;
     }
 }
