@@ -1,6 +1,4 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class P51_PrimeDigitReplacements {
     // Project Euler - Problem 51 - Prime digit replacements
@@ -20,27 +18,72 @@ public class P51_PrimeDigitReplacements {
         System.out.printf(message, solution);
     }
 
-    private static long findReplaceablePrime(int count) throws IOException {
-        Prime primes = new Prime1stMillion();
+    private static Prime primes;
+    private static long solutionPrime = -1;
+    private static int solutionCount = 0;
+    private static int solutionPositionCode = 0;
+
+    static {
+        try {
+            primes = new Prime1stMillion();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error: " + e.getMessage(), e);
+        }
+    }
+
+    static long findReplaceablePrime(int count) throws IOException {
         for (int i = 1; i < 1000000; i++) {
             long prime = primes.get(i);
-            if (getReplaceableCount(prime) == count) return prime;
+            if (getPrimeCount(prime) == count) return prime;
         }
         return -1;
     }
 
-    private static int getReplaceableCount(long prime) {
-        List<int[]> replacements = new ArrayList<>();
-        int maxCount = 0;
-        while (DigitNumber.hasNextCombination(prime, replacements)) {
-            replacements = DigitNumber.getNextCombination(prime, replacements);
-            int count = getReplaceableCount(prime, replacements);
-            if (count > maxCount) maxCount = count;
+    static int getPrimeCount(long prime) {
+        int result = -1;
+        int positionCode = 1;
+        while (DigitNumber.isValidPositionCode(prime, positionCode)) {
+            int count = getPrimeCount(prime, positionCode);
+            if (count > result) result = count;
+            if (count > solutionCount) {
+                solutionCount = count;
+                solutionPrime = prime;
+                solutionPositionCode = positionCode;
+                showSolution();
+            }
+            positionCode++;
         }
-        return maxCount;
+        return result;
     }
 
-    private static int getReplaceableCount(long prime, List<int[]> replacements) {
-        return 0;
+    static int getPrimeCount(long prime, int positionCode) {
+        int count = 0;
+        for (int newValue = 0; newValue <= 9; newValue++) {
+            long replacement = DigitNumber.replacePositions(prime, positionCode, newValue);
+            if (isInPrimeFamily(prime, replacement)) count++;
+        }
+        return count;
+    }
+
+    static boolean isInPrimeFamily(long prime, long replacement) {
+        return isSameLength(prime, replacement) &&
+                primes.isPrime(replacement);
+    }
+
+    static boolean isSameLength(long prime, long replacement) {
+        return ("" + replacement).length() ==
+                ("" + prime).length();
+    }
+
+    private static void showSolution() {
+        System.out.printf(
+                "Solution prime: %,d, replacement prime count: %d, position code: %d\nReplacements:\n",
+                solutionPrime, solutionCount, solutionPositionCode);
+        for (int newValue = 0; newValue <= 9; newValue++) {
+            long replacement = DigitNumber.replacePositions(solutionPrime, solutionPositionCode, newValue);
+            String primeMarker = isInPrimeFamily(solutionPrime, replacement) ? "*" : "";
+            System.out.printf("  new value: %d, %,d %s\n", newValue, replacement, primeMarker);
+        }
     }
 }

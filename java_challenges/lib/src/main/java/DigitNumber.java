@@ -19,11 +19,26 @@ class DigitNumber {
         return Long.parseLong(String.valueOf(chars));
     }
 
-    public static boolean hasNextCombination(long prime, List<int[]> replacements) {
-        return false;
+    static boolean hasNextPositionCode(long prime, int positionCode) {
+        int l = ("" + prime).length();
+        return positionCode < Math.pow(2, l) - 1;
     }
 
-    public static List<int[]> getNextCombination(long prime, List<int[]> replacements) {
-        return null;
+    static boolean isValidPositionCode(long prime, int positionCode) {
+        int l = ("" + prime).length();
+        return positionCode < Math.pow(2, l);
+    }
+
+    static long replacePositions(long number, int positionCode, int newValue) {
+        char[] chars = ("" + number).toCharArray();
+        int position = chars.length - 1;
+        while (positionCode > 0) {
+            if (positionCode % 2 == 1) {
+                chars[position] = (char) ('0' + newValue);
+            }
+            positionCode /= 2;
+            position--;
+        }
+        return Long.parseLong(String.valueOf(chars));
     }
 }
