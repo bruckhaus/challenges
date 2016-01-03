@@ -1,0 +1,44 @@
+import java.util.List;
+
+class DigitNumber {
+
+    static long replaceDigits(long number, List replacements) {
+        long temp = number;
+        for (Object item : replacements) {
+            int[] replacement = (int[]) item;
+            int position = replacement[0];
+            int newValue = replacement[1];
+            temp = replaceDigit(temp, position, newValue);
+        }
+        return temp;
+    }
+
+    static long replaceDigit(long number, int position, int newValue) {
+        char[] chars = ("" + number).toCharArray();
+        chars[position] = (char) ('0' + newValue);
+        return Long.parseLong(String.valueOf(chars));
+    }
+
+    static boolean hasNextPositionCode(long prime, int positionCode) {
+        int l = ("" + prime).length();
+        return positionCode < Math.pow(2, l) - 1;
+    }
+
+    static boolean isValidPositionCode(long prime, int positionCode) {
+        int l = ("" + prime).length();
+        return positionCode < Math.pow(2, l);
+    }
+
+    static long replacePositions(long number, int positionCode, int newValue) {
+        char[] chars = ("" + number).toCharArray();
+        int position = chars.length - 1;
+        while (positionCode > 0) {
+            if (positionCode % 2 == 1) {
+                chars[position] = (char) ('0' + newValue);
+            }
+            positionCode /= 2;
+            position--;
+        }
+        return Long.parseLong(String.valueOf(chars));
+    }
+}
