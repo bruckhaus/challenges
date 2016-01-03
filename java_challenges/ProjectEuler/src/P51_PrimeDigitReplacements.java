@@ -12,13 +12,16 @@ public class P51_PrimeDigitReplacements {
     // with the same digit, is part of an eight prime value family.
 
     public static void main(String[] args) throws IOException {
+        flagShowDiagnosticOutput = true;
         long solution = P51_PrimeDigitReplacements.findReplaceablePrime(8);
         String message = "The smallest prime which, by replacing part of the number " +
                 "with the same digit, is part of an eight prime value family is: %,d\n";
         System.out.printf(message, solution);
     }
 
+    private static boolean flagShowDiagnosticOutput = false;
     private static Prime primes;
+    private static long smallestPrime = -1;
     private static long solutionPrime = -1;
     private static int solutionCount = 0;
     private static int solutionPositionCode = 0;
@@ -33,9 +36,10 @@ public class P51_PrimeDigitReplacements {
     }
 
     static long findReplaceablePrime(int count) throws IOException {
+        solutionCount = 0;
         for (int i = 1; i < 1000000; i++) {
             long prime = primes.get(i);
-            if (getPrimeCount(prime) == count) return prime;
+            if (getPrimeCount(prime) == count) return solutionPrime;
         }
         return -1;
     }
@@ -48,7 +52,7 @@ public class P51_PrimeDigitReplacements {
             if (count > result) result = count;
             if (count > solutionCount) {
                 solutionCount = count;
-                solutionPrime = prime;
+                solutionPrime = smallestPrime;
                 solutionPositionCode = positionCode;
                 showSolution();
             }
@@ -59,9 +63,13 @@ public class P51_PrimeDigitReplacements {
 
     static int getPrimeCount(long prime, int positionCode) {
         int count = 0;
+        smallestPrime = -1;
         for (int newValue = 0; newValue <= 9; newValue++) {
             long replacement = DigitNumber.replacePositions(prime, positionCode, newValue);
-            if (isInPrimeFamily(prime, replacement)) count++;
+            if (isInPrimeFamily(prime, replacement)) {
+                count++;
+                if (smallestPrime == -1) smallestPrime = replacement;
+            }
         }
         return count;
     }
@@ -77,6 +85,7 @@ public class P51_PrimeDigitReplacements {
     }
 
     private static void showSolution() {
+        if (!flagShowDiagnosticOutput) return;
         System.out.printf(
                 "Solution prime: %,d, replacement prime count: %d, position code: %d\nReplacements:\n",
                 solutionPrime, solutionCount, solutionPositionCode);
