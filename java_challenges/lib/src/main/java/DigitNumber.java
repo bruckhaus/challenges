@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.List;
 
 class DigitNumber {
@@ -40,5 +41,11 @@ class DigitNumber {
             position--;
         }
         return Long.parseLong(String.valueOf(chars));
+    }
+
+    static char[] getSortedDigits(long l) {
+        char[] chars = ("" + l).toCharArray();
+        Arrays.sort(chars);
+        return chars;
     }
 }
