@@ -47,13 +47,6 @@ public class PrimeTest {
         assertEquals(104729, prime.get(10000));
     }
 
-// TODO: long running test: 4 minutes 51 seconds
-//    @Test
-//    public void testGetLarge() throws Exception {
-//        Prime prime = new Prime();
-//        assertEquals(1299709, prime.get(100000));
-//    }
-
     @Test
     public void testIsPrime() throws Exception {
         Prime prime = new Prime();

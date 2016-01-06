@@ -1,5 +1,6 @@
 import org.apache.commons.lang3.time.StopWatch;
 
+import java.io.IOException;
 import java.util.Set;
 
 public class P47_DistinctPrimeFactors {
@@ -25,6 +26,17 @@ public class P47_DistinctPrimeFactors {
         System.out.printf(message, solution, seconds);
     }
 
+    private static Prime prime;
+
+    static {
+        try {
+            prime = new Prime1stMillion();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error: " + e.getLocalizedMessage());
+        }
+    }
+
     public static long findFirst() {
         long candidate = 1;
         while (true) {
@@ -41,7 +53,7 @@ public class P47_DistinctPrimeFactors {
     }
 
     public static boolean hasFourDistinctPrimeFactors(long l) {
-        Set<Long> factors = Prime.getFactorSet(l);
+        Set<Long> factors = prime.getPrimeFactorSet(l);
         return factors.size() == 4;
     }
 }

@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,8 +24,14 @@ public class Prime1stMillionTest {
         assertEquals(7919, prime.get(1000));
         assertEquals(104729, prime.get(10000));
         assertEquals(1299709, prime.get(100000));
+        assertEquals(15485863, prime.get(1000000));
     }
 
+    @Test(expected=IndexOutOfBoundsException.class)
+    public void testGetIndexLimit() throws IOException {
+        Prime prime = new Prime1stMillion();
+        prime.get(1000001);
+    }
 
     @Test
     public void testIsPrime() throws Exception {
@@ -40,6 +47,24 @@ public class Prime1stMillionTest {
         }
     }
 
+    @Test
+    public void testGetPrimeFactorSet() throws Exception {
+        Prime prime = new Prime1stMillion();
+        checkPrimeFactorSet(prime, new Long[]{2L, 7L}, 14);
+        checkPrimeFactorSet(prime, new Long[]{3L, 5L}, 15);
+        checkPrimeFactorSet(prime, new Long[]{2L, 7L, 23L}, 644);
+        checkPrimeFactorSet(prime, new Long[]{3L, 5L, 43L}, 645);
+        checkPrimeFactorSet(prime, new Long[]{2L, 17L, 19L}, 646);
+        checkPrimeFactorSet(prime, new Long[]{3L, 7L, 13L, 491L}, 134043);
+        checkPrimeFactorSet(prime, new Long[]{2L, 23L, 31L, 47L}, 134044);
+        checkPrimeFactorSet(prime, new Long[]{5L, 17L, 19L, 83L}, 134045);
+        checkPrimeFactorSet(prime, new Long[]{2L, 3L, 11L, 677L}, 134046);
+    }
+
+    // Test helper:
+    private void checkPrimeFactorSet(Prime prime, Long[] factors, int number) throws IOException {
+        assertArrayEquals(factors, prime.getPrimeFactorSet(number).toArray());
+    }
 
     // Test helper:
     private List<Long> getPrimes() {
