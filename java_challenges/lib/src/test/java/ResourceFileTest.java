@@ -8,7 +8,7 @@ import java.util.List;
 public class ResourceFileTest {
 
     @Test
-    public void getField() throws Exception {
+    public void getLines() throws Exception {
         List lines = new ResourceFile("file/sampleResourceFile.txt").getLines();
         assertEquals(4, lines.size());
         assertEquals("This is a", lines.get(0));
