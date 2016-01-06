@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.TreeSet;
 
 public class P46_Goldbach {
@@ -13,76 +14,91 @@ public class P46_Goldbach {
     // It turns out that the conjecture was false.
     // What is the smallest odd composite that cannot be written as the sum of a prime and twice a square?
 
-    public static void main(String[] args) {
-        long smallest = P46_Goldbach.findSmallest();
+    public static void main(String[] args) throws IOException {
+        long smallest = new P46_Goldbach().findSmallest();
         String message = "The smallest odd composite that cannot be written " +
                 "as the sum of a prime and twice a square is %d.\n";
         System.out.printf(message, smallest);
     }
 
-    private static final long NOT_FOUND = Long.MIN_VALUE;
-    public static TreeSet<Long> generated = new TreeSet<>();
-    private static long lastPrime = 0;
-    private static Prime primes = new Prime();
+    private static Prime primes;
 
-    public static long findSmallest() {
-        long prime = 2;
+    public TreeSet<Long> generated = new TreeSet<>();
+
+    private final long NOT_FOUND = Long.MIN_VALUE;
+    private long lastPrime = 0;
+    private int primeIndex = 1;
+
+    static {
+        try {
+            primes = new Prime1stMillion();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error:" + e.getMessage());
+        }
+    }
+
+    P46_Goldbach() throws IOException {
+        generated.clear();
+        primes = new Prime1stMillion();
+        lastPrime = 0;
+        primeIndex = 1;
+    }
+
+    public long findSmallest() {
+        long prime;
         long missing;
         while (true) {
+            prime = primes.get(primeIndex);
             generateAndAddAll(prime);
             missing = searchMissing(prime);
             if (missing != NOT_FOUND) return missing;
             lastPrime = prime;
-            prime = primes.next();
+            primeIndex++;
         }
     }
 
-    public static void generateAndAddAll(long prime) {
+    public void generateAndAddAll(long prime) {
         generateAndAddWithPrime(prime);
         generateAndAddWithSquare(prime);
     }
 
-    public static void generateAndAddWithPrime(long prime) {
-        for (long i = 1; i <= prime; i++) {
-            generateAndAdd(prime, i);
+    public void generateAndAddWithPrime(long prime) {
+        for (long l = 1; l <= prime; l++) {
+            generateAndAdd(prime, l);
         }
     }
 
-    public static void generateAndAddWithSquare(long prime) {
+    public void generateAndAddWithSquare(long prime) {
         generateAndAddWithSquare(prime, lastPrime + 1);
     }
 
-    public static void generateAndAddWithSquare(long prime, long last) {
-        for (long previousPrime : primes.primes) {
-            for (long i = last; i <= prime; i++) {
-                generateAndAdd(previousPrime, i);
+    public void generateAndAddWithSquare(long prime, long start) {
+        for (int i = 1; i <= primeIndex; i++) {
+            long previousPrime = primes.get(i);
+            for (long j = start; j <= prime; j++) {
+                generateAndAdd(previousPrime, j);
             }
         }
     }
 
-    public static void generateAndAdd(long prime, long i) {
-        long newNumber = (long) (prime + 2 * Math.pow(i, 2));
+    public void generateAndAdd(long prime, long l) {
+        long newNumber = (long) (prime + 2 * Math.pow(l, 2));
         generated.add(newNumber);
     }
 
-    private static long searchMissing(long number) {
+    private long searchMissing(long number) {
         for (long i = getLastChecked(); i <= number + 2; i += 2) {
             if (isMissing(i)) return i;
         }
         return NOT_FOUND;
     }
 
-    private static boolean isMissing(long i) {
+    private boolean isMissing(long i) {
         return !primes.isPrime(i) && !generated.contains(i);
     }
 
-    private static long getLastChecked() {
+    private long getLastChecked() {
         return Math.max(9, lastPrime);
-    }
-
-    public static void reset() {
-        generated.clear();
-        lastPrime = 0;
-        primes = new Prime();
     }
 }

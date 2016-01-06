@@ -1,5 +1,5 @@
 public class P38_PandigitalMultiples {
-    // Euler Pandigital multiples - Problem 38
+    // Project Euler - Problem 38 - Pandigital Multiples
     // Take the number 192 and multiply it by each of 1, 2, and 3: 192 × 1 = 192, 192 × 2 = 384, 192 × 3 = 576
     // By concatenating each product we get the 1 to 9 pandigital, 192384576.
     // We will call 192384576 the concatenated product of 192 and (1,2,3)
@@ -13,7 +13,10 @@ public class P38_PandigitalMultiples {
     private static boolean printToStdOut = false;
 
     private static final long MAX_PANDIGITAL = 987654321;
-    private static final long MAX_CANDIDATE = MAX_PANDIGITAL / 3; // c * 1 + c * 2 <= max pandigital
+
+    // see: http://www.mathblog.dk/project-euler-38-pandigital-multiplying-fixed-number/
+    private static final long MIN_CANDIDATE = 9234;
+    private static final long MAX_CANDIDATE = 9487;
 
     private static long solution_candidate = 0;
     private static long solution_sequence = 0;
@@ -25,7 +28,7 @@ public class P38_PandigitalMultiples {
     }
 
     public static long findLargestPandigitalMultiple() {
-        for (long candidate = 1; candidate <= MAX_CANDIDATE; candidate += 2) {
+        for (long candidate = MIN_CANDIDATE; candidate <= MAX_CANDIDATE; candidate++) {
             long sequence = 2;
             long multiple = 0;
             while (multiple < MAX_PANDIGITAL) {

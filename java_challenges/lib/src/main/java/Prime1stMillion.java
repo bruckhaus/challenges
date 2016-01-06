@@ -1,10 +1,7 @@
 import com.sun.deploy.util.StringUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 class Prime1stMillion extends Prime {
 
@@ -33,6 +30,23 @@ class Prime1stMillion extends Prime {
     private long getPrime(String line) {
         String[] fields = StringUtils.splitString(line, ", ");
         return Long.parseLong(fields[1]);
+    }
+
+    @Override
+    public Set<Long> getPrimeFactorSet(long number) {
+        Set<Long> primeFactorSet = new TreeSet<>();
+        int index = 1;
+        long prime = this.get(index);
+        while (number > 1) {
+            if (number % prime == 0) {
+                primeFactorSet.add(prime);
+                number /= prime;
+            } else {
+                index++;
+                prime = this.get(index);
+            }
+        }
+        return primeFactorSet;
     }
 
     @Override

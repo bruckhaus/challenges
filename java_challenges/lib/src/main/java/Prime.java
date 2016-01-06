@@ -1,3 +1,5 @@
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.util.*;
 
 public class Prime {
@@ -49,6 +51,10 @@ public class Prime {
         last = 2;
         primes.clear();
         primes.add(2L);
+    }
+
+    public Set<Long> getPrimeFactorSet(long l) {
+        throw new NotImplementedException();
     }
 
     public static Set<Long> getFactorSet(long l) {

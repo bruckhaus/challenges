@@ -32,7 +32,6 @@ public class P38_PandigitalMultiplesTest {
 
     @Test
     public void testFindLargestPandigitalMultiple() throws Exception {
-        // TODO long running test: 42 seconds
-//        assertEquals(932718654, P38_PandigitalMultiples.findLargestPandigitalMultiple());
+        assertEquals(932718654, P38_PandigitalMultiples.findLargestPandigitalMultiple());
     }
 }
