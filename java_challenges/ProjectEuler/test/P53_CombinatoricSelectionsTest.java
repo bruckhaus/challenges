@@ -3,7 +3,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class P53_CombinatoricSelectionsTest {
-    // For reference, Pascal's triangle for i <= 9:
+    // For reference, Pascal's triangle for n <= 9:
     // 1
     // 1 1
     // 1 2 1
