@@ -1,3 +1,11 @@
+import com.sun.deploy.util.StringUtils;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
 public class P54_PokerHands {
     // Project Euler - Problem 54 - Poker hands
     // In the card game poker, a hand consists of five cards and are ranked, from lowest to highest, 
@@ -34,13 +42,111 @@ public class P54_PokerHands {
     // each player's hand is in no specific order, and in each hand there is a clear winner.
     // How many hands does Player 1 win?
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         int solution = P54_PokerHands.scoreHands();
         String message = "Player 1 wins %,d hands.\n";
         System.out.printf(message, solution);
     }
 
-    private static int scoreHands() {
+    private static final String HANDS_FILE = "file/p054_poker.txt";
+    private static final String[] CARD_VALUES = new String[]
+            {"2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"};
+
+    private static int scoreHands() throws IOException {
+        List lines = new ResourceFile(HANDS_FILE).getLines();
+        int player1Wins = 0;
+        for (Object line : lines) {
+            System.out.println("line = " + line);
+            String[] cards = StringUtils.splitString(String.valueOf(line), " ");
+            System.out.println("cards = " + Arrays.toString(cards));
+            String[] handPlayer1 = Arrays.copyOfRange(cards, 0, 5);
+            System.out.println("handPlayer1 = " + Arrays.toString(handPlayer1));
+            String[] handPlayer2 = Arrays.copyOfRange(cards, 5, 10);
+            System.out.println("handPlayer2 = " + Arrays.toString(handPlayer2));
+            int scorePlayer1 = scoreHand(handPlayer1);
+            int scorePlayer2 = scoreHand(handPlayer2);
+            if (scorePlayer1 > scorePlayer2) player1Wins++;
+        }
+        return player1Wins;
+    }
+
+    private static int scoreHand(String[] hand) {
+        //   - High Card: Highest value card.
+        //   - One Pair: Two cards of the same value.
+        //   - Two Pairs: Two different pairs.
+        //   - Three of a Kind: Three cards of the same value.
+        //   - Straight: All cards are consecutive values.
+        //   - Flush: All cards of the same suit.
+        //   - Full House: Three of a kind and a pair.
+        //   - Four of a Kind: Four cards of the same value.
+        //   - Straight Flush: All cards are consecutive values of same suit.
+        //   - Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
+        int score = 0;
+        score += scoreHighestCard(hand);
+        score += scorePairs(hand);
+        score += scoreThreeOfAKind(hand);
+        score += scoreStraight(hand);
+        score += scoreFlush(hand);
+        score += scoreFullHouse(hand);
+        score += scoreStrightFlush(hand);
+        score += scoreRoyalFlush(hand);
+        return score;
+    }
+
+    private static int scoreRoyalFlush(String[] hand) {
         return 0;
+    }
+
+    private static int scoreStrightFlush(String[] hand) {
+        return 0;
+    }
+
+    private static int scoreFullHouse(String[] hand) {
+        return 0;
+    }
+
+    private static int scoreFlush(String[] hand) {
+        return 0;
+    }
+
+    private static int scoreStraight(String[] hand) {
+        return 0;
+    }
+
+    private static int scoreThreeOfAKind(String[] hand) {
+        return 0;
+    }
+
+    private static int scorePairs(String[] hand) {
+        int score = 0;
+        for (String cardValue : CARD_VALUES) {
+            if (hasPair(hand, cardValue)) {
+                score += 20 + scoreCard(cardValue);
+            }
+        }
+        return score;
+    }
+
+    private static boolean hasPair(String[] hand, String cardValue) {
+        return false;
+    }
+
+    private static int scoreHighestCard(String[] hand) {
+        int score = 0;
+        for (int i = 0; i <= 4; i++) {
+            int cardScore = scoreCard(hand[0]);
+            if (cardScore > score) score = cardScore;
+        }
+        return score;
+    }
+
+    private static int scoreCard(String card) {
+        String cardValue = card.substring(0, 1);
+        if (cardValue.equals("A")) return 14;
+        if (cardValue.equals("K")) return 13;
+        if (cardValue.equals("Q")) return 12;
+        if (cardValue.equals("J")) return 11;
+        if (cardValue.equals("T")) return 10;
+        return Integer.parseInt(cardValue);
     }
 }
