@@ -1,10 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class PanDigital {
-    // Project Euler - Problem 41 - Pandigital prime - http://projecteuler.net/problem=41
-    // We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once.
-    // For example, 2143 is a 4-digit pandigital and is also prime.
+public class PandigitalOfVariableLength {
 
     private int length = 1;
     private int maxLength = -1;
@@ -12,7 +9,7 @@ public class PanDigital {
     private static ArrayList<String> Digits =
             new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9"));
 
-    public PanDigital(int length) {
+    public PandigitalOfVariableLength(int length) {
         maxLength = length;
         resetPosition();
     }
