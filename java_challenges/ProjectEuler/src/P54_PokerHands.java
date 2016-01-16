@@ -1,10 +1,11 @@
 import com.sun.deploy.util.StringUtils;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+
+import static org.apache.commons.lang3.StringUtils.countMatches;
+import static org.apache.commons.lang3.StringUtils.join;
 
 public class P54_PokerHands {
     // Project Euler - Problem 54 - Poker hands
@@ -52,17 +53,17 @@ public class P54_PokerHands {
     private static final String[] CARD_VALUES = new String[]
             {"2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"};
 
-    private static int scoreHands() throws IOException {
+    static int scoreHands() throws IOException {
         List lines = new ResourceFile(HANDS_FILE).getLines();
         int player1Wins = 0;
         for (Object line : lines) {
-            System.out.println("line = " + line);
+//            System.out.println("line = " + line);
             String[] cards = StringUtils.splitString(String.valueOf(line), " ");
-            System.out.println("cards = " + Arrays.toString(cards));
+//            System.out.println("cards = " + Arrays.toString(cards));
             String[] handPlayer1 = Arrays.copyOfRange(cards, 0, 5);
-            System.out.println("handPlayer1 = " + Arrays.toString(handPlayer1));
+//            System.out.println("handPlayer1 = " + Arrays.toString(handPlayer1));
             String[] handPlayer2 = Arrays.copyOfRange(cards, 5, 10);
-            System.out.println("handPlayer2 = " + Arrays.toString(handPlayer2));
+//            System.out.println("handPlayer2 = " + Arrays.toString(handPlayer2));
             int scorePlayer1 = scoreHand(handPlayer1);
             int scorePlayer2 = scoreHand(handPlayer2);
             if (scorePlayer1 > scorePlayer2) player1Wins++;
@@ -70,7 +71,7 @@ public class P54_PokerHands {
         return player1Wins;
     }
 
-    private static int scoreHand(String[] hand) {
+    static int scoreHand(String[] hand) {
         //   - High Card: Highest value card.
         //   - One Pair: Two cards of the same value.
         //   - Two Pairs: Two different pairs.
@@ -88,36 +89,58 @@ public class P54_PokerHands {
         score += scoreStraight(hand);
         score += scoreFlush(hand);
         score += scoreFullHouse(hand);
-        score += scoreStrightFlush(hand);
+        score += scoreStraightFlush(hand);
         score += scoreRoyalFlush(hand);
         return score;
     }
 
-    private static int scoreRoyalFlush(String[] hand) {
+    static int scoreRoyalFlush(String[] hand) {
         return 0;
     }
 
-    private static int scoreStrightFlush(String[] hand) {
+    static int scoreStraightFlush(String[] hand) {
         return 0;
     }
 
-    private static int scoreFullHouse(String[] hand) {
+    static int scoreFullHouse(String[] hand) {
+        int score = 0;
+        if (hasPair(hand) && hasThreeOfAKind(hand)) score += 100;
+        return score;
+    }
+
+    static int scoreFlush(String[] hand) {
+        return hasFlush(hand) ? 50 : 0;
+    }
+
+    static boolean hasFlush(String[] hand) {
+        String firstSuite = hand[0].substring(1);
+        for (int i = 1; i <= 4; i++) {
+            String thisSuite = hand[i].substring(1);
+            if (!thisSuite.equals(firstSuite)) return false;
+        }
+        return true;
+    }
+
+    static int scoreStraight(String[] hand) {
+        int[] values = new int[5];
+        getSortedValues(hand);
         return 0;
     }
 
-    private static int scoreFlush(String[] hand) {
-        return 0;
+    static int[] getSortedValues(String[] hand) {
+        int[] values = new int[5];
+        for (int i = 0; i <= 4; i++) {
+            values[i] = Integer.parseInt(String.valueOf(hand[i].charAt(0)));
+        }
+        Arrays.sort(values);
+        return values;
     }
 
-    private static int scoreStraight(String[] hand) {
-        return 0;
+    static int scoreThreeOfAKind(String[] hand) {
+        return hasThreeOfAKind(hand) ? 40 : 0;
     }
 
-    private static int scoreThreeOfAKind(String[] hand) {
-        return 0;
-    }
-
-    private static int scorePairs(String[] hand) {
+    static int scorePairs(String[] hand) {
         int score = 0;
         for (String cardValue : CARD_VALUES) {
             if (hasPair(hand, cardValue)) {
@@ -127,11 +150,7 @@ public class P54_PokerHands {
         return score;
     }
 
-    private static boolean hasPair(String[] hand, String cardValue) {
-        return false;
-    }
-
-    private static int scoreHighestCard(String[] hand) {
+    static int scoreHighestCard(String[] hand) {
         int score = 0;
         for (int i = 0; i <= 4; i++) {
             int cardScore = scoreCard(hand[0]);
@@ -140,7 +159,7 @@ public class P54_PokerHands {
         return score;
     }
 
-    private static int scoreCard(String card) {
+    static int scoreCard(String card) {
         String cardValue = card.substring(0, 1);
         if (cardValue.equals("A")) return 14;
         if (cardValue.equals("K")) return 13;
@@ -148,5 +167,33 @@ public class P54_PokerHands {
         if (cardValue.equals("J")) return 11;
         if (cardValue.equals("T")) return 10;
         return Integer.parseInt(cardValue);
+    }
+
+    static boolean hasThreeOfAKind(String[] hand) {
+        for (String cardValue : CARD_VALUES) {
+            if (hasThreeOfAKind(hand, cardValue)) return true;
+        }
+        return false;
+    }
+
+    static boolean hasThreeOfAKind(String[] hand, String cardValue) {
+        return hasRun(hand, cardValue, 3);
+    }
+
+    static boolean hasPair(String[] hand) {
+        for (String cardValue : CARD_VALUES) {
+            if (hasPair(hand, cardValue)) return true;
+        }
+        return false;
+    }
+
+    static boolean hasPair(String[] hand, String cardValue) {
+        return hasRun(hand, cardValue, 2);
+    }
+
+    static boolean hasRun(String[] hand, String cardValue, int count) {
+        String handString = join(hand, ",");
+        int matches = countMatches(handString, cardValue);
+        return matches == count;
     }
 }
