@@ -129,11 +129,26 @@ public class P54_PokerHands {
 
     static int[] getSortedValues(String[] hand) {
         int[] values = new int[5];
-        for (int i = 0; i <= 4; i++) {
-            values[i] = Integer.parseInt(String.valueOf(hand[i].charAt(0)));
-        }
+        for (int i = 0; i <= 4; i++) values[i] = getValue(hand[i].charAt(0));
         Arrays.sort(values);
         return values;
+    }
+
+    static int getValue(char charValue) {
+        switch (charValue) {
+            case 'A':
+                return 14;
+            case 'K':
+                return 13;
+            case 'Q':
+                return 12;
+            case 'J':
+                return 11;
+            case 'T':
+                return 10;
+            default:
+                return Character.getNumericValue(charValue);
+        }
     }
 
     static int scoreThreeOfAKind(String[] hand) {

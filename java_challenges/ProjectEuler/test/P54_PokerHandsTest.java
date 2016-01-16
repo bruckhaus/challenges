@@ -220,4 +220,21 @@ public class P54_PokerHandsTest {
         assert (expectedValues == values);
 
     }
+
+    @Test
+    public void getValue() throws Exception {
+        assertEquals(2, P54_PokerHands.getValue('2'));
+        assertEquals(3, P54_PokerHands.getValue('3'));
+        assertEquals(4, P54_PokerHands.getValue('4'));
+        assertEquals(5, P54_PokerHands.getValue('5'));
+        assertEquals(6, P54_PokerHands.getValue('6'));
+        assertEquals(7, P54_PokerHands.getValue('7'));
+        assertEquals(8, P54_PokerHands.getValue('8'));
+        assertEquals(9, P54_PokerHands.getValue('9'));
+        assertEquals(10, P54_PokerHands.getValue('T'));
+        assertEquals(11, P54_PokerHands.getValue('J'));
+        assertEquals(12, P54_PokerHands.getValue('Q'));
+        assertEquals(13, P54_PokerHands.getValue('K'));
+        assertEquals(14, P54_PokerHands.getValue('A'));
+    }
 }
