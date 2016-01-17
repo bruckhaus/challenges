@@ -148,7 +148,7 @@ public class PokerHandTest {
         assert (PokerHand.hasStraightWithLowAce(new int[]{2, 3, 4, 5, 14}));
         assert (!PokerHand.hasStraightWithLowAce(new int[]{10, 11, 12, 13, 14}));
     }
-    
+
     // other helpers:
 
     @Test

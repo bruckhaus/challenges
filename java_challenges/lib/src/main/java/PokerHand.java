@@ -1,3 +1,5 @@
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Arrays;
 
 import static org.apache.commons.lang3.StringUtils.countMatches;
@@ -83,8 +85,8 @@ class PokerHand {
     }
 
     static boolean hasOfAKind(String[] hand, String cardValue, int count) {
-        String handString = join(hand, ",");
-        int matches = countMatches(handString, cardValue);
+        String handString = StringUtils.join(hand, ",");
+        int matches = StringUtils.countMatches(handString, cardValue);
         return matches == count;
     }
 
