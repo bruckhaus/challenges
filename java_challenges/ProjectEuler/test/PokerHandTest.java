@@ -10,7 +10,7 @@ public class PokerHandTest {
     }
 
     @Test
-    public void isStraightWithHightAce() throws Exception {
+    public void isStraightWithHighAce() throws Exception {
         int[] sortedValues = new int[]{10, 11, 12, 13, 14};
         assert (PokerHand.hasStraightWithHighAce(sortedValues));
         assert (!PokerHand.hasStraightWithLowAce(sortedValues));
@@ -69,7 +69,7 @@ public class PokerHandTest {
     @Test
     public void hasRun() throws Exception {
         String[] onePair = new String[]{"KH", "KD", "7C", "2D", "9H"};
-        assert (PokerHand.hasRun(onePair, "K", 2));
+        assert (PokerHand.hasOfAKind(onePair, "K", 2));
     }
 
     @Test
@@ -78,6 +78,15 @@ public class PokerHandTest {
         int[] values = PokerHand.getSortedValues(hand);
         int[] expectedValues = new int[]{2, 7, 9, 13, 13};
         assertArrayEquals(expectedValues, values);
+    }
 
+    @Test
+    public void hasAce() throws Exception {
+        String[] noAce = new String[]{"KH", "KD", "7C", "2D", "9H"};
+        String[] oneAce = new String[]{"AH", "KD", "7C", "2D", "9H"};
+        String[] twoAces = new String[]{"AH", "AD", "7C", "2D", "9H"};
+        assert (!PokerHand.hasAce(noAce));
+        assert (PokerHand.hasAce(oneAce));
+        assert (PokerHand.hasAce(twoAces));
     }
 }

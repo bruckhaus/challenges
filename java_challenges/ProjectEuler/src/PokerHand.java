@@ -3,7 +3,7 @@ import java.util.Arrays;
 import static org.apache.commons.lang3.StringUtils.countMatches;
 import static org.apache.commons.lang3.StringUtils.join;
 
-public class PokerHand {
+class PokerHand {
 
     static boolean hasRoyalFlush(String[] hand) {
         return hasStraight(hand) && hasFlush(hand) && hasAce(hand);
@@ -57,25 +57,30 @@ public class PokerHand {
     }
 
     static boolean hasThreeOfAKind(String[] hand, String cardValue) {
-        return hasRun(hand, cardValue, 3);
+        return hasOfAKind(hand, cardValue, 3);
     }
 
     static boolean hasFourOfAKind(String[] hand, String cardValue) {
-        return hasRun(hand, cardValue, 4);
+        return hasOfAKind(hand, cardValue, 4);
     }
 
     static boolean hasPair(String[] hand) {
+        return getCountPairs(hand) > 0;
+    }
+
+    private static int getCountPairs(String[] hand) {
+        int countPairs = 0;
         for (String cardValue : PlayingCard.CARD_VALUES) {
-            if (hasPair(hand, cardValue)) return true;
+            if (hasPair(hand, cardValue)) countPairs++;
         }
-        return false;
+        return countPairs;
     }
 
     static boolean hasPair(String[] hand, String cardValue) {
-        return hasRun(hand, cardValue, 2);
+        return hasOfAKind(hand, cardValue, 2);
     }
 
-    static boolean hasRun(String[] hand, String cardValue, int count) {
+    static boolean hasOfAKind(String[] hand, String cardValue, int count) {
         String handString = join(hand, ",");
         int matches = countMatches(handString, cardValue);
         return matches == count;
@@ -86,5 +91,17 @@ public class PokerHand {
         for (int i = 0; i <= 4; i++) values[i] = PlayingCard.getCardValue(hand[i]);
         Arrays.sort(values);
         return values;
+    }
+
+    static boolean hasStraightFlush(String[] hand) {
+        return hasStraight(hand) && hasFlush(hand);
+    }
+
+    static boolean hasFullHouse(String[] hand) {
+        return hasThreeOfAKind(hand) && hasPair(hand);
+    }
+
+    static boolean hasTwoPairs(String[] hand) {
+        return getCountPairs(hand) == 2;
     }
 }

@@ -4,7 +4,15 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class PokerScore {
+class PokerScore {
+
+    private static final int POINTS_ROYAL_FLUSH = 700;
+    private static final int POINTS_STRAIGHT_FLUSH = 600;
+    private static final int POINTS_FOUR_OF_A_KIND = 500;
+    private static final int POINTS_FULL_HOUSE = 400;
+    private static final int POINTS_FLUSH = 300;
+    private static final int POINTS_STRAIGHT = 200;
+    private static final int POINTS_THREE_OF_A_KIND = 100;
 
     static int scoreHands(String handsFile) throws IOException {
         List lines = new ResourceFile(handsFile).getLines();
@@ -25,57 +33,57 @@ public class PokerScore {
     }
 
     static int scoreHand(String[] hand) {
-        //   - High Card: Highest value card.
-        //   - One Pair: Two cards of the same value.
-        //   - Two Pairs: Two different pairs.
-        //   - Three of a Kind: Three cards of the same value.
-        //   - Straight: All cards are consecutive values.
-        //   - Flush: All cards of the same suit.
-        //   - Full House: Three of a kind and a pair.
-        //   - Four of a Kind: Four cards of the same value.
-        //   - Straight Flush: All cards are consecutive values of same suit.
         //   - Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
-        int score = 0;
-        score += scoreHighestCard(hand);
-        score += scorePairs(hand);
-        score += scoreThreeOfAKind(hand);
-        score += scoreStraight(hand);
-        score += scoreFlush(hand);
-        score += scoreFullHouse(hand);
-        score += scoreFourOfAKind(hand);
-        score += scoreStraightFlush(hand);
-        score += scoreRoyalFlush(hand);
-        return score;
+        //   - Straight Flush: All cards are consecutive values of same suit.
+        //   - Four of a Kind: Four cards of the same value.
+        //   - Full House: Three of a kind and a pair.
+        //   - Flush: All cards of the same suit.
+        //   - Straight: All cards are consecutive values.
+        //   - Three of a Kind: Three cards of the same value.
+        //   - Two Pairs: Two different pairs.
+        //   - One Pair: Two cards of the same value.
+        //   - High Card: Highest value card.
+        if (PokerHand.hasRoyalFlush(hand)) return POINTS_ROYAL_FLUSH;
+        if (PokerHand.hasStraightFlush(hand)) return POINTS_STRAIGHT_FLUSH;
+        if (PokerHand.hasFourOfAKind(hand)) return POINTS_ROYAL_FLUSH;
+        if (PokerHand.hasFullHouse(hand)) return POINTS_ROYAL_FLUSH;
+        if (PokerHand.hasFlush(hand)) return POINTS_ROYAL_FLUSH;
+        if (PokerHand.hasStraight(hand)) return POINTS_ROYAL_FLUSH;
+        if (PokerHand.hasThreeOfAKind(hand)) return POINTS_ROYAL_FLUSH;
+        if (PokerHand.hasTwoPairs(hand)) return POINTS_ROYAL_FLUSH;
+        if (PokerHand.hasRoyalFlush(hand)) return POINTS_ROYAL_FLUSH;
+        if (PokerHand.hasRoyalFlush(hand)) return POINTS_ROYAL_FLUSH;
+        return PokerScore.scoreHighestCard(hand);
     }
 
     static int scoreRoyalFlush(String[] hand) {
-        return PokerHand.hasRoyalFlush(hand) ? 500 : 0;
+        return PokerHand.hasRoyalFlush(hand) ? POINTS_ROYAL_FLUSH : 0;
     }
 
     static int scoreStraightFlush(String[] hand) {
-        return PokerHand.hasFlush(hand) && PokerHand.hasStraight(hand) ? 300 : 0;
+        return PokerHand.hasFlush(hand) && PokerHand.hasStraight(hand) ? POINTS_STRAIGHT_FLUSH : 0;
     }
 
     static int scoreFourOfAKind(String[] hand) {
-        return PokerHand.hasFourOfAKind(hand) ? 250 : 0;
+        return PokerHand.hasFourOfAKind(hand) ? POINTS_FOUR_OF_A_KIND : 0;
     }
 
     static int scoreFullHouse(String[] hand) {
         int score = 0;
-        if (PokerHand.hasPair(hand) && PokerHand.hasThreeOfAKind(hand)) score += 60;
+        if (PokerHand.hasPair(hand) && PokerHand.hasThreeOfAKind(hand)) score += POINTS_FULL_HOUSE;
         return score;
     }
 
     static int scoreFlush(String[] hand) {
-        return PokerHand.hasFlush(hand) ? 50 : 0;
+        return PokerHand.hasFlush(hand) ? POINTS_FLUSH : 0;
     }
 
     static int scoreStraight(String[] hand) {
-        return PokerHand.hasStraight(hand) ? 150 : 0;
+        return PokerHand.hasStraight(hand) ? POINTS_STRAIGHT : 0;
     }
 
     static int scoreThreeOfAKind(String[] hand) {
-        return PokerHand.hasThreeOfAKind(hand) ? 80 : 0;
+        return PokerHand.hasThreeOfAKind(hand) ? POINTS_THREE_OF_A_KIND : 0;
     }
 
     static int scorePairs(String[] hand) {
