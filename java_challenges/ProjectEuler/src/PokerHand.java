@@ -104,4 +104,8 @@ class PokerHand {
     static boolean hasTwoPairs(String[] hand) {
         return getCountPairs(hand) == 2;
     }
+
+    static boolean hasOnePair(String[] hand) {
+        return getCountPairs(hand) == 1;
+    }
 }

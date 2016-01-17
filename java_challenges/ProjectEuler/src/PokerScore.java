@@ -6,13 +6,15 @@ import java.util.List;
 
 class PokerScore {
 
-    private static final int POINTS_ROYAL_FLUSH = 700;
-    private static final int POINTS_STRAIGHT_FLUSH = 600;
-    private static final int POINTS_FOUR_OF_A_KIND = 500;
-    private static final int POINTS_FULL_HOUSE = 400;
-    private static final int POINTS_FLUSH = 300;
-    private static final int POINTS_STRAIGHT = 200;
-    private static final int POINTS_THREE_OF_A_KIND = 100;
+    private static final int POINTS_ONE_PAIR = 100;
+    private static final int POINTS_TWO_PAIRS = POINTS_ONE_PAIR + 100;
+    private static final int POINTS_THREE_OF_A_KIND = POINTS_TWO_PAIRS + 100;
+    private static final int POINTS_STRAIGHT = POINTS_THREE_OF_A_KIND + 100;
+    private static final int POINTS_FLUSH = POINTS_STRAIGHT + 100;
+    private static final int POINTS_FULL_HOUSE = POINTS_FLUSH + 100;
+    private static final int POINTS_FOUR_OF_A_KIND = POINTS_FULL_HOUSE + 100;
+    private static final int POINTS_STRAIGHT_FLUSH = POINTS_FOUR_OF_A_KIND + 100;
+    private static final int POINTS_ROYAL_FLUSH = POINTS_STRAIGHT_FLUSH + 100;
 
     static int scoreHands(String handsFile) throws IOException {
         List lines = new ResourceFile(handsFile).getLines();
@@ -43,16 +45,15 @@ class PokerScore {
         //   - Two Pairs: Two different pairs.
         //   - One Pair: Two cards of the same value.
         //   - High Card: Highest value card.
-        if (PokerHand.hasRoyalFlush(hand)) return POINTS_ROYAL_FLUSH;
-        if (PokerHand.hasStraightFlush(hand)) return POINTS_STRAIGHT_FLUSH;
-        if (PokerHand.hasFourOfAKind(hand)) return POINTS_ROYAL_FLUSH;
-        if (PokerHand.hasFullHouse(hand)) return POINTS_ROYAL_FLUSH;
-        if (PokerHand.hasFlush(hand)) return POINTS_ROYAL_FLUSH;
-        if (PokerHand.hasStraight(hand)) return POINTS_ROYAL_FLUSH;
-        if (PokerHand.hasThreeOfAKind(hand)) return POINTS_ROYAL_FLUSH;
-        if (PokerHand.hasTwoPairs(hand)) return POINTS_ROYAL_FLUSH;
-        if (PokerHand.hasRoyalFlush(hand)) return POINTS_ROYAL_FLUSH;
-        if (PokerHand.hasRoyalFlush(hand)) return POINTS_ROYAL_FLUSH;
+        if (PokerHand.hasRoyalFlush(hand)) return POINTS_ROYAL_FLUSH + scoreHighestCard(hand);
+        if (PokerHand.hasStraightFlush(hand)) return POINTS_STRAIGHT_FLUSH + scoreHighestCard(hand);
+        if (PokerHand.hasFourOfAKind(hand)) return POINTS_FOUR_OF_A_KIND + scoreHighestCard(hand);
+        if (PokerHand.hasFullHouse(hand)) return POINTS_FULL_HOUSE + scoreHighestCard(hand);
+        if (PokerHand.hasFlush(hand)) return POINTS_FLUSH + scoreHighestCard(hand);
+        if (PokerHand.hasStraight(hand)) return POINTS_STRAIGHT + scoreHighestCard(hand);
+        if (PokerHand.hasThreeOfAKind(hand)) return POINTS_THREE_OF_A_KIND + scoreHighestCard(hand);
+        if (PokerHand.hasTwoPairs(hand)) return POINTS_TWO_PAIRS + scoreHighestCard(hand);
+        if (PokerHand.hasOnePair(hand)) return POINTS_ONE_PAIR + scoreHighestCard(hand);
         return PokerScore.scoreHighestCard(hand);
     }
 

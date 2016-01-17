@@ -6,6 +6,6 @@ public class P54_PokerHandsTest {
 
     @Test
     public void scoreHands() throws Exception {
-        assertEquals(387, PokerScore.scoreHands(P54_PokerHands.HANDS_FILE));
+        assertEquals(388, PokerScore.scoreHands(P54_PokerHands.HANDS_FILE));
     }
 }

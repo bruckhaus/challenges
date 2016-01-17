@@ -67,6 +67,16 @@ public class PokerHandTest {
     }
 
     @Test
+    public void hasOnePair() throws Exception {
+        String[] noPair = new String[]{"AH", "KD", "9C", "8D", "6H"};
+        String[] onePair = new String[]{"KH", "KD", "9C", "8D", "6H"};
+        String[] twoPairs = new String[]{"KH", "KD", "9C", "9D", "6H"};
+        assert (!PokerHand.hasOnePair(noPair));
+        assert (PokerHand.hasOnePair(onePair));
+        assert (!PokerHand.hasOnePair(twoPairs));
+    }
+
+    @Test
     public void hasRun() throws Exception {
         String[] onePair = new String[]{"KH", "KD", "7C", "2D", "9H"};
         assert (PokerHand.hasOfAKind(onePair, "K", 2));
