@@ -57,7 +57,7 @@ public class P54_PokerHandsTest {
     @Test
     public void scoreStraightWin() throws Exception {
         // straight > three of a kind
-        String[] straight = new String[]{"AH", "KD", "JH", "TD", "9C"};
+        String[] straight = new String[]{"AH", "KD", "QH", "JD", "TC"};
         String[] threeOfAKind = new String[]{"KH", "KD", "KC", "7H", "5H"};
         int straightScore = P54_PokerHands.scoreHand(straight);
         int threeOfAKIndScore = P54_PokerHands.scoreHand(threeOfAKind);
@@ -71,8 +71,6 @@ public class P54_PokerHandsTest {
         String[] twoPairs = new String[]{"AH", "AD", "QH", "QD", "2C"};
         int threeOfAKindScore = P54_PokerHands.scoreHand(threeOfAKind);
         int twoPairsScore = P54_PokerHands.scoreHand(twoPairs);
-        System.out.println("twoPairsScore = " + twoPairsScore);
-        System.out.println("threeOfAKindScore = " + threeOfAKindScore);
         assert (threeOfAKindScore > twoPairsScore);
     }
 
@@ -202,7 +200,7 @@ public class P54_PokerHandsTest {
 
     @Test
     public void scoreHands() throws Exception {
-        assertEquals(388, P54_PokerHands.scoreHands());
+        assertEquals(387, P54_PokerHands.scoreHands());
     }
 
     @Test

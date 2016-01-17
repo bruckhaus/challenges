@@ -96,15 +96,15 @@ public class P54_PokerHands {
     }
 
     static int scoreRoyalFlush(String[] hand) {
-        return 0;
+        return isRoyalFlush(hand) ? 500 : 0;
     }
 
     static int scoreStraightFlush(String[] hand) {
-        return hasFlush(hand) && hasStraight(hand) ? 200 : 0;
+        return hasFlush(hand) && hasStraight(hand) ? 300 : 0;
     }
 
     static int scoreFourOfAKind(String[] hand) {
-        return hasFourOfAKind(hand) ? 150 : 0;
+        return hasFourOfAKind(hand) ? 250 : 0;
     }
 
     static int scoreFullHouse(String[] hand) {
@@ -118,11 +118,7 @@ public class P54_PokerHands {
     }
 
     static int scoreStraight(String[] hand) {
-        return hasStraight(hand)? 60 : 0;
-    }
-
-    static boolean hasStraight(String[] hand) {
-        return isStraight(getSortedValues(hand));
+        return hasStraight(hand) ? 150 : 0;
     }
 
     static int scoreThreeOfAKind(String[] hand) {
@@ -152,6 +148,10 @@ public class P54_PokerHands {
         return getValue(getValueChar(card));
     }
 
+    static boolean isRoyalFlush(String[] hand) {
+        return hasStraight(hand) && hasFlush(hand) && hasAce(hand);
+    }
+
     static boolean isStraight(int[] sortedValues) {
         return isStraightWithHighAce(sortedValues) ||
                 isStraightWithLowAce(sortedValues);
@@ -165,6 +165,15 @@ public class P54_PokerHands {
     static boolean isStraightWithLowAce(int[] sortedValues) {
         for (int i = 0; i <= 3; i++) if (sortedValues[i] != i + 2) return false;
         return sortedValues[4] == 14;
+    }
+
+    static boolean hasStraight(String[] hand) {
+        return isStraight(getSortedValues(hand));
+    }
+
+    static boolean hasAce(String[] hand) {
+        for (int i = 0; i <= 4; i++) if (hand[i].charAt(0) == 'A') return true;
+        return false;
     }
 
     static boolean hasFlush(String[] hand) {
