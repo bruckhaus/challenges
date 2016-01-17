@@ -162,13 +162,6 @@ public class PokerScoreTest {
     }
 
     @Test
-    public void scorePairs() throws Exception {
-        String[] onePair = new String[]{"KH", "KD", "7C", "2D", "9H"};
-        int onePairScore = PokerScore.scorePairs(onePair);
-        assert (onePairScore > 0);
-    }
-
-    @Test
     public void scoreHighestCard() throws Exception {
         String[] hand = new String[]{"KH", "JD", "7C", "5D", "3H"};
         int score = PokerScore.scoreHighestCard(hand);

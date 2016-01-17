@@ -126,6 +126,23 @@ public class PokerHandTest {
         assertEquals(2, PokerHand.getCountPairs(twoPairs));
     }
 
+    @Test
+    public void getOfAKindCard() throws Exception {
+        String[] fourOfAKind = new String[]{"KH", "KD", "KC", "KS", "9H"};
+        String[] notFourOfAKind = new String[]{"KH", "KD", "KC", "QS", "9H"};
+        assertEquals("K", PokerHand.getOfAKindCard(fourOfAKind, 4));
+        assertEquals("?", PokerHand.getOfAKindCard(notFourOfAKind, 4));
+    }
+
+    @Test
+    public void getOfAKindCard1() throws Exception {
+        String[] fourOfAKind = new String[]{"KH", "KD", "KC", "4S", "9H"};
+        assertEquals("9", PokerHand.getOfAKindCard(fourOfAKind, 1, 1));
+        assertEquals("4", PokerHand.getOfAKindCard(fourOfAKind, 1, 2));
+        assertEquals("?", PokerHand.getOfAKindCard(fourOfAKind, 1, 3));
+        assertEquals("?", PokerHand.getOfAKindCard(fourOfAKind, 2, 1));
+    }
+
     // straight helpers:
 
     @Test

@@ -2,7 +2,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 
-import static org.apache.commons.lang3.StringUtils.countMatches;
 import static org.apache.commons.lang3.StringUtils.join;
 
 class PokerHand {
@@ -97,6 +96,30 @@ class PokerHand {
         }
         return countPairs;
     }
+
+    static String getOfAKindCard(String[] hand, int count) {
+        for (String cardValue : PlayingCard.CARD_VALUES) {
+            if (hasOfAKind(hand, cardValue, count)) return cardValue;
+        }
+        return "?";
+    }
+
+    static String getOfAKindCard(String[] hand, int count, int n) {
+        // get n-th highest card having count in hand
+        int seen = 0;
+        for (String cardValue : PlayingCard.CARD_VALUES) {
+            if (hasOfAKind(hand, cardValue, count)) {
+                seen++;
+                if (seen == n) return cardValue;
+            }
+        }
+        return "?";
+    }
+
+    static String getPairCard(String[] hand) {
+        return null;
+    }
+
 
     // straight helpers:
 
