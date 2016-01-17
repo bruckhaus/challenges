@@ -1,14 +1,14 @@
-public class PlayingCard {
+class PlayingCard {
 
     static final String[] CARD_VALUES = new String[]
             {"2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"};
 
-    static char getValueChar(String card) {
-        return card.charAt(0);
+    static int getCardValue(String card) {
+        return getCharValue(getValueChar(card));
     }
 
-    static int getCardValue(String card) {
-        return getCharValue(card.charAt(0));
+    static char getValueChar(String card) {
+        return card.charAt(0);
     }
 
     static int getCharValue(char charValue) {
@@ -27,6 +27,4 @@ public class PlayingCard {
                 return Character.getNumericValue(charValue);
         }
     }
-
-
 }
