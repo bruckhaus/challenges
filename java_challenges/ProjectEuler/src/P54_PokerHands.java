@@ -89,6 +89,7 @@ public class P54_PokerHands {
         score += scoreStraight(hand);
         score += scoreFlush(hand);
         score += scoreFullHouse(hand);
+        score += scoreFourOfAKind(hand);
         score += scoreStraightFlush(hand);
         score += scoreRoyalFlush(hand);
         return score;
@@ -99,12 +100,16 @@ public class P54_PokerHands {
     }
 
     static int scoreStraightFlush(String[] hand) {
-        return 0;
+        return hasFlush(hand) && hasStraight(hand) ? 200 : 0;
+    }
+
+    static int scoreFourOfAKind(String[] hand) {
+        return hasFourOfAKind(hand) ? 150 : 0;
     }
 
     static int scoreFullHouse(String[] hand) {
         int score = 0;
-        if (hasPair(hand) && hasThreeOfAKind(hand)) score += 100;
+        if (hasPair(hand) && hasThreeOfAKind(hand)) score += 60;
         return score;
     }
 
@@ -112,47 +117,16 @@ public class P54_PokerHands {
         return hasFlush(hand) ? 50 : 0;
     }
 
-    static boolean hasFlush(String[] hand) {
-        String firstSuite = hand[0].substring(1);
-        for (int i = 1; i <= 4; i++) {
-            String thisSuite = hand[i].substring(1);
-            if (!thisSuite.equals(firstSuite)) return false;
-        }
-        return true;
-    }
-
     static int scoreStraight(String[] hand) {
-        int[] values = new int[5];
-        getSortedValues(hand);
-        return 0;
+        return hasStraight(hand)? 60 : 0;
     }
 
-    static int[] getSortedValues(String[] hand) {
-        int[] values = new int[5];
-        for (int i = 0; i <= 4; i++) values[i] = getValue(hand[i].charAt(0));
-        Arrays.sort(values);
-        return values;
-    }
-
-    static int getValue(char charValue) {
-        switch (charValue) {
-            case 'A':
-                return 14;
-            case 'K':
-                return 13;
-            case 'Q':
-                return 12;
-            case 'J':
-                return 11;
-            case 'T':
-                return 10;
-            default:
-                return Character.getNumericValue(charValue);
-        }
+    static boolean hasStraight(String[] hand) {
+        return isStraight(getSortedValues(hand));
     }
 
     static int scoreThreeOfAKind(String[] hand) {
-        return hasThreeOfAKind(hand) ? 40 : 0;
+        return hasThreeOfAKind(hand) ? 80 : 0;
     }
 
     static int scorePairs(String[] hand) {
@@ -175,13 +149,38 @@ public class P54_PokerHands {
     }
 
     static int scoreCard(String card) {
-        String cardValue = card.substring(0, 1);
-        if (cardValue.equals("A")) return 14;
-        if (cardValue.equals("K")) return 13;
-        if (cardValue.equals("Q")) return 12;
-        if (cardValue.equals("J")) return 11;
-        if (cardValue.equals("T")) return 10;
-        return Integer.parseInt(cardValue);
+        return getValue(getValueChar(card));
+    }
+
+    static boolean isStraight(int[] sortedValues) {
+        return isStraightWithHighAce(sortedValues) ||
+                isStraightWithLowAce(sortedValues);
+    }
+
+    static boolean isStraightWithHighAce(int[] values) {
+        for (int i = 1; i <= 4; i++) if (values[i] != values[i - 1] + 1) return false;
+        return true;
+    }
+
+    static boolean isStraightWithLowAce(int[] sortedValues) {
+        for (int i = 0; i <= 3; i++) if (sortedValues[i] != i + 2) return false;
+        return sortedValues[4] == 14;
+    }
+
+    static boolean hasFlush(String[] hand) {
+        String firstSuite = hand[0].substring(1);
+        for (int i = 1; i <= 4; i++) {
+            String thisSuite = hand[i].substring(1);
+            if (!thisSuite.equals(firstSuite)) return false;
+        }
+        return true;
+    }
+
+    static boolean hasFourOfAKind(String[] hand) {
+        for (String cardValue : CARD_VALUES) {
+            if (hasFourOfAKind(hand, cardValue)) return true;
+        }
+        return false;
     }
 
     static boolean hasThreeOfAKind(String[] hand) {
@@ -193,6 +192,10 @@ public class P54_PokerHands {
 
     static boolean hasThreeOfAKind(String[] hand, String cardValue) {
         return hasRun(hand, cardValue, 3);
+    }
+
+    static boolean hasFourOfAKind(String[] hand, String cardValue) {
+        return hasRun(hand, cardValue, 4);
     }
 
     static boolean hasPair(String[] hand) {
@@ -211,4 +214,37 @@ public class P54_PokerHands {
         int matches = countMatches(handString, cardValue);
         return matches == count;
     }
+
+    static int[] getSortedValues(String[] hand) {
+        int[] values = new int[5];
+        for (int i = 0; i <= 4; i++) values[i] = getValue(getValueChar(hand[i]));
+        Arrays.sort(values);
+        return values;
+    }
+
+    static int getCardValue(String card) {
+        return getValue(card.charAt(0));
+    }
+
+    static int getValue(char charValue) {
+        switch (charValue) {
+            case 'A':
+                return 14;
+            case 'K':
+                return 13;
+            case 'Q':
+                return 12;
+            case 'J':
+                return 11;
+            case 'T':
+                return 10;
+            default:
+                return Character.getNumericValue(charValue);
+        }
+    }
+
+    static char getValueChar(String card) {
+        return card.charAt(0);
+    }
+
 }

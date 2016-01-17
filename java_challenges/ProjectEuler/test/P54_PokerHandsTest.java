@@ -71,6 +71,8 @@ public class P54_PokerHandsTest {
         String[] twoPairs = new String[]{"AH", "AD", "QH", "QD", "2C"};
         int threeOfAKindScore = P54_PokerHands.scoreHand(threeOfAKind);
         int twoPairsScore = P54_PokerHands.scoreHand(twoPairs);
+        System.out.println("twoPairsScore = " + twoPairsScore);
+        System.out.println("threeOfAKindScore = " + threeOfAKindScore);
         assert (threeOfAKindScore > twoPairsScore);
     }
 
@@ -134,9 +136,47 @@ public class P54_PokerHandsTest {
 
     @Test
     public void scoreStraight() throws Exception {
-        String[] straight = new String[]{"AH", "KD", "JH", "TD", "9C"};
+        // straight without ace
+        String[] straight = new String[]{"JH", "TD", "9C", "8D", "7S"};
         int straightScore = P54_PokerHands.scoreStraight(straight);
         assert (straightScore > 0);
+
+        // straight with high ace
+        straight = new String[]{"AH", "KD", "QH", "JD", "TC"};
+        straightScore = P54_PokerHands.scoreStraight(straight);
+        assert (straightScore > 0);
+
+        // straight with low ace
+        straight = new String[]{"5H", "4D", "3H", "2D", "AC"};
+        straightScore = P54_PokerHands.scoreStraight(straight);
+        assert (straightScore > 0);
+    }
+
+    @Test
+    public void isStraight() throws Exception {
+        int[] sortedValues = new int[]{7, 8, 9, 10, 11};
+        assert (P54_PokerHands.isStraight(sortedValues));
+    }
+
+    @Test
+    public void isStraightWithHightAce() throws Exception {
+        int[] sortedValues = new int[]{10, 11, 12, 13, 14};
+        assert (P54_PokerHands.isStraightWithHighAce(sortedValues));
+        assert (!P54_PokerHands.isStraightWithLowAce(sortedValues));
+    }
+
+    @Test
+    public void isStraightWithLowAce() throws Exception {
+        int[] sortedValues = new int[]{2, 3, 4, 5, 14};
+        assert (!P54_PokerHands.isStraightWithHighAce(sortedValues));
+        assert (P54_PokerHands.isStraightWithLowAce(sortedValues));
+    }
+
+    @Test
+    public void scoreFourOfAKind() throws Exception {
+        String[] fourOfAKind = new String[]{"KC", "KS", "KH", "KD", "9H"};
+        int fourOfAKindScore = P54_PokerHands.scoreFourOfAKind(fourOfAKind);
+        assert (fourOfAKindScore > 0);
     }
 
     @Test
@@ -162,7 +202,7 @@ public class P54_PokerHandsTest {
 
     @Test
     public void scoreHands() throws Exception {
-        assertEquals(401, P54_PokerHands.scoreHands());
+        assertEquals(388, P54_PokerHands.scoreHands());
     }
 
     @Test
@@ -181,6 +221,14 @@ public class P54_PokerHandsTest {
     }
 
     @Test
+    public void hasStraight() throws Exception {
+        String[] straight = new String[]{"KH", "QD", "JH", "TH", "9S"};
+        String[] notStraight = new String[]{"KH", "JH", "9H", "7H", "4D"};
+        assert (P54_PokerHands.hasStraight(straight));
+        assert (!P54_PokerHands.hasStraight(notStraight));
+    }
+
+    @Test
     public void hasThreeOfAKind() throws Exception {
         String[] threeOfAKind = new String[]{"KH", "KD", "KC", "2D", "9H"};
         assert (P54_PokerHands.hasThreeOfAKind(threeOfAKind));
@@ -191,6 +239,13 @@ public class P54_PokerHandsTest {
         String[] threeOfAKind = new String[]{"KH", "KD", "KC", "2D", "9H"};
         assert (P54_PokerHands.hasThreeOfAKind(threeOfAKind, "K"));
         assert (P54_PokerHands.hasThreeOfAKind(threeOfAKind));
+    }
+
+    @Test
+    public void hasFourOfAKind1() throws Exception {
+        String[] fourOfAKind = new String[]{"KC", "KS", "KH", "KD", "9H"};
+        assert (P54_PokerHands.hasFourOfAKind(fourOfAKind, "K"));
+        assert (P54_PokerHands.hasFourOfAKind(fourOfAKind));
     }
 
     @Test
@@ -216,9 +271,14 @@ public class P54_PokerHandsTest {
     public void getSortedValues() throws Exception {
         String[] hand = new String[]{"KH", "KD", "7C", "2D", "9H"};
         int[] values = P54_PokerHands.getSortedValues(hand);
-        int[] expectedValues = new int[] {2, 7, 9, 13, 13};
-        assert (expectedValues == values);
+        int[] expectedValues = new int[]{2, 7, 9, 13, 13};
+        assertArrayEquals(expectedValues, values);
 
+    }
+
+    @Test
+    public void getValueChar() throws Exception {
+        assertEquals('2', P54_PokerHands.getValueChar("2H"));
     }
 
     @Test
