@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class P54_PokerHands {
     // Project Euler - Problem 54 - Poker hands
     // In the card game poker, a hand consists of five cards and are ranked, from lowest to highest, 
@@ -34,13 +36,11 @@ public class P54_PokerHands {
     // each player's hand is in no specific order, and in each hand there is a clear winner.
     // How many hands does Player 1 win?
 
-    public static void main(String[] args) {
-        int solution = P54_PokerHands.scoreHands();
+    static final String HANDS_FILE = "file/p054_poker.txt";
+
+    public static void main(String[] args) throws IOException {
+        int solution = PokerScore.scoreHands(HANDS_FILE);
         String message = "Player 1 wins %,d hands.\n";
         System.out.printf(message, solution);
-    }
-
-    private static int scoreHands() {
-        return 0;
     }
 }
