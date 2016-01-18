@@ -1,8 +1,4 @@
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 class PokerScore {
     //   - Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
@@ -35,19 +31,6 @@ class PokerScore {
     private static final int POINTS_FOUR_OF_A_KIND = POINTS_FULL_HOUSE + POINT_INCREMENT;
     private static final int POINTS_STRAIGHT_FLUSH = POINTS_FOUR_OF_A_KIND + POINT_INCREMENT;
     private static final int POINTS_ROYAL_FLUSH = POINTS_STRAIGHT_FLUSH + POINT_INCREMENT;
-
-    // poker file:
-
-    static int scoreHands(String handsFile) throws IOException {
-        List lines = new ResourceFile(handsFile).getLines();
-        int player1Wins = 0;
-        for (Object line : lines) {
-            int scorePlayer1 = scoreHand(getHandFromLine(line, 1));
-            int scorePlayer2 = scoreHand(getHandFromLine(line, 2));
-            if (scorePlayer1 > scorePlayer2) player1Wins++;
-        }
-        return player1Wins;
-    }
 
     // overall hand scoring:
 
@@ -161,11 +144,6 @@ class PokerScore {
 
     static int scoreCard(String card) {
         return PlayingCard.getCardValue(card);
-    }
-
-    private static String[] getHandFromLine(Object line, int player) {
-        String[] cards = StringUtils.split(String.valueOf(line), " ");
-        return Arrays.copyOfRange(cards, (player - 1) * 5, 5 + (player - 1) * 5);
     }
 
     // debugging:

@@ -1,4 +1,8 @@
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class P54_PokerHands {
     // Project Euler - Problem 54 - Poker hands
@@ -39,8 +43,24 @@ public class P54_PokerHands {
     static final String HANDS_FILE = "file/p054_poker.txt";
 
     public static void main(String[] args) throws IOException {
-        int solution = PokerScore.scoreHands(HANDS_FILE);
+        int solution = scoreHands();
         String message = "Player 1 wins %,d hands.\n";
         System.out.printf(message, solution);
+    }
+
+    static int scoreHands() throws IOException {
+        List lines = new ResourceFile(HANDS_FILE).getLines();
+        int player1Wins = 0;
+        for (Object line : lines) {
+            int scorePlayer1 = PokerScore.scoreHand(getHandFromLine(line, 1));
+            int scorePlayer2 = PokerScore.scoreHand(getHandFromLine(line, 2));
+            if (scorePlayer1 > scorePlayer2) player1Wins++;
+        }
+        return player1Wins;
+    }
+
+    private static String[] getHandFromLine(Object line, int player) {
+        String[] cards = StringUtils.split(String.valueOf(line), " ");
+        return Arrays.copyOfRange(cards, (player - 1) * 5, 5 + (player - 1) * 5);
     }
 }

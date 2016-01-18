@@ -114,11 +114,6 @@ class PokerHand {
         return "?";
     }
 
-    static String getPairCard(String[] hand) {
-        return null;
-    }
-
-
     // straight helpers:
 
     static boolean hasStraight(int[] sortedValues) {

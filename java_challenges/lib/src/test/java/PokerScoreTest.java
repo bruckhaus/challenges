@@ -61,7 +61,7 @@ public class PokerScoreTest {
     }
 
     @Test
-    public void twoFiveswithJackBeatTwoFivesWithSeven() throws Exception {
+    public void twoFivesWithJackBeatTwoFivesWithSeven() throws Exception {
         //    [6D, 7C, 5D, 5H, 3S], score = 1,057,629: one pair
         //    [5C, JC, 2H, 5S, 3D], score = 1,061,319: one pair
         String[] player1Hand = new String[]{"6D", "7C", "5D", "5H", "3S"};
@@ -252,5 +252,4 @@ public class PokerScoreTest {
         int score = PokerScore.scoreCard("9D");
         assert (score > 0);
     }
-
 }
