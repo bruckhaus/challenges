@@ -1,11 +1,8 @@
-import com.sun.deploy.util.StringUtils;
-import com.sun.deploy.util.SystemUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
-import static sun.misc.Version.println;
 
 class PokerScore {
     //   - Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
@@ -40,7 +37,7 @@ class PokerScore {
         List lines = new ResourceFile(handsFile).getLines();
         int player1Wins = 0;
         for (Object line : lines) {
-            String[] cards = StringUtils.splitString(String.valueOf(line), " ");
+            String[] cards = StringUtils.split(String.valueOf(line), " ");
             String[] handPlayer1 = Arrays.copyOfRange(cards, 0, 5);
             String[] handPlayer2 = Arrays.copyOfRange(cards, 5, 10);
             System.out.println();
@@ -84,16 +81,16 @@ class PokerScore {
 
     static int scoreFourOfAKind(String[] hand) {
         int points = POINTS_FOUR_OF_A_KIND +
-                scoreCard(PokerHand.getOfAKindCard(hand, 4)) * 10 +
-                scoreCard(PokerHand.getOfAKindCard(hand, 1));
+                getCumulativeSimpleCardScore(hand, 4, 1, 1, 10) +
+                getCumulativeSimpleCardScore(hand, 1, 1, 1, 1);
         debugScore(hand, points, "four of a kind");
         return points;
     }
 
     static int scoreFullHouse(String[] hand) {
         int points = POINTS_FULL_HOUSE +
-                scoreCard(PokerHand.getOfAKindCard(hand, 3)) * 10 +
-                scoreCard(PokerHand.getOfAKindCard(hand, 2));
+                getCumulativeSimpleCardScore(hand, 3, 1, 1, 10) +
+                getCumulativeSimpleCardScore(hand, 2, 1, 1, 1);
         debugScore(hand, points, "full house");
         return points;
     }
@@ -118,43 +115,41 @@ class PokerScore {
 
     static int scoreThreeOfAKind(String[] hand) {
         int points = POINTS_THREE_OF_A_KIND +
-                scoreCard(PokerHand.getOfAKindCard(hand, 3)) * 100 +
-                getHighCardScore(hand) * 10 +
-                getScoreByCardRank(hand, 1, 2);
+                getCumulativeSimpleCardScore(hand, 3, 1, 1, 100) +
+                getCumulativeSimpleCardScore(hand, 1, 1, 2, 1);
         debugScore(hand, points, "three of a kind");
         return points;
     }
 
     private static int scoreTwoPairs(String[] hand) {
         int points = POINTS_TWO_PAIRS +
-                getScoreByCardRank(hand, 2, 1) * 100 +
-                getScoreByCardRank(hand, 2, 2) * 10 +
-                getHighCardScore(hand);
+                getCumulativeSimpleCardScore(hand, 2, 1, 2, 10) +
+                getCumulativeSimpleCardScore(hand, 1, 1, 1, 1);
         debugScore(hand, points, "two pairs");
         return points;
     }
 
     private static int scoreOnePair(String[] hand) {
         int points = POINTS_ONE_PAIR +
-                getScoreByCardRank(hand, 2, 1) * 10000 +
-                getHighCardScore(hand) * 1000 +
-                getScoreByCardRank(hand, 1, 2) * 100 +
-                getScoreByCardRank(hand, 1, 3) * 10 +
-                getScoreByCardRank(hand, 1, 4);
+                getCumulativeSimpleCardScore(hand, 2, 1, 1, 10000) +
+                getCumulativeSimpleCardScore(hand, 1, 1, 4, 1);
         debugScore(hand, points, "one pair");
         return points;
     }
 
     static int scoreHighestCard(String[] hand) {
-        int count = 1;
-        int rank = 2;
-        int points = getHighCardScore(hand) * 10000 +
-                getScoreByCardRank(hand, count, rank) * 1000 +
-                getScoreByCardRank(hand, 1, 3) * 100 +
-                getScoreByCardRank(hand, 1, 4) * 10 +
-                getScoreByCardRank(hand, 1, 5);
+        int points = getCumulativeSimpleCardScore(hand, 1, 1, 5, 1);
         debugScore(hand, points, "highest card");
         return points;
+    }
+
+    private static int getCumulativeSimpleCardScore(String[] hand, int count, int start, int end, int multiplier) {
+        int score = 0;
+        for (int i = end; i >= start; i--) {
+            score += getScoreByCardRank(hand, count, i) * multiplier;
+            multiplier *= 10;
+        }
+        return score;
     }
 
     private static int getScoreByCardRank(String[] hand, int count, int rank) {
