@@ -22,7 +22,8 @@ class PokerScore {
     // then highest cards in each hand are compared (see example 4 below);
     // if the highest cards tie then the next highest cards are compared, and so on.
 
-    private static boolean printDebugOutput = false;
+    @SuppressWarnings("FieldCanBeLocal")
+    private static boolean PRINT_DEBUG_OUTPUT = false;
 
     private static final int POINT_INCREMENT = 1000000;
     private static final int POINTS_ONE_PAIR = POINT_INCREMENT;
@@ -35,20 +36,20 @@ class PokerScore {
     private static final int POINTS_STRAIGHT_FLUSH = POINTS_FOUR_OF_A_KIND + POINT_INCREMENT;
     private static final int POINTS_ROYAL_FLUSH = POINTS_STRAIGHT_FLUSH + POINT_INCREMENT;
 
+    // poker file:
+
     static int scoreHands(String handsFile) throws IOException {
         List lines = new ResourceFile(handsFile).getLines();
         int player1Wins = 0;
         for (Object line : lines) {
-            String[] cards = StringUtils.split(String.valueOf(line), " ");
-            String[] handPlayer1 = Arrays.copyOfRange(cards, 0, 5);
-            String[] handPlayer2 = Arrays.copyOfRange(cards, 5, 10);
-            System.out.println();
-            int scorePlayer1 = scoreHand(handPlayer1);
-            int scorePlayer2 = scoreHand(handPlayer2);
+            int scorePlayer1 = scoreHand(getHandFromLine(line, 1));
+            int scorePlayer2 = scoreHand(getHandFromLine(line, 2));
             if (scorePlayer1 > scorePlayer2) player1Wins++;
         }
         return player1Wins;
     }
+
+    // overall hand scoring:
 
     static int scoreHand(String[] hand) {
         if (PokerHand.hasRoyalFlush(hand)) return scoreRoyalFlush(hand);
@@ -63,6 +64,8 @@ class PokerScore {
         return PokerScore.scoreHighestCard(hand);
     }
 
+    // individual hand scores:
+
     static int scoreRoyalFlush(String[] hand) {
         int points = POINTS_ROYAL_FLUSH;
         debugScore(hand, points, "royal flush");
@@ -70,49 +73,42 @@ class PokerScore {
     }
 
     static int scoreStraightFlush(String[] hand) {
-        int points = POINTS_STRAIGHT_FLUSH +
-                getHighCardScore(hand);
+        int points = POINTS_STRAIGHT_FLUSH + getHighCardScore(hand);
         debugScore(hand, points, "straight flush");
         return points;
     }
 
     static int scoreFourOfAKind(String[] hand) {
         int points = POINTS_FOUR_OF_A_KIND +
-                getCumulativeSimpleCardScore(hand, 4, 1, 1, 10) +
-                getCumulativeSimpleCardScore(hand, 1, 1, 1, 1);
+                getScoreByCardCount(hand, 4, 10) +
+                getScoreByCardCount(hand, 1, 1);
         debugScore(hand, points, "four of a kind");
         return points;
     }
 
     static int scoreFullHouse(String[] hand) {
         int points = POINTS_FULL_HOUSE +
-                getCumulativeSimpleCardScore(hand, 3, 1, 1, 10) +
-                getCumulativeSimpleCardScore(hand, 2, 1, 1, 1);
+                getScoreByCardCount(hand, 3, 10) +
+                getScoreByCardCount(hand, 2, 1);
         debugScore(hand, points, "full house");
         return points;
     }
 
     static int scoreFlush(String[] hand) {
-        int points = POINTS_FLUSH +
-                getHighCardScore(hand);
+        int points = POINTS_FLUSH + getCumulativeSimpleCardScore(hand, 1, 1, 5, 1);
         debugScore(hand, points, "flush");
         return points;
     }
 
     static int scoreStraight(String[] hand) {
-        int points = POINTS_STRAIGHT +
-                getHighCardScore(hand);
+        int points = POINTS_STRAIGHT + getHighCardScore(hand);
         debugScore(hand, points, "straight");
         return points;
     }
 
-    private static int getHighCardScore(String[] hand) {
-        return getScoreByCardRank(hand, 1, 1);
-    }
-
     static int scoreThreeOfAKind(String[] hand) {
         int points = POINTS_THREE_OF_A_KIND +
-                getCumulativeSimpleCardScore(hand, 3, 1, 1, 100) +
+                getScoreByCardCount(hand, 3, 100) +
                 getCumulativeSimpleCardScore(hand, 1, 1, 2, 1);
         debugScore(hand, points, "three of a kind");
         return points;
@@ -121,14 +117,14 @@ class PokerScore {
     private static int scoreTwoPairs(String[] hand) {
         int points = POINTS_TWO_PAIRS +
                 getCumulativeSimpleCardScore(hand, 2, 1, 2, 10) +
-                getCumulativeSimpleCardScore(hand, 1, 1, 1, 1);
+                getScoreByCardCount(hand, 1, 1);
         debugScore(hand, points, "two pairs");
         return points;
     }
 
     private static int scoreOnePair(String[] hand) {
         int points = POINTS_ONE_PAIR +
-                getCumulativeSimpleCardScore(hand, 2, 1, 1, 10000) +
+                getScoreByCardCount(hand, 2, 10000) +
                 getCumulativeSimpleCardScore(hand, 1, 1, 4, 1);
         debugScore(hand, points, "one pair");
         return points;
@@ -138,6 +134,16 @@ class PokerScore {
         int points = getCumulativeSimpleCardScore(hand, 1, 1, 5, 1);
         debugScore(hand, points, "highest card");
         return points;
+    }
+
+    // helpers:
+
+    private static int getHighCardScore(String[] hand) {
+        return getScoreByCardRank(hand, 1, 1);
+    }
+
+    private static int getScoreByCardCount(String[] hand, int count, int multiplier) {
+        return getCumulativeSimpleCardScore(hand, count, 1, 1, multiplier);
     }
 
     private static int getCumulativeSimpleCardScore(String[] hand, int count, int start, int end, int multiplier) {
@@ -157,7 +163,14 @@ class PokerScore {
         return PlayingCard.getCardValue(card);
     }
 
+    private static String[] getHandFromLine(Object line, int player) {
+        String[] cards = StringUtils.split(String.valueOf(line), " ");
+        return Arrays.copyOfRange(cards, (player - 1) * 5, 5 + (player - 1) * 5);
+    }
+
+    // debugging:
+
     private static void debugScore(String[] hand, int points, String message) {
-        if (printDebugOutput) System.out.printf("%s, score = %,d: %s\n", Arrays.toString(hand), points, message);
+        if (PRINT_DEBUG_OUTPUT) System.out.printf("%s, score = %,d: %s\n", Arrays.toString(hand), points, message);
     }
 }
