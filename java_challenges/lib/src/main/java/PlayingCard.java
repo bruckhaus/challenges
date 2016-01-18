@@ -2,6 +2,8 @@ class PlayingCard {
 
     static final String[] CARD_VALUES = new String[]
             {"A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"};
+    static final int ACE = 14;
+
 
     static int getCardValue(String card) {
         return getCharValue(getValueChar(card));

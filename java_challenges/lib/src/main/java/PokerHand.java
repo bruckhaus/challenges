@@ -128,13 +128,15 @@ class PokerHand {
 
     static boolean hasStraightWithLowAce(int[] sortedValues) {
         for (int i = 0; i <= 3; i++) if (sortedValues[i] != i + 2) return false;
-        return sortedValues[4] == 14;
+        return sortedValues[4] == PlayingCard.ACE;
     }
 
     // other helpers:
 
     static boolean hasAce(String[] hand) {
-        for (int i = 0; i <= 4; i++) if (hand[i].charAt(0) == 'A') return true;
+        for (int i = 0; i <= 4; i++) {
+            if (PlayingCard.getCardValue(hand[i]) == PlayingCard.ACE) return true;
+        }
         return false;
     }
 
