@@ -1,6 +1,79 @@
 import org.junit.Test;
 
 public class PokerScoreTest {
+
+    // simple hand wins:
+
+    @Test
+    public void StraightScoredAsStraight() throws Exception {
+    //    [8C, 2D, 2H, 2C, 4S], score = 3,000,284: three of a kind
+    //    [4C, 6S, 7D, 5S, 3S], score = 76,543: highest card
+    //    [4C, 6S, 7D, 5S, 3S], score = 4,076,543: straight
+        String[] straight = new String[]{"4C", "6S", "7D", "5S", "3S"};
+        PokerScore.scoreHand(straight);
+        assert (PokerHand.hasStraight(straight));
+    }
+
+    @Test
+    public void FlushWithDiamondsBeatsThreeAces() throws Exception {
+        // Hand Player 1                           Player 2                             Winner
+        // 3    2D 9C AS AH AC (Three Aces)        3D 6D 7D TD QD (Flush with Diamonds) Player 2
+        String[] player1Hand = new String[]{"2D", "9C", "AS", "AH", "AC"};
+        String[] player2Hand = new String[]{"3D", "6D", "7D", "TD", "QD"};
+        assert (PokerScore.scoreHand(player1Hand) < PokerScore.scoreHand(player2Hand));
+    }
+
+    // tie breakers:
+
+    @Test
+    public void highestCardAceBeatsHighestCardQueen() throws Exception {
+        // Hand Player 1                           Player 2                             Winner
+        // 2    5D 8C 9S JS AC (Highest card Ace)  2C 5C 7D 8S QH (Highest card Queen)  Player 1
+        String[] player1Hand = new String[]{"5D", "8C", "9S", "JS", "AC"};
+        String[] player2Hand = new String[]{"2C", "5C", "7D", "8S", "QH"};
+        assert (PokerScore.scoreHand(player1Hand) > PokerScore.scoreHand(player2Hand));
+    }
+
+    @Test
+    public void pairOfEightsBeatsPairOfFives() throws Exception {
+        // Hand Player 1                           Player 2                             Winner
+        // 1    5H 5C 6S 7S KD (Pair of Fives)     2C 3S 8S 8D TD (Pair of Eights)      Player 2
+        String[] player1Hand = new String[]{"5H", "5C", "6S", "7S", "KD"};
+        String[] player2Hand = new String[]{"2C", "3S", "8S", "8C", "TD"};
+        assert (PokerScore.scoreHand(player1Hand) < PokerScore.scoreHand(player2Hand));
+    }
+
+    @Test
+    public void pairOfQueensWithNineBeatsPairOfQueensWithSeven() throws Exception {
+        // Hand Player 1                           Player 2                             Winner
+        // 4    4D 6S 9H QH QC (Pair of Queens,    3D 6D 7H QD QS (Pair of Queens,
+        //                      Highest card Nine)                 Highest card Seven)  Player 1
+        String[] player1Hand = new String[]{"4D", "6S", "9H", "QH", "QC"};
+        String[] player2Hand = new String[]{"3D", "6D", "7H", "QD", "QS"};
+        assert (PokerScore.scoreHand(player1Hand) > PokerScore.scoreHand(player2Hand));
+    }
+
+    @Test
+    public void fullHouseWithFoursBeatsFullHouseWithThrees() throws Exception {
+        // Hand Player 1                           Player 2                             Winner
+        // 5    2H 2D 4C 4D 4S (Full House,        3C 3D 3S 9S 9D (Full House,
+        //                      With Three Fours)                  with Three Threes)   Player 1
+        String[] player1Hand = new String[]{"2H", "2D", "4C", "4D", "4S"};
+        String[] player2Hand = new String[]{"3C", "3D", "3S", "9S", "9D"};
+        assert (PokerScore.scoreHand(player1Hand) > PokerScore.scoreHand(player2Hand));
+    }
+
+    @Test
+    public void twoFiveswithJackBeatTwoFivesWithSeven() throws Exception {
+        //    [6D, 7C, 5D, 5H, 3S], score = 1,057,629: one pair
+        //    [5C, JC, 2H, 5S, 3D], score = 1,061,319: one pair
+        String[] player1Hand = new String[]{"6D", "7C", "5D", "5H", "3S"};
+        String[] player2Hand = new String[]{"5C", "JC", "2H", "5S", "3D"};
+        assert (PokerScore.scoreHand(player1Hand) < PokerScore.scoreHand(player2Hand));
+    }
+
+    // special hand wins:
+
     @Test
     public void scoreRoyalFlushWin() throws Exception {
         // royal flush > straight flush
