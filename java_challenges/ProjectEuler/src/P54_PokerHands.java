@@ -40,6 +40,7 @@ public class P54_PokerHands {
     // each player's hand is in no specific order, and in each hand there is a clear winner.
     // How many hands does Player 1 win?
 
+    @SuppressWarnings("WeakerAccess")
     static final String HANDS_FILE = "file/p054_poker.txt";
 
     public static void main(String[] args) throws IOException {
