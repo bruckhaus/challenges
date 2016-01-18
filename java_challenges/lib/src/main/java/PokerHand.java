@@ -2,8 +2,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 
-import static org.apache.commons.lang3.StringUtils.join;
-
 class PokerHand {
     //   - Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
     //   - Straight Flush: All cards are consecutive values of same suit.

@@ -5,15 +5,22 @@ import static org.junit.Assert.*;
 public class PokerHandTest {
     @Test
     public void hasRoyalFlush() throws Exception {
-
+        String[] royalFlush = new String[]{"AH", "KH", "QH", "JH", "TH"};
+        String[] regularFlush = new String[]{"KH", "QH", "JH", "TH", "9H"};
+        assert (PokerHand.hasRoyalFlush(royalFlush));
+        assert (!PokerHand.hasRoyalFlush(regularFlush));
     }
 
     @Test
     public void hasStraightFlush() throws Exception {
         String[] royalFlush = new String[]{"AH", "KH", "QH", "JH", "TH"};
         String[] regularFlush = new String[]{"KH", "QH", "JH", "TH", "9H"};
-        assert (PokerHand.hasRoyalFlush(royalFlush));
-        assert (!PokerHand.hasRoyalFlush(regularFlush));
+        String[] flush = new String[]{"AH", "QH", "JH", "TH", "9H"};
+        String[] straight = new String[]{"KH", "QH", "JH", "TH", "9D"};
+        assert (PokerHand.hasStraightFlush(royalFlush));
+        assert (PokerHand.hasStraightFlush(regularFlush));
+        assert (!PokerHand.hasStraightFlush(flush));
+        assert (!PokerHand.hasStraightFlush(straight));
     }
 
     @Test
@@ -34,9 +41,11 @@ public class PokerHandTest {
 
     @Test
     public void hasStraight() throws Exception {
-        String[] straight = new String[]{"KH", "QD", "JH", "TH", "9S"};
+        String[] straightWithSeven = new String[]{"4C", "6S", "7D", "5S", "3S"};
+        String[] straightWithKing = new String[]{"KH", "QD", "JH", "TH", "9S"};
         String[] notStraight = new String[]{"KH", "JH", "9H", "7H", "4D"};
-        assert (PokerHand.hasStraight(straight));
+        assert (PokerHand.hasStraight(straightWithSeven));
+        assert (PokerHand.hasStraight(straightWithKing));
         assert (!PokerHand.hasStraight(notStraight));
     }
 

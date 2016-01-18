@@ -22,6 +22,8 @@ class PokerScore {
     // then highest cards in each hand are compared (see example 4 below);
     // if the highest cards tie then the next highest cards are compared, and so on.
 
+    private static boolean printDebugOutput = false;
+
     private static final int POINT_INCREMENT = 1000000;
     private static final int POINTS_ONE_PAIR = POINT_INCREMENT;
     private static final int POINTS_TWO_PAIRS = POINTS_ONE_PAIR + POINT_INCREMENT;
@@ -44,11 +46,6 @@ class PokerScore {
             int scorePlayer1 = scoreHand(handPlayer1);
             int scorePlayer2 = scoreHand(handPlayer2);
             if (scorePlayer1 > scorePlayer2) player1Wins++;
-
-            int scoreDiff = scorePlayer1 - scorePlayer2;
-            if (Math.abs(scoreDiff) < 10000) {
-                System.out.printf("Close call diff: %,d\n", scoreDiff);
-            }
         }
         return player1Wins;
     }
@@ -161,6 +158,6 @@ class PokerScore {
     }
 
     private static void debugScore(String[] hand, int points, String message) {
-        System.out.printf("%s, score = %,d: %s\n", Arrays.toString(hand), points, message);
+        if (printDebugOutput) System.out.printf("%s, score = %,d: %s\n", Arrays.toString(hand), points, message);
     }
 }

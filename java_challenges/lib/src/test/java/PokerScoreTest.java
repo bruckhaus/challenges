@@ -5,22 +5,19 @@ public class PokerScoreTest {
     // simple hand wins:
 
     @Test
-    public void StraightScoredAsStraight() throws Exception {
-    //    [8C, 2D, 2H, 2C, 4S], score = 3,000,284: three of a kind
-    //    [4C, 6S, 7D, 5S, 3S], score = 76,543: highest card
-    //    [4C, 6S, 7D, 5S, 3S], score = 4,076,543: straight
-        String[] straight = new String[]{"4C", "6S", "7D", "5S", "3S"};
-        PokerScore.scoreHand(straight);
-        assert (PokerHand.hasStraight(straight));
-    }
-
-    @Test
-    public void FlushWithDiamondsBeatsThreeAces() throws Exception {
+    public void flushWithDiamondsBeatsThreeAces() throws Exception {
         // Hand Player 1                           Player 2                             Winner
         // 3    2D 9C AS AH AC (Three Aces)        3D 6D 7D TD QD (Flush with Diamonds) Player 2
         String[] player1Hand = new String[]{"2D", "9C", "AS", "AH", "AC"};
         String[] player2Hand = new String[]{"3D", "6D", "7D", "TD", "QD"};
         assert (PokerScore.scoreHand(player1Hand) < PokerScore.scoreHand(player2Hand));
+    }
+
+    @Test
+    public void lowPairBeatsBigHighestCard() throws Exception {
+        String[] player1Hand = new String[]{"2D", "2H", "3S", "4H", "5C"};
+        String[] player2Hand = new String[]{"AC", "KC", "QC", "JC", "9H"};
+        assert (PokerScore.scoreHand(player1Hand) > PokerScore.scoreHand(player2Hand));
     }
 
     // tie breakers:
@@ -57,7 +54,7 @@ public class PokerScoreTest {
     public void fullHouseWithFoursBeatsFullHouseWithThrees() throws Exception {
         // Hand Player 1                           Player 2                             Winner
         // 5    2H 2D 4C 4D 4S (Full House,        3C 3D 3S 9S 9D (Full House,
-        //                      With Three Fours)                  with Three Threes)   Player 1
+        //                      With Three Fours)                  With Three Threes)   Player 1
         String[] player1Hand = new String[]{"2H", "2D", "4C", "4D", "4S"};
         String[] player2Hand = new String[]{"3C", "3D", "3S", "9S", "9D"};
         assert (PokerScore.scoreHand(player1Hand) > PokerScore.scoreHand(player2Hand));
@@ -173,6 +170,8 @@ public class PokerScoreTest {
         int highCardScore = PokerScore.scoreHand(highCard);
         assert (higherCardScore > highCardScore);
     }
+
+    // hand scores:
 
     @Test
     public void scoreRoyalFlush() throws Exception {
