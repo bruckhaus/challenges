@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,11 +19,6 @@ class DigitNumber {
         char[] chars = ("" + number).toCharArray();
         chars[position] = (char) ('0' + newValue);
         return Long.parseLong(String.valueOf(chars));
-    }
-
-    static boolean hasNextPositionCode(long prime, int positionCode) {
-        int l = ("" + prime).length();
-        return positionCode < Math.pow(2, l) - 1;
     }
 
     static boolean isValidPositionCode(long prime, int positionCode) {
@@ -47,5 +43,14 @@ class DigitNumber {
         char[] chars = ("" + l).toCharArray();
         Arrays.sort(chars);
         return chars;
+    }
+
+    static int getDigitSum(BigInteger number) {
+        int sum = 0;
+        String numberString = number.toString();
+        for (int i = 0; i < numberString.length(); i++) {
+            sum += Character.getNumericValue(numberString.charAt(i));
+        }
+        return sum;
     }
 }

@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -34,5 +35,15 @@ public class DigitNumberTest {
         assertArrayEquals(chars, DigitNumber.getSortedDigits(32107654));
         assertArrayEquals(chars, DigitNumber.getSortedDigits(12345670));
         assertArrayEquals(chars, DigitNumber.getSortedDigits(10234567));
+    }
+
+    @Test
+    public void testGetDigitSum() throws Exception {
+        assertEquals(1, DigitNumber.getDigitSum(new BigInteger("1")));
+        assertEquals(27, DigitNumber.getDigitSum(new BigInteger("999")));
+        assertEquals(15, DigitNumber.getDigitSum(new BigInteger("12345")));
+        assertEquals(45, DigitNumber.getDigitSum(new BigInteger("123456789")));
+        assertEquals(90, DigitNumber.getDigitSum(new BigInteger("1234567890123456789")));
+        assertEquals(135, DigitNumber.getDigitSum(new BigInteger("123456789012345678901234567890")));
     }
 }
