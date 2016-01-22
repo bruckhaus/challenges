@@ -1,3 +1,5 @@
+import java.math.BigInteger;
+
 public class P55_LychrelNumbers {
     // Project Euler - Problem 55 - Lychrel numbers
     // If we take 47, reverse and add, 47 + 74 = 121, which is palindromic.
@@ -19,18 +21,17 @@ public class P55_LychrelNumbers {
 
     public static void main(String[] args) {
         String message = "The number of Lychrel numbers that exist below ten-thousand is %,d.\n";
-        int solution = P55_LychrelNumbers.getLychrelCount(LIMIT);
+        int solution = P55_LychrelNumbers.getLychrelCount(LIMIT_TESTED);
         System.out.printf(message, solution);
     }
 
-    private static final int LIMIT = 10000;
-    private static final int ITERATION_LIMIT = 50;
+    private static final int LIMIT_TESTED = 10000;
+    private static final int LIMIT_ITERATIONS = 50;
 
     static int getLychrelCount(int limit) {
         int count = 0;
         for (int candidate = 1; candidate <= limit; candidate++) {
-            if (!isLychrelNumber(candidate)) {
-                System.out.println("candidate = " + candidate);
+            if (isLychrelNumber(candidate)) {
                 count++;
             }
         }
@@ -38,14 +39,17 @@ public class P55_LychrelNumbers {
     }
 
     static boolean isLychrelNumber(int number) {
-        for (int iteration = 1; iteration <= ITERATION_LIMIT; iteration++) {
-            number = getLychrelTransform(number);
-            if (isPalindrome(number)) return true;
+        BigInteger candidate = new BigInteger("" + number);
+        for (int iteration = 1; iteration <= LIMIT_ITERATIONS; iteration++) {
+            candidate = getLychrelTransform(candidate);
+            if (isPalindrome(candidate)) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
-    static boolean isPalindrome(int number) {
+    static boolean isPalindrome(BigInteger number) {
         String numberString = "" + number;
         int rightPointer = numberString.length() - 1;
         for (int leftPointer = 0; true; leftPointer++) {
@@ -55,8 +59,9 @@ public class P55_LychrelNumbers {
         }
     }
 
-    static int getLychrelTransform(int number) {
-        String reverse = new StringBuffer("" + number).reverse().toString();
-        return Integer.parseInt("" + number + reverse);
+    static BigInteger getLychrelTransform(BigInteger number) {
+        String reverseString = new StringBuffer("" + number).reverse().toString();
+        BigInteger reverse = new BigInteger(reverseString);
+        return number.add(reverse);
     }
 }
