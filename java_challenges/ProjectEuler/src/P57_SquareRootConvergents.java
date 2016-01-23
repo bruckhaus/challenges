@@ -26,16 +26,25 @@ public class P57_SquareRootConvergents {
     static int getCount(int limit) {
         int count = 0;
         BigInteger numerator = new BigInteger("3");
-        BigInteger bitInteger_2 = new BigInteger("2");
-        BigInteger denominator = bitInteger_2;
-        for (int i = 1; i <= limit; i++) {
-            BigInteger temp = denominator.multiply(bitInteger_2);
-            BigInteger nextNumerator = numerator.add(temp);
-            denominator = numerator.add(denominator);
+        BigInteger denominator = new BigInteger("2");
+        BigInteger nextNumerator;
+        for (int i = 2; i <= limit; i++) {
+            nextNumerator = getNextNumerator(numerator, denominator);
+            denominator = getNextDenominator(numerator, denominator);
             numerator = nextNumerator;
             if (hasMoreDigits(numerator, denominator)) count++;
         }
         return count;
+    }
+
+    static BigInteger getNextDenominator(BigInteger numerator, BigInteger denominator) {
+        return numerator.add(denominator);
+    }
+
+    static BigInteger getNextNumerator(BigInteger numerator, BigInteger denominator) {
+        BigInteger bitInteger_2 = new BigInteger("2");
+        BigInteger temp = denominator.multiply(bitInteger_2);
+        return numerator.add(temp);
     }
 
     static boolean hasMoreDigits(BigInteger number1, BigInteger number2) {
