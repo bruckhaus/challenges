@@ -42,12 +42,10 @@ public class P57_SquareRootConvergents {
     }
 
     static BigInteger getNextNumerator(BigInteger numerator, BigInteger denominator) {
-        BigInteger bitInteger_2 = new BigInteger("2");
-        BigInteger temp = denominator.multiply(bitInteger_2);
-        return numerator.add(temp);
+        return numerator.add(denominator.multiply(new BigInteger("2")));
     }
 
     static boolean hasMoreDigits(BigInteger number1, BigInteger number2) {
-        return ("" + number1).length() > ("" + number2).length();
+        return number1.toString().length() > number2.toString().length();
     }
 }
