@@ -18,7 +18,7 @@ class P58_SpiralPrimes {
     // for which the ratio of primes along both diagonals first falls below 10%?
 
     private static final double RATIO = 0.10;
-    private static final int MAX_SIZE = 100;
+    private static final int MAX_SIZE = 8001;
 
     public static void main(String[] args) {
         String message = "The side length for which the prime ratio first falls below 10%% is %,d.\n";
@@ -26,11 +26,12 @@ class P58_SpiralPrimes {
         System.out.printf(message, length);
     }
 
-    private static int getCriticalPrimeLength(double ratio) {
+    private static int getCriticalPrimeLength(double ratioLimit) {
         SpiralMatrix spiral = new SpiralMatrix(MAX_SIZE);
+        spiral.grow(1);
         for (int length = 3; length <= MAX_SIZE; length += 2) {
             spiral.grow(length);
-            if (spiral.getDiagonalPrimeRatio() < ratio) return length;
+            if (spiral.getDiagonalPrimeRatio() < ratioLimit) return length;
         }
         return -1;
     }
