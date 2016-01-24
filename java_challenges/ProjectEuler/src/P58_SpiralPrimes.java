@@ -17,46 +17,21 @@ class P58_SpiralPrimes {
     // If this process is continued, what is the side length of the square spiral
     // for which the ratio of primes along both diagonals first falls below 10%?
 
-    private static final int LIMIT = 10;
+    private static final double RATIO = 0.10;
+    private static final int MAX_SIZE = 100;
 
     public static void main(String[] args) {
         String message = "The side length for which the prime ratio first falls below 10%% is %,d.\n";
-        int length = P58_SpiralPrimes.getLength(LIMIT);
+        int length = P58_SpiralPrimes.getCriticalPrimeLength(RATIO);
         System.out.printf(message, length);
     }
 
-    private static final int MAX_SIZE = 100;
-    private static int[][] spiral = new int[MAX_SIZE][MAX_SIZE];
-    private static int spiralSize = 0;
-    private static int sprialMaxValue = 0;
-
-    private static int getLength(int limit) {
+    private static int getCriticalPrimeLength(double ratio) {
+        SpiralMatrix spiral = new SpiralMatrix(MAX_SIZE);
         for (int length = 3; length <= MAX_SIZE; length += 2) {
-            growSpiral(length);
-            if (getSpiralRatio() < 10) return length;
+            spiral.grow(length);
+            if (spiral.getDiagonalPrimeRatio() < ratio) return length;
         }
         return -1;
-    }
-
-    private static float getSpiralRatio() {
-        return 0;
-    }
-
-    private static void growSpiral(int length) {
-        while (!spiralComplete(length)) {
-            int i = getNextI();
-            int j = getNextJ();
-            setSpiralValue(i, j);
-        }
-        spiralSize = length;
-    }
-
-    private static void setSpiralValue(int i, int j) {
-        sprialMaxValue++;
-        spiral[i][j] = sprialMaxValue;
-    }
-
-    private static boolean spiralComplete(int length) {
-        return sprialMaxValue >= Math.pow(length, 2);
     }
 }
