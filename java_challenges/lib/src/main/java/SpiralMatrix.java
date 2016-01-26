@@ -1,4 +1,5 @@
 public class SpiralMatrix {
+    // TODO: unit tests for SpiralMatrix
 
     private int[][] spiral;
     private int matrixSize;

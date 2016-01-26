@@ -27,6 +27,16 @@ class P58_SpiralPrimes {
     }
 
     private static int getCriticalPrimeLength(double ratioLimit) {
+        int primes = 0;
+        int diagonalCellCount = 1;
+        for (int i = 3; true; i+= 2) {
+            diagonalCellCount += 4;
+            for (int j = 1; j <= 3; j++) if (Prime.checkPrime(i * i - j * (i - 1))) primes++;
+            if (1.0 * primes / diagonalCellCount < ratioLimit) return i;
+        }
+    }
+
+    private static int getCriticalLengthWithSprialMatrix(double ratioLimit) {
         SpiralMatrix spiral = new SpiralMatrix(MAX_SIZE);
         spiral.grow(1);
         for (int length = 3; length <= MAX_SIZE; length += 2) {
