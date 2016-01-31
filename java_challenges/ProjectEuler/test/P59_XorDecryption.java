@@ -21,6 +21,8 @@ public class P59_XorDecryption {
     // ASCII values in the original text.
 
     static final String CYPHER_FILE = "file/p059_cipher.txt";
+    private static int keyCode = 0;
+    private static String key = "";
 
     public static void main(String[] args) throws IOException {
         String message = "\nThe encryption key is %s.\n";
@@ -48,8 +50,15 @@ public class P59_XorDecryption {
         }
     }
 
-    private static String getKey() {
-        return "aaa";
+    static String getKey() {
+        int positionValue = keyCode / 26 / 26;
+        key = Character.toString((char) ('a' + positionValue));
+        positionValue = keyCode / 26 % 26;
+        key += Character.toString((char) ('a' + positionValue));
+        positionValue = keyCode % 26;
+        key += Character.toString((char) ('a' + positionValue));
+        keyCode++;
+        return key;
     }
 
     private static boolean hasEnglishWords(String text) {
