@@ -1,3 +1,10 @@
+import com.sun.javafx.tools.resource.ResourceFilter;
+import com.sun.org.apache.regexp.internal.RE;
+import com.sun.org.apache.xml.internal.resolver.Resolver;
+import com.sun.org.apache.xml.internal.security.signature.ObjectContainer;
+import com.sun.org.apache.xml.internal.security.utils.resolver.ResourceResolver;
+import com.sun.prism.ResourceFactory;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -21,8 +28,8 @@ public class P59_XorDecryption {
     // ASCII values in the original text.
 
     static final String CYPHER_FILE = "file/p059_cipher.txt";
+    static final String WORDS_FILE = "file/english-words-1000.txt";
     private static int keyCode = 0;
-    private static String key = "";
 
     public static void main(String[] args) throws IOException {
         String message = "\nThe encryption key is %s.\n";
@@ -31,6 +38,7 @@ public class P59_XorDecryption {
     }
 
     private static String findKey(String cypherFile) throws IOException {
+        loadEnglishWords();
         List lines = new ResourceFile(cypherFile).getLines();
         String cyper = lines.get(0).toString();
         String[] codes = cyper.split(",");
@@ -50,9 +58,16 @@ public class P59_XorDecryption {
         }
     }
 
+    private static void loadEnglishWords() throws IOException {
+        List lines = new ResourceFile(WORDS_FILE).getLines();
+        for (Object line : lines) {
+            System.out.println("line = " + line);
+        }
+    }
+
     static String getKey() {
         int positionValue = keyCode / 26 / 26;
-        key = Character.toString((char) ('a' + positionValue));
+        String key = Character.toString((char) ('a' + positionValue));
         positionValue = keyCode / 26 % 26;
         key += Character.toString((char) ('a' + positionValue));
         positionValue = keyCode % 26;
