@@ -1,5 +1,7 @@
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class P59_XorDecryption {
     // Project Euler - Problem 59 - XOR decryption
@@ -22,6 +24,7 @@ public class P59_XorDecryption {
     static final String CYPHER_FILE = "file/p059_cipher.txt";
     static final String WORDS_FILE = "file/english-words-1000.txt";
     private static int keyCode = 0;
+    private static Set words;
 
     public static void main(String[] args) throws IOException {
         String message = "\nThe encryption key is %s.\n";
@@ -32,8 +35,8 @@ public class P59_XorDecryption {
     private static String findKey(String cypherFile) throws IOException {
         loadEnglishWords();
         List lines = new ResourceFile(cypherFile).getLines();
-        String cyper = lines.get(0).toString();
-        String[] codes = cyper.split(",");
+        String cypher = lines.get(0).toString();
+        String[] codes = cypher.split(",");
         int position = 0;
         String clearText = "";
         char letter = 0;
@@ -52,8 +55,10 @@ public class P59_XorDecryption {
 
     private static void loadEnglishWords() throws IOException {
         List lines = new ResourceFile(WORDS_FILE).getLines();
+        words = new HashSet<String>();
         for (Object line : lines) {
-            System.out.println("line = " + line);
+            String word = line.toString();
+            words.add(word);
         }
     }
 
@@ -69,6 +74,13 @@ public class P59_XorDecryption {
     }
 
     private static boolean hasEnglishWords(String text) {
-        return true;
+        String[] tokens = text.split(" ");
+        int countTokens = 0;
+        int englishWords = 0;
+        for (String token : tokens) {
+            countTokens++;
+            if (words.contains(token)) englishWords++;
+        }
+        return 1.0 * englishWords / countTokens > 0.5;
     }
 }
