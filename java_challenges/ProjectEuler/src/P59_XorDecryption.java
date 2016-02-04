@@ -34,23 +34,36 @@ public class P59_XorDecryption {
 
     private static String findKey(String cypherFile) throws IOException {
         loadEnglishWords();
-        List lines = new ResourceFile(cypherFile).getLines();
-        String cypher = lines.get(0).toString();
-        String[] codes = cypher.split(",");
-        int position = 0;
-        String clearText = "";
-        char letter = 0;
+        String encryptedMessage = getEncryptedMessage(cypherFile);
+        String clearText;
         while (true) {
             String key = getKey();
-            for (String code : codes) {
-                char keyChar = key.charAt(position % 3);
-                letter = (char) (code.charAt(0) ^ keyChar);
-                System.out.printf("%s", letter);
-                position++;
+            clearText = getDecryptedMessage(encryptedMessage, key);
+            if (hasEnglishWords(clearText)) {
+                System.out.println("clearText = " + clearText);
+                return key;
             }
-            clearText += String.valueOf(letter);
-            if (hasEnglishWords(clearText)) return key;
         }
+    }
+
+    private static String getEncryptedMessage(String cypherFile) throws IOException {
+        List lines = new ResourceFile(cypherFile).getLines();
+        String commaSeparatedCodes = lines.get(0).toString();
+        String[] codeStringArray = commaSeparatedCodes.split(",");
+        String encryptedMessage = "";
+        for (String code : codeStringArray) encryptedMessage += (char) Integer.parseInt(code);
+        return encryptedMessage;
+    }
+
+    private static String getDecryptedMessage(String encryptedMessage, String key) {
+        String clearText = "";
+        int position = 0;
+        for (char code : encryptedMessage.toCharArray()) {
+            char keyChar = key.charAt(position % 3);
+            clearText += (char) (code ^ keyChar);
+            position++;
+        }
+        return clearText;
     }
 
     private static void loadEnglishWords() throws IOException {
