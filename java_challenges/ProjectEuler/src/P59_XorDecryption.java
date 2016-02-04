@@ -27,12 +27,12 @@ public class P59_XorDecryption {
     private static Set words;
 
     public static void main(String[] args) throws IOException {
-        String message = "\nThe encryption key is %s.\n";
-        String key = P59_XorDecryption.findKey(CYPHER_FILE);
-        System.out.printf(message, key);
+        String message = "\nThe sum of the ASCII codes in the original message is %d.\n";
+        int sum = P59_XorDecryption.decryptAndFindSumOfAsciiCodes(CYPHER_FILE);
+        System.out.printf(message, sum);
     }
 
-    private static String findKey(String cypherFile) throws IOException {
+    private static int decryptAndFindSumOfAsciiCodes(String cypherFile) throws IOException {
         loadEnglishWords();
         String encryptedMessage = getEncryptedMessage(cypherFile);
         String clearText;
@@ -40,10 +40,19 @@ public class P59_XorDecryption {
             String key = getKey();
             clearText = getDecryptedMessage(encryptedMessage, key);
             if (hasEnglishWords(clearText)) {
+                int sumOfAsciiCodes = getSumOfAsciiCodes(clearText);
+                System.out.println("key = " + key);
                 System.out.println("clearText = " + clearText);
-                return key;
+                System.out.println("sumOfAsciiCodes = " + sumOfAsciiCodes);
+                return sumOfAsciiCodes;
             }
         }
+    }
+
+    private static int getSumOfAsciiCodes(String clearText) {
+        int sum = 0;
+        for (char code : clearText.toCharArray()) sum += code;
+        return sum;
     }
 
     private static String getEncryptedMessage(String cypherFile) throws IOException {
