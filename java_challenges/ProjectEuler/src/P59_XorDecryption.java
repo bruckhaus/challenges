@@ -23,36 +23,33 @@ public class P59_XorDecryption {
 
     static final String CYPHER_FILE = "file/p059_cipher.txt";
     static final String WORDS_FILE = "file/english-words-1000.txt";
+
+    private static boolean printToStdOut = false;
     private static int keyCode = 0;
-    private static Set words;
+    private static Set<String> words;
+    private static String key;
 
     public static void main(String[] args) throws IOException {
+        printToStdOut = true;
         String message = "\nThe sum of the ASCII codes in the original message is %d.\n";
-        int sum = P59_XorDecryption.decryptAndFindSumOfAsciiCodes(CYPHER_FILE);
+        int sum = P59_XorDecryption.findSumOfCodes(CYPHER_FILE);
         System.out.printf(message, sum);
     }
 
-    private static int decryptAndFindSumOfAsciiCodes(String cypherFile) throws IOException {
-        loadEnglishWords();
-        String encryptedMessage = getEncryptedMessage(cypherFile);
-        String clearText;
-        while (true) {
-            String key = getKey();
-            clearText = getDecryptedMessage(encryptedMessage, key);
-            if (hasEnglishWords(clearText)) {
-                int sumOfAsciiCodes = getSumOfAsciiCodes(clearText);
-                System.out.println("key = " + key);
-                System.out.println("clearText = " + clearText);
-                System.out.println("sumOfAsciiCodes = " + sumOfAsciiCodes);
-                return sumOfAsciiCodes;
-            }
+    static {
+        try {
+            loadEnglishWords();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private static int getSumOfAsciiCodes(String clearText) {
-        int sum = 0;
-        for (char code : clearText.toCharArray()) sum += code;
-        return sum;
+    private static int findSumOfCodes(String cypherFile) throws IOException {
+        String cypher = getEncryptedMessage(cypherFile);
+        String message = breakCypher(cypher);
+        int sumOfAsciiCodes = getSumOfAsciiCodes(message);
+        printSolutionInfo(key, message, sumOfAsciiCodes);
+        return sumOfAsciiCodes;
     }
 
     private static String getEncryptedMessage(String cypherFile) throws IOException {
@@ -64,15 +61,24 @@ public class P59_XorDecryption {
         return encryptedMessage;
     }
 
-    private static String getDecryptedMessage(String encryptedMessage, String key) {
-        String clearText = "";
+    private static String breakCypher(String cypher) {
+        String message = "";
+        do {
+            key = getNextKey();
+            message = decrypt(cypher, key);
+        } while (!hasEnglishWords(message));
+        return message;
+    }
+
+    private static String decrypt(String cypher, String key) {
+        String decrypted = "";
         int position = 0;
-        for (char code : encryptedMessage.toCharArray()) {
+        for (char code : cypher.toCharArray()) {
             char keyChar = key.charAt(position % 3);
-            clearText += (char) (code ^ keyChar);
+            decrypted += (char) (code ^ keyChar);
             position++;
         }
-        return clearText;
+        return decrypted;
     }
 
     private static void loadEnglishWords() throws IOException {
@@ -84,7 +90,7 @@ public class P59_XorDecryption {
         }
     }
 
-    static String getKey() {
+    static String getNextKey() {
         int positionValue = keyCode / 26 / 26;
         String key = Character.toString((char) ('a' + positionValue));
         positionValue = keyCode / 26 % 26;
@@ -104,5 +110,17 @@ public class P59_XorDecryption {
             if (words.contains(token)) englishWords++;
         }
         return 1.0 * englishWords / countTokens > 0.5;
+    }
+
+    private static int getSumOfAsciiCodes(String clearText) {
+        int sum = 0;
+        for (char code : clearText.toCharArray()) sum += code;
+        return sum;
+    }
+
+    private static void printSolutionInfo(String key, String clearText, int sumOfAsciiCodes) {
+        if (!printToStdOut) return;
+        String message = "key = %s\nclear text = %s\nsum of codes = %d\n";
+        System.out.printf(message, key, clearText, sumOfAsciiCodes);
     }
 }
