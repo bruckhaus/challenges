@@ -1,7 +1,5 @@
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class P59_XorDecryption {
     // Project Euler - Problem 59 - XOR decryption
@@ -22,105 +20,49 @@ public class P59_XorDecryption {
     // ASCII values in the original text.
 
     static final String CYPHER_FILE = "file/p059_cipher.txt";
-    static final String WORDS_FILE = "file/english-words-1000.txt";
+    public static final double RECOGNIZED_WORD_RATIO_THRESHOLD = 0.5;
 
     private static boolean printToStdOut = false;
-    private static int keyCode = 0;
-    private static Set<String> words;
-    private static String key;
+    private static String message;
+    private static int checkSum;
 
     public static void main(String[] args) throws IOException {
         printToStdOut = true;
-        String message = "\nThe sum of the ASCII codes in the original message is %d.\n";
-        int sum = P59_XorDecryption.findSumOfCodes(CYPHER_FILE);
-        System.out.printf(message, sum);
+        String message = "The sum of the ASCII codes in the original message is %d.\n";
+        int checkSum = P59_XorDecryption.decryptedCheckSum(CYPHER_FILE);
+        System.out.printf(message, checkSum);
     }
 
-    static {
-        try {
-            loadEnglishWords();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    static int decryptedCheckSum(String cypherFile) throws IOException {
+        String cypher = getCypher(cypherFile);
+        message = breakCypher(cypher);
+        checkSum = Crypto.getCheckSum(message);
+        printSolutionInfo();
+        return checkSum;
     }
 
-    private static int findSumOfCodes(String cypherFile) throws IOException {
-        String cypher = getEncryptedMessage(cypherFile);
-        String message = breakCypher(cypher);
-        int sumOfAsciiCodes = getSumOfAsciiCodes(message);
-        printSolutionInfo(key, message, sumOfAsciiCodes);
-        return sumOfAsciiCodes;
-    }
-
-    private static String getEncryptedMessage(String cypherFile) throws IOException {
+    static String getCypher(String cypherFile) throws IOException {
         List lines = new ResourceFile(cypherFile).getLines();
         String commaSeparatedCodes = lines.get(0).toString();
         String[] codeStringArray = commaSeparatedCodes.split(",");
-        String encryptedMessage = "";
-        for (String code : codeStringArray) encryptedMessage += (char) Integer.parseInt(code);
-        return encryptedMessage;
+        String cypher = "";
+        for (String code : codeStringArray) cypher += (char) Integer.parseInt(code);
+        return cypher;
     }
 
-    private static String breakCypher(String cypher) {
-        String message = "";
-        do {
-            key = getNextKey();
-            message = decrypt(cypher, key);
-        } while (!hasEnglishWords(message));
-        return message;
-    }
-
-    private static String decrypt(String cypher, String key) {
-        String decrypted = "";
-        int position = 0;
-        for (char code : cypher.toCharArray()) {
-            char keyChar = key.charAt(position % 3);
-            decrypted += (char) (code ^ keyChar);
-            position++;
+    static String breakCypher(String cypher) {
+        String message;
+        Crypto.reset();
+        while (Crypto.nextKey()) {
+            message = Crypto.decrypt(cypher);
+            if (English.hasEnglishWords(message, RECOGNIZED_WORD_RATIO_THRESHOLD)) return message;
         }
-        return decrypted;
+        return "";
     }
 
-    private static void loadEnglishWords() throws IOException {
-        List lines = new ResourceFile(WORDS_FILE).getLines();
-        words = new HashSet<String>();
-        for (Object line : lines) {
-            String word = line.toString();
-            words.add(word);
-        }
-    }
-
-    static String getNextKey() {
-        int positionValue = keyCode / 26 / 26;
-        String key = Character.toString((char) ('a' + positionValue));
-        positionValue = keyCode / 26 % 26;
-        key += Character.toString((char) ('a' + positionValue));
-        positionValue = keyCode % 26;
-        key += Character.toString((char) ('a' + positionValue));
-        keyCode++;
-        return key;
-    }
-
-    private static boolean hasEnglishWords(String text) {
-        String[] tokens = text.split(" ");
-        int countTokens = 0;
-        int englishWords = 0;
-        for (String token : tokens) {
-            countTokens++;
-            if (words.contains(token)) englishWords++;
-        }
-        return 1.0 * englishWords / countTokens > 0.5;
-    }
-
-    private static int getSumOfAsciiCodes(String clearText) {
-        int sum = 0;
-        for (char code : clearText.toCharArray()) sum += code;
-        return sum;
-    }
-
-    private static void printSolutionInfo(String key, String clearText, int sumOfAsciiCodes) {
+    private static void printSolutionInfo() {
         if (!printToStdOut) return;
-        String message = "key = %s\nclear text = %s\nsum of codes = %d\n";
-        System.out.printf(message, key, clearText, sumOfAsciiCodes);
+        String format = "key = %s\nmessage = %s\nchecksum = %d\n";
+        System.out.printf(format, Crypto.getKey(), message, checkSum);
     }
 }
