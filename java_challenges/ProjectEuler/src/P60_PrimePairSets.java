@@ -38,24 +38,24 @@ public class P60_PrimePairSets {
     }
 
     static long[] findPrimeArray(int arraySize) {
-        for (int lastPrimeIndex = arraySize; true; lastPrimeIndex++) {
-            System.out.printf("Checking for last prime %,d\n", primes.get(lastPrimeIndex));
-            primeArray = searchPrimeArray(arraySize, lastPrimeIndex);
+        for (int maxPrimeIndex = arraySize; true; maxPrimeIndex++) {
+            System.out.printf("Checking for last prime %,d\n", primes.get(maxPrimeIndex));
+            primeArray = searchPrimeArray(arraySize, maxPrimeIndex);
             if (primeArray != null) return primeArray;
         }
     }
 
-    static long[] searchPrimeArray(int setSize, int lastPrimeIndex) {
-        for (int[] combo : new Combinations(lastPrimeIndex, setSize - 1)) {
-            primeArray = getPrimeArray(setSize, lastPrimeIndex, combo);
+    static long[] searchPrimeArray(int setSize, int maxPrimeIndex) {
+        for (int[] combo : new Combinations(maxPrimeIndex, setSize - 1)) {
+            primeArray = getPrimeArray(setSize, maxPrimeIndex, combo);
             if (isConcatenable(setSize, primeArray)) return primeArray;
         }
         return null;
     }
 
-    static long[] getPrimeArray(int arraySize, int lastPrimeIndex, int[] combo) {
+    static long[] getPrimeArray(int arraySize, int maxPrimeIndex, int[] combo) {
         primeArray = new long[arraySize];
-        primeArray[arraySize - 1] = primes.get(lastPrimeIndex);
+        primeArray[arraySize - 1] = primes.get(maxPrimeIndex);
         for (int j = 0; j <= arraySize - 2; j++) primeArray[j] = primes.get(combo[j] + 1);
         return primeArray;
     }
