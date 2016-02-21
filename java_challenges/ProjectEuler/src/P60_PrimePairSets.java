@@ -1,7 +1,7 @@
 import org.apache.commons.math3.util.Combinations;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.*;
 
 public class P60_PrimePairSets {
     // Project Euler - Problem 60 - Prime pair sets
@@ -11,21 +11,24 @@ public class P60_PrimePairSets {
     // The sum of these four primes, 792, represents the lowest sum for a set of four primes with this property.
     // Find the lowest sum for a set of five primes for which any two primes concatenate to produce another prime.
 
-    private static final int SET_SIZE = 5;
+    private static final int PRIME_ARRAY_SIZE = 5;
+    private static final int HASH_SET_SIZE = 30000;
     private static boolean FORWARD = true;
     private static boolean BACKWARD = !FORWARD;
     private static Prime1stMillion primes;
     private static long[] primeArray;
+    private static List<Set<Integer>> hashSets;
 
     public static void main(String[] args) {
         String message = "The lowest sum for a set of five primes " +
                 "for which any two primes concatenate to produce another prime is %d.\n";
-        long primeSum = P60_PrimePairSets.findPrimeSum(SET_SIZE);
+        long primeSum = P60_PrimePairSets.findPrimeSum(PRIME_ARRAY_SIZE);
         showSolutionPrimeArray();
         System.out.printf(message, primeSum);
     }
 
     static {
+        hashSets = new ArrayList<Set<Integer>>();
         try {
             primes = new Prime1stMillion();
         } catch (IOException e) {
@@ -38,40 +41,28 @@ public class P60_PrimePairSets {
     }
 
     static long[] findPrimeArray(int arraySize) {
-        for (int maxPrimeIndex = arraySize; true; maxPrimeIndex++) {
+        for (int maxPrimeIndex = 0; true; maxPrimeIndex++) {
             System.out.printf("Checking for last prime %,d\n", primes.get(maxPrimeIndex));
+            updateHashSets(maxPrimeIndex);
             primeArray = searchPrimeArray(arraySize, maxPrimeIndex);
             if (primeArray != null) return primeArray;
         }
     }
 
-    static long[] searchPrimeArray(int setSize, int maxPrimeIndex) {
-        for (int[] combo : new Combinations(maxPrimeIndex, setSize - 1)) {
-            primeArray = getPrimeArray(setSize, maxPrimeIndex, combo);
-            if (isConcatenable(setSize, primeArray)) return primeArray;
+    private static long[] searchPrimeArray(int arraySize, int maxPrimeIndex) {
+        return new long[0];
+    }
+
+    private static void updateHashSets(int index) {
+        hashSets.set(index, new HashSet<Integer>());
+        for (int i = 0; i < index; i++) {
+            if (isConcatenablePair(primes.get(i), primes.get(index))) hashSets.get(i).add(index);
         }
-        return null;
     }
 
-    static long[] getPrimeArray(int arraySize, int maxPrimeIndex, int[] combo) {
-        primeArray = new long[arraySize];
-        primeArray[arraySize - 1] = primes.get(maxPrimeIndex);
-        for (int j = 0; j <= arraySize - 2; j++) primeArray[j] = primes.get(combo[j] + 1);
-        return primeArray;
-    }
-
-    static boolean isConcatenable(int setSize, long[] primeArray) {
-        for (int[] pair : new Combinations(setSize, 2)) {
-            if (!isConcatenable(primeArray, pair, FORWARD)) return false;
-            if (!isConcatenable(primeArray, pair, BACKWARD)) return false;
-        }
-        return true;
-    }
-
-    static boolean isConcatenable(long[] primeArray, int[] pair, boolean forward) {
-        int first = forward ? 0 : 1;
-        int second = forward ? 1 : 0;
-        return primes.isPrime(concatenate(primeArray[pair[first]], primeArray[pair[second]]));
+    private static boolean isConcatenablePair(long left, long right) {
+        return primes.isPrime(concatenate(right, left)) &&
+                primes.isPrime(concatenate(left, right));
     }
 
     static long concatenate(long prime1, long prime2) {
