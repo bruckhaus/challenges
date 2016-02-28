@@ -19,28 +19,27 @@ class PrimePairs {
         }
     }
 
-    static List get(int index) {
+    static List<Integer> get(int index) {
         buildPairs(index);
         return pairsList.get(index);
     }
 
-    static List buildPairs(int index) {
-        while (index > lastIndex) {
+    static List<Integer> buildPairs(int index) {
+        while (lastIndex < index) {
             lastIndex++;
-            addPairs(lastIndex);
+            pairsList.add(lastIndex, getPairs(lastIndex));
         }
         return pairsList.get(index);
     }
 
-    static List addPairs(int index) {
-        List<Integer> newPairs = new ArrayList<>();
+    static List<Integer> getPairs(int index) {
+        List<Integer> pairs = new ArrayList<>();
         for (int i = 1; i < index; i++) {
             if (isConcatenable(i, index)) {
-                newPairs.add(i);
+                pairs.add(i);
             }
         }
-        pairsList.add(index, newPairs);
-        return newPairs;
+        return pairs;
     }
 
     static List<Integer> getPrimePair(int prime1, int prime2) {

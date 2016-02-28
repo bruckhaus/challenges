@@ -38,17 +38,17 @@ public class PrimePairsTest {
 
     @Test
     public void testAddPairs() throws Exception {
-        assertArrayEquals(new Integer[0], PrimePairs.addPairs(0).toArray());      // no prime for index 0
-        assertArrayEquals(new Integer[0], PrimePairs.addPairs(1).toArray());      // no pairs for 2
-        assertArrayEquals(new Integer[0], PrimePairs.addPairs(2).toArray());      // no pairs for 3
-        assertArrayEquals(new Integer[0], PrimePairs.addPairs(3).toArray());      // no pairs for 5
-        assertArrayEquals(new Integer[]{2}, PrimePairs.addPairs(4).toArray());    // 7: 37, 73
-        assertArrayEquals(new Integer[]{2}, PrimePairs.addPairs(5).toArray());    // 11: 311, 113
-        assertArrayEquals(new Integer[0], PrimePairs.addPairs(6).toArray());      // no pairs for 13
-        assertArrayEquals(new Integer[]{2}, PrimePairs.addPairs(7).toArray());    // 17: 317, 173
-        assertArrayEquals(new Integer[]{4, 6}, PrimePairs.addPairs(8).toArray()); // 19: 719, 197 + 1317, 1713
-        assertArrayEquals(new Integer[]{5}, PrimePairs.addPairs(9).toArray());    // 23: 1123, 2311
-        assertArrayEquals(new Integer[0], PrimePairs.addPairs(10).toArray());     // no pairs for 29
+        assertArrayEquals(new Integer[0], PrimePairs.getPairs(0).toArray());      // no prime for index 0
+        assertArrayEquals(new Integer[0], PrimePairs.getPairs(1).toArray());      // no pairs for 2
+        assertArrayEquals(new Integer[0], PrimePairs.getPairs(2).toArray());      // no pairs for 3
+        assertArrayEquals(new Integer[0], PrimePairs.getPairs(3).toArray());      // no pairs for 5
+        assertArrayEquals(new Integer[]{2}, PrimePairs.getPairs(4).toArray());    // 7: 37, 73
+        assertArrayEquals(new Integer[]{2}, PrimePairs.getPairs(5).toArray());    // 11: 311, 113
+        assertArrayEquals(new Integer[0], PrimePairs.getPairs(6).toArray());      // no pairs for 13
+        assertArrayEquals(new Integer[]{2}, PrimePairs.getPairs(7).toArray());    // 17: 317, 173
+        assertArrayEquals(new Integer[]{4, 6}, PrimePairs.getPairs(8).toArray()); // 19: 719, 197 + 1317, 1713
+        assertArrayEquals(new Integer[]{5}, PrimePairs.getPairs(9).toArray());    // 23: 1123, 2311
+        assertArrayEquals(new Integer[0], PrimePairs.getPairs(10).toArray());     // no pairs for 29
     }
 
     @Test
@@ -56,6 +56,17 @@ public class PrimePairsTest {
         assertNull(PrimePairs.getPrimePair(1, 2));
         assertArrayEquals(new Integer[]{2, 4}, PrimePairs.getPrimePair(2, 4).toArray());
         assertArrayEquals(new Integer[]{2, 4}, PrimePairs.getPrimePair(4, 2).toArray());
+        assert (PrimePairs.get(692).contains(6));
+        assert (PrimePairs.get(751).contains(6));
+        assert (PrimePairs.get(751).contains(692));
+        assert (PrimePairs.get(868).contains(6));
+        assert (PrimePairs.get(868).contains(692));
+        assert (PrimePairs.get(868).contains(751));
+        assert (PrimePairs.get(1051).contains(6));
+        assert (PrimePairs.get(1051).contains(692));
+        assert (PrimePairs.get(1051).contains(751));
+        assert (PrimePairs.get(1051).contains(868));
+        assert (!PrimePairs.get(1051).contains(869));
     }
 
     @Test
@@ -138,7 +149,7 @@ public class PrimePairsTest {
         assert (!PrimePairs.isPair(1, 2));
         assert (!PrimePairs.isPair(2, 1));
         // {2, 12, 19}
-        assert (PrimePairs.isPair(2, 12)); // FIXME: fails due to interactions with other tests
+        assert (PrimePairs.isPair(2, 12));
         assert (PrimePairs.isPair(2, 19));
         assert (PrimePairs.isPair(12, 19));
         assert (PrimePairs.isPair(19, 12));

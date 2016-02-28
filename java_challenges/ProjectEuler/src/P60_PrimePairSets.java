@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class P60_PrimePairSets {
     // Find the lowest sum for a set of five primes for which any two primes concatenate to produce another prime.
 
     private static final int PRIME_ARRAY_SIZE = 5;
+    private static List<Integer> tracers;
 
     public static void main(String[] args) {
         String message = "The lowest sum for a set of five primes " +
@@ -18,6 +20,15 @@ public class P60_PrimePairSets {
         showSolutionPrimeArray(solution);
         long primeSum = P60_PrimePairSets.getSum(solution);
         System.out.printf(message, primeSum);
+    }
+
+    static {
+        tracers = new ArrayList<>();
+        tracers.add(6);
+        tracers.add(692);
+        tracers.add(751);
+        tracers.add(868);
+        tracers.add(1051);
     }
 
     static long[] findPrimeArray(int size) {
@@ -30,6 +41,10 @@ public class P60_PrimePairSets {
     }
 
     static List<Integer> searchPrimeArray(int size, int seed) {
+        if (tracers.contains(seed)) {
+            System.out.printf("search for size: %d, seed: %d\n", size, seed);
+            System.out.printf("  pairs[%d]: %s\n", seed, PrimePairs.get(seed).toString());
+        }
         List<Integer> solution;
         for (Object nextSeed : PrimePairs.get(seed)) {
             solution = searchPrimeArray(size, seed, (Integer) nextSeed);
@@ -39,6 +54,9 @@ public class P60_PrimePairSets {
     }
 
     static List<Integer> searchPrimeArray(int size, int seed1, int seed2) {
+        if (tracers.contains(seed1) && tracers.contains(seed2)) {
+            System.out.printf("    search for size: %d, seeds: %d, %d\n", size, seed1, seed2);
+        }
         if (size == 2) return PrimePairs.getPrimePair(seed1, seed2);
         List<Integer> solution;
         solution = searchPrimeArray(size - 1, seed2);

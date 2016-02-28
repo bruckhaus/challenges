@@ -29,15 +29,54 @@ public class P60_PrimePairSetsTest {
 
     @Test
     public void testSearchPrimeArrayWithTwoSeeds() throws Exception {
-        List<Integer> result = P60_PrimePairSets.searchPrimeArray(3, 2, 1);
-        assert result == null;
-        result = P60_PrimePairSets.searchPrimeArray(3, 19, 11);
-        assert result == null;
-        result = P60_PrimePairSets.searchPrimeArray(3, 19, 12);
-        assert result != null;
+        List<Integer> result;
+        Integer[] array;
+
+//         not a solution for these seeds:
+//        result = P60_PrimePairSets.searchPrimeArray(3, 2, 1);
+//        assertNull(result);
+//        result = P60_PrimePairSets.searchPrimeArray(3, 19, 11);
+//        assertNull(result);
+//
+//         solution for 3 primes:
+//        result = P60_PrimePairSets.searchPrimeArray(3, 19, 12);
+//        assertNotNull(result);
+//        Collections.sort(result);
+//        array = new Integer[]{2, 12, 19};
+//        assertArrayEquals(array, result.toArray());
+
+        // solution for 4 primes:
+//        array = new Integer[]{2, 12, 19}; // FIXME: not the expected values
+//        result = P60_PrimePairSets.searchPrimeArray(4, 868);
+//        assertNotNull(result);
+//        Collections.sort(result);
+//        assertArrayEquals(array, result.toArray());
+
+        assert (PrimePairs.get(692).contains(6));
+        assert (PrimePairs.get(751).contains(6));
+        assert (PrimePairs.get(751).contains(692));
+        assert (PrimePairs.get(868).contains(6));
+        assert (PrimePairs.get(868).contains(692));
+        assert (PrimePairs.get(868).contains(751));
+        assert (PrimePairs.get(1051).contains(6));
+        assert (PrimePairs.get(1051).contains(692));
+        assert (PrimePairs.get(1051).contains(751));
+        assert (PrimePairs.get(1051).contains(868));
+        assert (!PrimePairs.get(1051).contains(869));
+
+        // solution for 5 primes:
+        array = new Integer[]{2, 12, 19}; // FIXME: not the expected values
+        result = P60_PrimePairSets.searchPrimeArray(5, 1051);
+        assertNotNull(result);
         Collections.sort(result);
-        Integer[] array = new Integer[]{2, 12, 19};
         assertArrayEquals(array, result.toArray());
+
+        // solution for 5 primes:
+//        array = new Integer[]{2, 12, 19}; // FIXME: not the expected values
+//        result = P60_PrimePairSets.searchPrimeArray(5, 1051, 868);
+//        assertNotNull(result);
+//        Collections.sort(result);
+//        assertArrayEquals(array, result.toArray());
     }
 
     @Test
