@@ -19,17 +19,6 @@ class PrimePairs {
         }
     }
 
-    static List addPairs(int index) {
-        List<Integer> newPairs = new ArrayList<>();
-        for (int i = 1; i < index; i++) {
-            if (isConcatenable(i, index)) {
-                newPairs.add(i);
-            }
-        }
-        pairsList.add(index, newPairs);
-        return newPairs;
-    }
-
     static List get(int index) {
         buildPairs(index);
         return pairsList.get(index);
@@ -43,18 +32,29 @@ class PrimePairs {
         return pairsList.get(index);
     }
 
+    static List addPairs(int index) {
+        List<Integer> newPairs = new ArrayList<>();
+        for (int i = 1; i < index; i++) {
+            if (isConcatenable(i, index)) {
+                newPairs.add(i);
+            }
+        }
+        pairsList.add(index, newPairs);
+        return newPairs;
+    }
+
     static List<Integer> getPrimePair(int prime1, int prime2) {
         if (PrimePairs.isConcatenable(prime1, prime2)) return getListFromPair(prime1, prime2);
         return null;
     }
 
-    static List<Integer> getListFromPair(int index1, int index2) {
-        List<Integer> list = new ArrayList<>();
-        int first = Math.min(index1, index2);
-        int second = Math.max(index1, index2);
-        list.add(first);
-        list.add(second);
-        return list;
+    static boolean isConcatenable(long left, long right) {
+        return primes.isPrime(concatenate(left, right)) &&
+                primes.isPrime(concatenate(right, left));
+    }
+
+    static boolean isConcatenable(int first, int second) {
+        return isConcatenable(primes.get(first), primes.get(second));
     }
 
     static boolean isConcatenable(List<Integer> list) {
@@ -73,15 +73,6 @@ class PrimePairs {
         return get(larger).contains(smaller);
     }
 
-    static boolean isConcatenable(int first, int second) {
-        return isConcatenable(primes.get(first), primes.get(second));
-    }
-
-    static boolean isConcatenable(long left, long right) {
-        return primes.isPrime(concatenate(left, right)) &&
-                primes.isPrime(concatenate(right, left));
-    }
-
     static long[] getPrimeArray(List<Integer> list) {
         long[] array = new long[list.size()];
         for (int i = 0; i < list.size(); i++) array[i] = primes.get(list.get(i));
@@ -89,11 +80,20 @@ class PrimePairs {
         return array;
     }
 
+    static long concatenate(long prime1, long prime2) {
+        return Long.parseLong("" + prime1 + prime2);
+    }
+
     static long getPrime(int index) {
         return primes.get(index);
     }
 
-    static long concatenate(long prime1, long prime2) {
-        return Long.parseLong("" + prime1 + prime2);
+    static List<Integer> getListFromPair(int index1, int index2) {
+        List<Integer> list = new ArrayList<>();
+        int first = Math.min(index1, index2);
+        int second = Math.max(index1, index2);
+        list.add(first);
+        list.add(second);
+        return list;
     }
 }

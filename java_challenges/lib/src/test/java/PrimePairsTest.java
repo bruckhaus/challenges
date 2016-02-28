@@ -8,22 +8,7 @@ import static org.junit.Assert.*;
 public class PrimePairsTest {
 
     @Test
-    public void addPairs() throws Exception {
-        assertArrayEquals(new Integer[0], PrimePairs.addPairs(0).toArray());      // no prime for index 0
-        assertArrayEquals(new Integer[0], PrimePairs.addPairs(1).toArray());      // no pairs for 2
-        assertArrayEquals(new Integer[0], PrimePairs.addPairs(2).toArray());      // no pairs for 3
-        assertArrayEquals(new Integer[0], PrimePairs.addPairs(3).toArray());      // no pairs for 5
-        assertArrayEquals(new Integer[]{2}, PrimePairs.addPairs(4).toArray());    // 7: 37, 73
-        assertArrayEquals(new Integer[]{2}, PrimePairs.addPairs(5).toArray());    // 11: 311, 113
-        assertArrayEquals(new Integer[0], PrimePairs.addPairs(6).toArray());      // no pairs for 13
-        assertArrayEquals(new Integer[]{2}, PrimePairs.addPairs(7).toArray());    // 17: 317, 173
-        assertArrayEquals(new Integer[]{4, 6}, PrimePairs.addPairs(8).toArray()); // 19: 719, 197 + 1317, 1713
-        assertArrayEquals(new Integer[]{5}, PrimePairs.addPairs(9).toArray());    // 23: 1123, 2311
-        assertArrayEquals(new Integer[0], PrimePairs.addPairs(10).toArray());     // no pairs for 29
-    }
-
-    @Test
-    public void get() throws Exception {
+    public void testGet() throws Exception {
         assertArrayEquals(new Integer[0], PrimePairs.get(0).toArray());      // no prime for index 0
         assertArrayEquals(new Integer[0], PrimePairs.get(1).toArray());      // 2: no pairs
         assertArrayEquals(new Integer[0], PrimePairs.get(2).toArray());      // 3: no pairs
@@ -38,7 +23,43 @@ public class PrimePairsTest {
     }
 
     @Test
-    public void isConcatenablePrimes() throws Exception {
+    public void testBuildPairs() throws Exception {
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(0).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(1).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(2).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(3).toArray());
+        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairs(4).toArray());
+        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairs(5).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(6).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(6).toArray());
+        assertArrayEquals(new Integer[]{4, 6}, PrimePairs.buildPairs(8).toArray());
+        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairs(5).toArray());
+    }
+
+    @Test
+    public void testAddPairs() throws Exception {
+        assertArrayEquals(new Integer[0], PrimePairs.addPairs(0).toArray());      // no prime for index 0
+        assertArrayEquals(new Integer[0], PrimePairs.addPairs(1).toArray());      // no pairs for 2
+        assertArrayEquals(new Integer[0], PrimePairs.addPairs(2).toArray());      // no pairs for 3
+        assertArrayEquals(new Integer[0], PrimePairs.addPairs(3).toArray());      // no pairs for 5
+        assertArrayEquals(new Integer[]{2}, PrimePairs.addPairs(4).toArray());    // 7: 37, 73
+        assertArrayEquals(new Integer[]{2}, PrimePairs.addPairs(5).toArray());    // 11: 311, 113
+        assertArrayEquals(new Integer[0], PrimePairs.addPairs(6).toArray());      // no pairs for 13
+        assertArrayEquals(new Integer[]{2}, PrimePairs.addPairs(7).toArray());    // 17: 317, 173
+        assertArrayEquals(new Integer[]{4, 6}, PrimePairs.addPairs(8).toArray()); // 19: 719, 197 + 1317, 1713
+        assertArrayEquals(new Integer[]{5}, PrimePairs.addPairs(9).toArray());    // 23: 1123, 2311
+        assertArrayEquals(new Integer[0], PrimePairs.addPairs(10).toArray());     // no pairs for 29
+    }
+
+    @Test
+    public void testGetPrimePair() throws Exception {
+        assertNull(PrimePairs.getPrimePair(1, 2));
+        assertArrayEquals(new Integer[]{2, 4}, PrimePairs.getPrimePair(2, 4).toArray());
+        assertArrayEquals(new Integer[]{2, 4}, PrimePairs.getPrimePair(4, 2).toArray());
+    }
+
+    @Test
+    public void testIsConcatenablePrimes() throws Exception {
         assert (!PrimePairs.isConcatenable(3L, 2L));
         assert (!PrimePairs.isConcatenable(5L, 2L));
         assert (!PrimePairs.isConcatenable(5L, 3L));
@@ -48,10 +69,21 @@ public class PrimePairsTest {
         assert (!PrimePairs.isConcatenable(11L, 2L));
         assert (PrimePairs.isConcatenable(11L, 3L));
         assert (!PrimePairs.isConcatenable(11L, 5L));
+        // concatenable primes {13, 5197, 5701, 6733, 8389}, indices {6, 692, 751, 868, 1051}
+        assert (PrimePairs.isConcatenable(13L, 5197L));
+        assert (PrimePairs.isConcatenable(13L, 5701L));
+        assert (PrimePairs.isConcatenable(13L, 6733L));
+        assert (PrimePairs.isConcatenable(13L, 8389L));
+        assert (PrimePairs.isConcatenable(5197L, 5701L));
+        assert (PrimePairs.isConcatenable(5197L, 6733L));
+        assert (PrimePairs.isConcatenable(5197L, 8389L));
+        assert (PrimePairs.isConcatenable(5701L, 6733L));
+        assert (PrimePairs.isConcatenable(5701L, 8389L));
+        assert (PrimePairs.isConcatenable(6733L, 8389L));
     }
 
     @Test
-    public void isConcatenableIndices() throws Exception {
+    public void testIsConcatenableIndices() throws Exception {
         assert (!PrimePairs.isConcatenable(2, 1));
         assert (!PrimePairs.isConcatenable(3, 1));
         assert (!PrimePairs.isConcatenable(3, 2));
@@ -64,7 +96,7 @@ public class PrimePairsTest {
     }
 
     @Test
-    public void isConcatenableList() throws Exception {
+    public void testIsConcatenableList() throws Exception {
         List<Integer> list = new ArrayList<>();
         // concatenable list {3, 7}:
         list.add(4); // 3
@@ -89,10 +121,42 @@ public class PrimePairsTest {
         assert (PrimePairs.isConcatenable(list));
         list.add(5);
         assert (!PrimePairs.isConcatenable(list));
+        // concatenable prime list {13, 5197, 5701, 6733, 8389}
+        list.clear();
+        list.add(6);    // 13
+        list.add(692);  // 5197
+        list.add(751);  // 5701
+        list.add(868);  // 6733
+        list.add(1051); // 8389
+        assert (PrimePairs.isConcatenable(list));
+        list.add(5);
+        assert (!PrimePairs.isConcatenable(list));
     }
 
     @Test
-    public void getPrimeArray() throws Exception {
+    public void testIsPair() throws Exception {
+        assert (!PrimePairs.isPair(1, 2));
+        assert (!PrimePairs.isPair(2, 1));
+        // {2, 12, 19}
+        assert (PrimePairs.isPair(2, 12)); // FIXME: fails due to interactions with other tests
+        assert (PrimePairs.isPair(2, 19));
+        assert (PrimePairs.isPair(12, 19));
+        assert (PrimePairs.isPair(19, 12));
+        // concatenable primes {13, 5197, 5701, 6733, 8389}, indices {6, 692, 751, 868, 1051}
+        assert (PrimePairs.isPair(6, 692));
+        assert (PrimePairs.isPair(6, 751));
+        assert (PrimePairs.isPair(6, 868));
+        assert (PrimePairs.isPair(6, 1051));
+        assert (PrimePairs.isPair(692, 751));
+        assert (PrimePairs.isPair(692, 868));
+        assert (PrimePairs.isPair(692, 1051));
+        assert (PrimePairs.isPair(751, 868));
+        assert (PrimePairs.isPair(751, 1051));
+        assert (PrimePairs.isPair(868, 1051));
+    }
+
+    @Test
+    public void testGetPrimeArray() throws Exception {
         List<Integer> list = new ArrayList<>();
         assertArrayEquals(new long[0], PrimePairs.getPrimeArray(list));
         list.add(1);
@@ -104,13 +168,13 @@ public class PrimePairsTest {
     }
 
     @Test
-    public void concatenate() throws Exception {
+    public void testConcatenate() throws Exception {
         assertEquals(12, PrimePairs.concatenate(1, 2));
         assertEquals(12345678901L, PrimePairs.concatenate(1234567890, 1));
     }
 
     @Test
-    public void getPrime() throws Exception {
+    public void testGetPrime() throws Exception {
         assertEquals(2, PrimePairs.getPrime(1));
         assertEquals(3, PrimePairs.getPrime(2));
         assertEquals(5, PrimePairs.getPrime(3));
@@ -124,39 +188,8 @@ public class PrimePairsTest {
     }
 
     @Test
-    public void buildPairs() throws Exception {
-        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(0).toArray());
-        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(1).toArray());
-        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(2).toArray());
-        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(3).toArray());
-        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairs(4).toArray());
-        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairs(5).toArray());
-        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(6).toArray());
-        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(6).toArray());
-        assertArrayEquals(new Integer[]{4, 6}, PrimePairs.buildPairs(8).toArray());
-        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairs(5).toArray());
-    }
-
-    @Test
-    public void getPrimePair() throws Exception {
-        assertNull(PrimePairs.getPrimePair(1, 2));
-        assertArrayEquals(new Integer[]{2, 4}, PrimePairs.getPrimePair(2, 4).toArray());
-        assertArrayEquals(new Integer[]{2, 4}, PrimePairs.getPrimePair(4, 2).toArray());
-    }
-
-    @Test
-    public void getListFromPair() throws Exception {
+    public void testGetListFromPair() throws Exception {
         assertArrayEquals(new Integer[]{1, 2}, PrimePairs.getListFromPair(1, 2).toArray());
         assertArrayEquals(new Integer[]{1, 2}, PrimePairs.getListFromPair(2, 1).toArray());
-    }
-
-    @Test
-    public void isPair() throws Exception {
-        assert (!PrimePairs.isPair(1, 2));
-        assert (!PrimePairs.isPair(2, 1));
-        assert (PrimePairs.isPair(2, 12));
-        assert (PrimePairs.isPair(2, 19));
-        assert (PrimePairs.isPair(12, 19));
-        assert (PrimePairs.isPair(19, 12));
     }
 }

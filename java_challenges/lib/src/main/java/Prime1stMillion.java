@@ -7,6 +7,7 @@ class Prime1stMillion extends Prime {
 
     // http://www.naturalnumbers.org/primes.html
     private static final String PRIME_1ST_MILLION_FILE = "file/P-1000000.txt";
+    private static final int MAX_INDEX = 1000000 - 1;
     private List<Long> primes;
     private Set<Long> primeSet;
 
@@ -51,7 +52,12 @@ class Prime1stMillion extends Prime {
 
     @Override
     public Boolean isPrime(long tested) {
-        return primeSet.contains(tested);
+        if (isCached(tested)) return primeSet.contains(tested);
+        return Prime.checkPrime(tested);
+    }
+
+    private boolean isCached(long tested) {
+        return tested <= primes.get(MAX_INDEX);
     }
 
     @Override
