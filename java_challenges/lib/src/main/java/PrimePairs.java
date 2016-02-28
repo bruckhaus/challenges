@@ -35,11 +35,26 @@ class PrimePairs {
         return pairsList.get(index);
     }
 
-    private static void buildPairs(int index) {
+    static List buildPairs(int index) {
         while (index > lastIndex) {
             lastIndex++;
             addPairs(lastIndex);
         }
+        return pairsList.get(index);
+    }
+
+    static List<Integer> getPrimePair(int prime1, int prime2) {
+        if (PrimePairs.isConcatenable(prime1, prime2)) return getListFromPair(prime1, prime2);
+        return null;
+    }
+
+    static List<Integer> getListFromPair(int index1, int index2) {
+        List<Integer> list = new ArrayList<>();
+        int first = Math.min(index1, index2);
+        int second = Math.max(index1, index2);
+        list.add(first);
+        list.add(second);
+        return list;
     }
 
     static boolean isConcatenable(List<Integer> list) {

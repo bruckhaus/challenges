@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,29 +38,15 @@ public class P60_PrimePairSets {
         return null;
     }
 
-    static List<Integer> searchPrimeArray(int size, int seed, int newSeed) {
-        if (size == 2) return checkPair(seed, newSeed);
+    static List<Integer> searchPrimeArray(int size, int seed1, int seed2) {
+        if (size == 2) return PrimePairs.getPrimePair(seed1, seed2);
         List<Integer> solution;
-        solution = searchPrimeArray(size - 1, newSeed);
+        solution = searchPrimeArray(size - 1, seed2);
         if (solution != null) {
-            solution.add(seed);
+            solution.add(seed1);
             if (PrimePairs.isConcatenable(solution)) return solution;
         }
         return null;
-    }
-
-    static List<Integer> checkPair(int seed, int newSeed) {
-        if (PrimePairs.isConcatenable(seed, newSeed)) {
-            return makeList(seed, newSeed);
-        }
-        return null;
-    }
-
-    static List<Integer> makeList(int seed, int newSeed) {
-        List<Integer> solution = new ArrayList<>();
-        solution.add(seed);
-        solution.add(newSeed);
-        return solution;
     }
 
     static long getSum(long[] longs) {

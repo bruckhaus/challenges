@@ -93,7 +93,7 @@ public class PrimePairsTest {
 
     @Test
     public void getPrimeArray() throws Exception {
-        ArrayList<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         assertArrayEquals(new long[0], PrimePairs.getPrimeArray(list));
         list.add(1);
         assertArrayEquals(new long[]{2}, PrimePairs.getPrimeArray(list));
@@ -123,4 +123,40 @@ public class PrimePairsTest {
         assertEquals(29, PrimePairs.getPrime(10));
     }
 
+    @Test
+    public void buildPairs() throws Exception {
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(0).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(1).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(2).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(3).toArray());
+        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairs(4).toArray());
+        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairs(5).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(6).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(6).toArray());
+        assertArrayEquals(new Integer[]{4, 6}, PrimePairs.buildPairs(8).toArray());
+        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairs(5).toArray());
+    }
+
+    @Test
+    public void getPrimePair() throws Exception {
+        assertNull(PrimePairs.getPrimePair(1, 2));
+        assertArrayEquals(new Integer[]{2, 4}, PrimePairs.getPrimePair(2, 4).toArray());
+        assertArrayEquals(new Integer[]{2, 4}, PrimePairs.getPrimePair(4, 2).toArray());
+    }
+
+    @Test
+    public void getListFromPair() throws Exception {
+        assertArrayEquals(new Integer[]{1, 2}, PrimePairs.getListFromPair(1, 2).toArray());
+        assertArrayEquals(new Integer[]{1, 2}, PrimePairs.getListFromPair(2, 1).toArray());
+    }
+
+    @Test
+    public void isPair() throws Exception {
+        assert (!PrimePairs.isPair(1, 2));
+        assert (!PrimePairs.isPair(2, 1));
+        assert (PrimePairs.isPair(2, 12));
+        assert (PrimePairs.isPair(2, 19));
+        assert (PrimePairs.isPair(12, 19));
+        assert (PrimePairs.isPair(19, 12));
+    }
 }
