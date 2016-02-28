@@ -32,8 +32,8 @@ public class P60_PrimePairSets {
 
     static List<Integer> searchPrimeArray(int size, int seed) {
         List<Integer> solution;
-        for (int nextSeed : PrimePairs.get(seed)) {
-            solution = searchPrimeArray(size, seed, nextSeed);
+        for (Object nextSeed : PrimePairs.get(seed)) {
+            solution = searchPrimeArray(size, seed, (Integer) nextSeed);
             if (solution != null) return solution;
         }
         return null;

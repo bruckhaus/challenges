@@ -70,6 +70,7 @@ class PrimePairs {
     static long[] getPrimeArray(List<Integer> list) {
         long[] array = new long[list.size()];
         for (int i = 0; i < list.size(); i++) array[i] = primes.get(list.get(i));
+        Arrays.sort(array);
         return array;
     }
 
