@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 class PrimePairs {
@@ -20,16 +21,16 @@ class PrimePairs {
 
     static List addPairs(int index) {
         List<Integer> newPairs = new ArrayList<>();
-        pairsList.add(newPairs);
         for (int i = 1; i < index; i++) {
             if (isConcatenable(i, index)) {
                 newPairs.add(i);
             }
         }
+        pairsList.add(index, newPairs);
         return newPairs;
     }
 
-    static List<Integer> get(int index) {
+    static List get(int index) {
         buildPairs(index);
         return pairsList.get(index);
     }
@@ -42,29 +43,19 @@ class PrimePairs {
     }
 
     static boolean isConcatenable(List<Integer> list) {
-        System.out.println("checking list = " + list);
-        if (list.size() < 2) {
-            System.out.println("  list has less than 2 elements");
-            return true;
-        }
+        if (list.size() < 2) return true;
         List<Integer> temp = new ArrayList<>();
         temp.addAll(list);
         int head = temp.remove(0);
-        System.out.println("  removed head = " + head);
-        for (int other : temp) {
-            System.out.printf("  checking %d and %d\n", head, other);
-            if (!isPair(head, other)) {
-                System.out.println("  not pair");
-                return false;
-            }
-        }
+        for (int other : temp) if (!isPair(head, other)) return false;
         return isConcatenable(temp);
     }
 
-    private static boolean isPair(int index1, int index2) {
-        buildPairs(Math.max(index1, index2));
-        return PrimePairs.get(index2).contains(index1) ||
-                PrimePairs.get(index1).contains(index2);
+    static boolean isPair(Integer index1, Integer index2) {
+        Integer larger = Math.max(index1, index2);
+        Integer smaller = Math.min(index1, index2);
+        buildPairs(larger);
+        return get(larger).contains(smaller);
     }
 
     static boolean isConcatenable(int first, int second) {

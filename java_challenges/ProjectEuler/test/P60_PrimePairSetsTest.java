@@ -27,32 +27,32 @@ public class P60_PrimePairSetsTest {
 
 //    @Test
 //    public void testIsConcatenable() throws Exception {
-//        assert (P60_PrimePairSets.isConcatenable(2, new long[]{3, 7}));
-//        assert (!P60_PrimePairSets.isConcatenable(2, new long[]{3, 5}));
-//        assert (P60_PrimePairSets.isConcatenable(3, new long[]{3, 37, 67}));
-//        assert (!P60_PrimePairSets.isConcatenable(3, new long[]{11, 37, 67}));
-//        assert (P60_PrimePairSets.isConcatenable(4, new long[]{3, 7, 109, 673}));
-//        assert (!P60_PrimePairSets.isConcatenable(4, new long[]{3, 19, 109, 673}));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(2, new long[]{3, 7}));
+//        assert (!P60_PrimePairSets.isConcatenablePrimes(2, new long[]{3, 5}));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(3, new long[]{3, 37, 67}));
+//        assert (!P60_PrimePairSets.isConcatenablePrimes(3, new long[]{11, 37, 67}));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(4, new long[]{3, 7, 109, 673}));
+//        assert (!P60_PrimePairSets.isConcatenablePrimes(4, new long[]{3, 19, 109, 673}));
 //    }
 //
 //    @Test
 //    public void testIsConcatenable1() throws Exception {
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 7}, new int[]{0, 1}, true));
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 7}, new int[]{0, 1}, false));
-//        assert (!P60_PrimePairSets.isConcatenable(new long[]{3, 5}, new int[]{0, 1}, true));
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 5}, new int[]{0, 1}, false));
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 37, 67}, new int[]{0, 1}, true));
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 37, 67}, new int[]{0, 1}, false));
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 37, 67}, new int[]{0, 2}, true));
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 37, 67}, new int[]{0, 2}, false));
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 37, 67}, new int[]{1, 2}, true));
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 37, 67}, new int[]{1, 2}, false));
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 11, 67}, new int[]{0, 1}, true));
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 11, 67}, new int[]{0, 1}, false));
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 11, 67}, new int[]{0, 2}, true));
-//        assert (P60_PrimePairSets.isConcatenable(new long[]{3, 11, 67}, new int[]{0, 2}, false));
-//        assert (!P60_PrimePairSets.isConcatenable(new long[]{3, 11, 67}, new int[]{1, 2}, true));
-//        assert (!P60_PrimePairSets.isConcatenable(new long[]{3, 11, 67}, new int[]{1, 2}, false));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 7}, new int[]{0, 1}, true));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 7}, new int[]{0, 1}, false));
+//        assert (!P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 5}, new int[]{0, 1}, true));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 5}, new int[]{0, 1}, false));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 37, 67}, new int[]{0, 1}, true));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 37, 67}, new int[]{0, 1}, false));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 37, 67}, new int[]{0, 2}, true));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 37, 67}, new int[]{0, 2}, false));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 37, 67}, new int[]{1, 2}, true));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 37, 67}, new int[]{1, 2}, false));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 11, 67}, new int[]{0, 1}, true));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 11, 67}, new int[]{0, 1}, false));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 11, 67}, new int[]{0, 2}, true));
+//        assert (P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 11, 67}, new int[]{0, 2}, false));
+//        assert (!P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 11, 67}, new int[]{1, 2}, true));
+//        assert (!P60_PrimePairSets.isConcatenablePrimes(new long[]{3, 11, 67}, new int[]{1, 2}, false));
 //    }
 //
 //    @Test

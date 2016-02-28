@@ -38,7 +38,7 @@ public class PrimePairsTest {
     }
 
     @Test
-    public void isConcatenable() throws Exception {
+    public void isConcatenablePrimes() throws Exception {
         assert (!PrimePairs.isConcatenable(3L, 2L));
         assert (!PrimePairs.isConcatenable(5L, 2L));
         assert (!PrimePairs.isConcatenable(5L, 3L));
@@ -51,7 +51,7 @@ public class PrimePairsTest {
     }
 
     @Test
-    public void isConcatenable1() throws Exception {
+    public void isConcatenableIndices() throws Exception {
         assert (!PrimePairs.isConcatenable(2, 1));
         assert (!PrimePairs.isConcatenable(3, 1));
         assert (!PrimePairs.isConcatenable(3, 2));
@@ -64,17 +64,15 @@ public class PrimePairsTest {
     }
 
     @Test
-    public void isConcatenable2() throws Exception {
+    public void isConcatenableList() throws Exception {
         List<Integer> list = new ArrayList<>();
-
-        // concatenable list {3, 7}
+        // concatenable list {3, 7}:
         list.add(4); // 3
         list.add(2); // 7
         assert (PrimePairs.isConcatenable(list));
         list.add(5);
         assert (!PrimePairs.isConcatenable(list));
-
-        // concatenable prime list {3, 37, 67}
+        // concatenable prime list {3, 37, 67}:
         list.clear();
         list.add(2);  // 3
         list.add(12); // 37
@@ -82,12 +80,11 @@ public class PrimePairsTest {
         assert (PrimePairs.isConcatenable(list));
         list.add(5);
         assert (!PrimePairs.isConcatenable(list));
-
-        // concatenable prime list {3, 7, 109, 673}
+        // concatenable prime list {3, 7, 109, 673}:
         list.clear();
-        list.add(2);  // 3
-        list.add(4);  // 7
-        list.add(29); // 109
+        list.add(2);   // 3
+        list.add(4);   // 7
+        list.add(29);  // 109
         list.add(122); // 673
         assert (PrimePairs.isConcatenable(list));
         list.add(5);
@@ -95,7 +92,7 @@ public class PrimePairsTest {
     }
 
     @Test
-    public void getPrimesArray() throws Exception {
+    public void getPrimeArray() throws Exception {
         ArrayList<Integer> list = new ArrayList<>();
         assertArrayEquals(new long[0], PrimePairs.getPrimeArray(list));
         list.add(1);
