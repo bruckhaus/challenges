@@ -15,12 +15,12 @@ public class P60_PrimePairSetsTest {
     }
 
     @Test
-    public void testSearchPrimeArrayWithOneSeed() throws Exception {
-        List<Integer> result = P60_PrimePairSets.searchPrimeArray(2, 2);
+    public void testFindIndexArray() throws Exception {
+        List<Integer> result = P60_PrimePairSets.findIndexArray(2);
         assertNull(result);
-        result = P60_PrimePairSets.searchPrimeArray(2, 3);
+        result = P60_PrimePairSets.findIndexArray(3);
         assert result == null;
-        result = P60_PrimePairSets.searchPrimeArray(2, 4);
+        result = P60_PrimePairSets.findIndexArray(4);
         assert result != null;
         Collections.sort(result);
         Integer[] array = new Integer[]{2, 4};
@@ -33,13 +33,13 @@ public class P60_PrimePairSetsTest {
         Integer[] array;
 
 //         not a solution for these seeds:
-//        result = P60_PrimePairSets.searchPrimeArray(3, 2, 1);
+//        result = P60_PrimePairSets.findIndexArray(3, 2, 1);
 //        assertNull(result);
-//        result = P60_PrimePairSets.searchPrimeArray(3, 19, 11);
+//        result = P60_PrimePairSets.findIndexArray(3, 19, 11);
 //        assertNull(result);
 //
 //         solution for 3 primes:
-//        result = P60_PrimePairSets.searchPrimeArray(3, 19, 12);
+//        result = P60_PrimePairSets.findIndexArray(3, 19, 12);
 //        assertNotNull(result);
 //        Collections.sort(result);
 //        array = new Integer[]{2, 12, 19};
@@ -47,7 +47,7 @@ public class P60_PrimePairSetsTest {
 
         // solution for 4 primes:
 //        array = new Integer[]{2, 12, 19}; // FIXME: not the expected values
-//        result = P60_PrimePairSets.searchPrimeArray(4, 868);
+//        result = P60_PrimePairSets.findIndexArray(4, 868);
 //        assertNotNull(result);
 //        Collections.sort(result);
 //        assertArrayEquals(array, result.toArray());
@@ -66,14 +66,14 @@ public class P60_PrimePairSetsTest {
 
         // solution for 5 primes:
         array = new Integer[]{2, 12, 19}; // FIXME: not the expected values
-        result = P60_PrimePairSets.searchPrimeArray(5, 1051);
+        result = P60_PrimePairSets.findIndexArray(5);
         assertNotNull(result);
         Collections.sort(result);
         assertArrayEquals(array, result.toArray());
 
         // solution for 5 primes:
 //        array = new Integer[]{2, 12, 19}; // FIXME: not the expected values
-//        result = P60_PrimePairSets.searchPrimeArray(5, 1051, 868);
+//        result = P60_PrimePairSets.findIndexArray(5, 1051, 868);
 //        assertNotNull(result);
 //        Collections.sort(result);
 //        assertArrayEquals(array, result.toArray());

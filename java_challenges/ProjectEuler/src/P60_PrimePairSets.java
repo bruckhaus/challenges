@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class P60_PrimePairSets {
     // Project Euler - Problem 60 - Prime pair sets
@@ -32,38 +30,43 @@ public class P60_PrimePairSets {
     }
 
     static long[] findPrimeArray(int size) {
-        List<Integer> solution;
-        for (int i = 1; true; i++) {
-            showStep(i);
-            solution = searchPrimeArray(size, i);
-            if (solution != null) return PrimePairs.getPrimeArray(solution);
+        return PrimePairs.getPrimeArray(findIndexArray(size));
+    }
+
+    static List<Integer> findIndexArray(int size) {
+        System.out.println("\nsize = " + size);
+        int seed = 1;
+        int offset = 0;
+        List<Integer> solution = new ArrayList<>();
+        List<Integer> pairs = PrimePairs.get(seed);
+        List<Integer> partial;
+        while (true) {
+            System.out.println("seed = " + seed);
+            System.out.println("offset = " + offset);
+            System.out.println("solution = " + (solution != null ? solution.toString() : null));
+            if (offset <= pairs.size() - 1) {
+                partial = findIndexArray(size - 1);
+                solution = checkPartial(seed, partial);
+                if (solution != null) {
+                    Collections.sort(solution);
+                    System.out.println("solution = " + solution.toString());
+                    return solution;
+                }
+            }
+            if (offset < pairs.size() - 1) {
+                offset++;
+            } else {
+                seed++;
+                offset = 0;
+                pairs = PrimePairs.get(seed);
+            }
         }
     }
 
-    static List<Integer> searchPrimeArray(int size, int seed) {
-        if (tracers.contains(seed)) {
-            System.out.printf("search for size: %d, seed: %d\n", size, seed);
-            System.out.printf("  pairs[%d]: %s\n", seed, PrimePairs.get(seed).toString());
-        }
-        List<Integer> solution;
-        for (Object nextSeed : PrimePairs.get(seed)) {
-            solution = searchPrimeArray(size, seed, (Integer) nextSeed);
-            if (solution != null) return solution;
-        }
-        return null;
-    }
-
-    static List<Integer> searchPrimeArray(int size, int seed1, int seed2) {
-        if (tracers.contains(seed1) && tracers.contains(seed2)) {
-            System.out.printf("    search for size: %d, seeds: %d, %d\n", size, seed1, seed2);
-        }
-        if (size == 2) return PrimePairs.getPrimePair(seed1, seed2);
-        List<Integer> solution;
-        solution = searchPrimeArray(size - 1, seed2);
-        if (solution != null) {
-            solution.add(seed1);
-            if (PrimePairs.isConcatenable(solution)) return solution;
-        }
+    private static List<Integer> checkPartial(int seed, List<Integer> partial) {
+        if (partial == null) return null;
+        partial.add(seed);
+        if (PrimePairs.isConcatenable(partial)) return partial;
         return null;
     }
 
