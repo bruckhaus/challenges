@@ -14,12 +14,11 @@ public class P60_PrimePairSets {
 
     public static void main(String[] args) {
         diagnosticsToStdOut = false;
-        String message = "The lowest sum for a set of five primes " +
+        String message ="Solution prime set = %s.\n" +
+                "The lowest sum for a set of five primes " +
                 "for which any two primes concatenate to produce another prime is %d.\n";
-        long[] solution = P60_PrimePairSets.findPrimeArray(PRIME_ARRAY_SIZE);
-        showSolutionPrimeArray(solution);
-        long primeSum = P60_PrimePairSets.getSum(solution);
-        System.out.printf(message, primeSum);
+        long[] primeArray = P60_PrimePairSets.findPrimeArray(PRIME_ARRAY_SIZE);
+        System.out.printf(message, Arrays.toString(primeArray), P60_PrimePairSets.getSum(primeArray));
     }
 
     static long[] findPrimeArray(int size) {
@@ -33,22 +32,22 @@ public class P60_PrimePairSets {
         }
     }
 
-    static List<Integer> findIndexArray(int size, int seed, int start) {
+    static List<Integer> findIndexArray(int size, int seed, int seedOffset) {
         showCall(size);
         if (size == 1) return makeList(seed);
-        List<Integer> pairs = PrimePairs.get(seed);
-        int offset = 0;
+        List<Integer> seedPairs = PrimePairs.get(seed);
+        int partialOffset = 0;
         while (true) {
-            if (start > pairs.size() - 1) return null;
-            List<Integer> partial = findIndexArray(size - 1, pairs.get(start), offset);
-            showStep(size, seed, start, offset, partial, pairs);
+            if (seedOffset > seedPairs.size() - 1) return null;
+            List<Integer> partial = findIndexArray(size - 1, seedPairs.get(seedOffset), partialOffset);
+            showStep(size, seed, seedOffset, partialOffset, partial, seedPairs);
             if (partial == null) {
-                start++;
-                offset = 0;
+                seedOffset++;
+                partialOffset = 0;
             } else {
                 List<Integer> solution = checkPartial(partial, seed);
                 if (solution == null) {
-                    offset++;
+                    partialOffset++;
                 } else {
                     showSolution(solution);
                     return solution;
@@ -80,22 +79,21 @@ public class P60_PrimePairSets {
         System.out.printf("Find index array for size: %d\n", size);
     }
 
-    private static void showStep(int size, int seed, int start, int offset, List<Integer> partial, List<Integer> pairs) {
+    private static void showStep(int size, int seed, int offsetForSolution, int offsetForPartial,
+                                 List<Integer> partial, List<Integer> pairs) {
         if (!diagnosticsToStdOut) return;
         if (seed <= maxSeedShown) return;
         maxSeedShown = seed;
         long prime = PrimePairs.getPrime(seed);
         String partialStr = partial == null ? "null" : partial.toString();
-        System.out.printf("Size: %d, prime[%5d]: %,5d, start: %2d, offset: %2d, partial solution: %20s, pairs: %s\n",
-                size, seed, prime, start, offset, partialStr, pairs);
+        System.out.printf("Size: %d, prime[%5d]: %,5d, " +
+                "offset for solution: %2d, offset for partial: %2d, " +
+                "partial solution: %20s, pairs: %s\n",
+                size, seed, prime, offsetForSolution, offsetForPartial, partialStr, pairs);
     }
 
     private static void showSolution(List<Integer> solution) {
         if (!diagnosticsToStdOut) return;
         System.out.printf("Solution: %s\n", solution.toString());
-    }
-
-    private static void showSolutionPrimeArray(long[] solution) {
-        System.out.printf("Solution prime set = %s\n", Arrays.toString(solution));
     }
 }

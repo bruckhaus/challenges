@@ -12,6 +12,7 @@ public class P60_PrimePairSetsTest {
         assertArrayEquals(new long[]{3, 7}, P60_PrimePairSets.findPrimeArray(2));
         assertArrayEquals(new long[]{3, 37, 67}, P60_PrimePairSets.findPrimeArray(3));
         assertArrayEquals(new long[]{3, 7, 109, 673}, P60_PrimePairSets.findPrimeArray(4));
+        assertArrayEquals(new long[]{13, 5197, 5701, 6733, 8389}, P60_PrimePairSets.findPrimeArray(5));
     }
 
     @Test
@@ -20,6 +21,7 @@ public class P60_PrimePairSetsTest {
         assertArrayEquals(new Integer[]{2, 4}, P60_PrimePairSets.findIndexArray(2).toArray());
         assertArrayEquals(new Integer[]{2, 12, 19}, P60_PrimePairSets.findIndexArray(3).toArray());
         assertArrayEquals(new Integer[]{2, 4, 29, 122}, P60_PrimePairSets.findIndexArray(4).toArray());
+        assertArrayEquals(new Integer[]{6, 692, 751, 868, 1051}, P60_PrimePairSets.findIndexArray(5).toArray());
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -28,12 +30,12 @@ public class P60_PrimePairSetsTest {
         assertArrayEquals(new Integer[]{2, 4, 29, 122}, P60_PrimePairSets.findIndexArray(4, 122, 0).toArray());
         assertArrayEquals(new Integer[]{9, 64, 123, 144}, P60_PrimePairSets.findIndexArray(4, 144, 0).toArray());
         assertArrayEquals(new Integer[]{5, 52, 176, 283}, P60_PrimePairSets.findIndexArray(4, 283, 0).toArray());
+        assertArrayEquals(new Integer[]{50, 112, 556, 868}, P60_PrimePairSets.findIndexArray(4, 868, 0).toArray());
+        assertArrayEquals(new Integer[]{6, 692, 751, 868}, P60_PrimePairSets.findIndexArray(4, 868, 31).toArray());
         assertNull(P60_PrimePairSets.findIndexArray(4, 121, 0));
         assertNull(P60_PrimePairSets.findIndexArray(4, 123, 0));
         assertNull(P60_PrimePairSets.findIndexArray(4, 143, 0));
         assertNull(P60_PrimePairSets.findIndexArray(4, 145, 0));
-        assertNull(P60_PrimePairSets.findIndexArray(4, 182, 0));
-        assertNull(P60_PrimePairSets.findIndexArray(4, 184, 0));
     }
 
     @Test
@@ -52,11 +54,6 @@ public class P60_PrimePairSetsTest {
     }
 
     @Test
-    public void testSizeFiveSolution() throws Exception {
-        assertArrayEquals(new Integer[]{6, 692, 751, 868, 1051}, P60_PrimePairSets.findIndexArray(5).toArray());
-    }
-
-    @Test
     public void testGetSum() throws Exception {
         assertEquals(10, P60_PrimePairSets.getSum(new long[]{1, 2, 3, 4}));
         assertEquals(10, P60_PrimePairSets.getSum(new long[]{3, 7}));
@@ -65,13 +62,13 @@ public class P60_PrimePairSetsTest {
     }
 
     @Test
-    public void makeList() throws Exception {
+    public void testMakeList() throws Exception {
         assertArrayEquals(new Integer[]{1}, P60_PrimePairSets.makeList(1).toArray());
         assertArrayEquals(new Integer[]{777}, P60_PrimePairSets.makeList(777).toArray());
     }
 
     @Test
-    public void checkPartial() throws Exception {
+    public void testCheckPartial() throws Exception {
         List<Integer> result;
         result = P60_PrimePairSets.checkPartial(P60_PrimePairSets.makeList(2), 3);
         assertNull(result);
