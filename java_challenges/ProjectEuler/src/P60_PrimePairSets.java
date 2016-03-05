@@ -9,11 +9,11 @@ public class P60_PrimePairSets {
     // Find the lowest sum for a set of five primes for which any two primes concatenate to produce another prime.
 
     private static final int PRIME_ARRAY_SIZE = 5;
-    private static boolean printToStdOut = true;
+    private static boolean diagnosticsToStdOut = false;
     private static int maxSeedShown = 0;
 
     public static void main(String[] args) {
-        printToStdOut = true;
+        diagnosticsToStdOut = false;
         String message = "The lowest sum for a set of five primes " +
                 "for which any two primes concatenate to produce another prime is %d.\n";
         long[] solution = P60_PrimePairSets.findPrimeArray(PRIME_ARRAY_SIZE);
@@ -76,12 +76,12 @@ public class P60_PrimePairSets {
     }
 
     private static void showCall(int size) {
-//        if (!printToStdOut) return;
-//        System.out.printf("Find index array for size: %d\n", size);
+        if (!diagnosticsToStdOut) return;
+        System.out.printf("Find index array for size: %d\n", size);
     }
 
     private static void showStep(int size, int seed, int start, int offset, List<Integer> partial, List<Integer> pairs) {
-        if (!printToStdOut) return;
+        if (!diagnosticsToStdOut) return;
         if (seed <= maxSeedShown) return;
         maxSeedShown = seed;
         long prime = PrimePairs.getPrime(seed);
@@ -91,8 +91,8 @@ public class P60_PrimePairSets {
     }
 
     private static void showSolution(List<Integer> solution) {
-//        if (!printToStdOut) return;
-//        System.out.printf("Solution: %s\n", solution.toString());
+        if (!diagnosticsToStdOut) return;
+        System.out.printf("Solution: %s\n", solution.toString());
     }
 
     private static void showSolutionPrimeArray(long[] solution) {

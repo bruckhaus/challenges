@@ -25,9 +25,9 @@ public class P60_PrimePairSetsTest {
     @SuppressWarnings("ConstantConditions")
     @Test
     public void testFindIndexArray2() throws Exception {
-//        assertArrayEquals(new Integer[]{2, 4, 29, 122}, P60_PrimePairSets.findIndexArray(4, 122, 0).toArray());
-        assertArrayEquals(new Integer[]{9, 64, 123, 144}, P60_PrimePairSets.findIndexArray(4, 123, 0).toArray());
-//        assertArrayEquals(new Integer[]{5, 52, 176, 283}, P60_PrimePairSets.findIndexArray(4, 145, 0).toArray());
+        assertArrayEquals(new Integer[]{2, 4, 29, 122}, P60_PrimePairSets.findIndexArray(4, 122, 0).toArray());
+        assertArrayEquals(new Integer[]{9, 64, 123, 144}, P60_PrimePairSets.findIndexArray(4, 144, 0).toArray());
+        assertArrayEquals(new Integer[]{5, 52, 176, 283}, P60_PrimePairSets.findIndexArray(4, 283, 0).toArray());
     }
 
     @Test
