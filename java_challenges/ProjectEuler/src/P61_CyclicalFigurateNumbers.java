@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.*;
 
 public class P61_CyclicalFigurateNumbers {
     // Project Euler - Problem 61 - Cyclical figurate numbers
@@ -27,18 +26,79 @@ public class P61_CyclicalFigurateNumbers {
                 "triangle, square, pentagonal, hexagonal, heptagonal, and octagonal, " +
                 "is represented by a different number in the set is %,d\n" +
                 "The set is: %s\n";
-        Set<Integer> solution = P61_CyclicalFigurateNumbers.getList(6);
+        List<int[]> solution = P61_CyclicalFigurateNumbers.getList(6);
         long sum = P61_CyclicalFigurateNumbers.getSum(solution);
         System.out.printf(message, sum, solution.toString());
     }
 
-    static Set<Integer> getList(int count) {
+    private static Polygonal triangular = new Triangular();
+    private static Polygonal square = new Square();
+    private static Polygonal pentagonal = new Pentagonal();
+    private static Polygonal hexagonal = new Hexagonal();
+    private static Polygonal heptagonal = new Heptagonal();
+    private static Polygonal octagonal = new Octagonal();
+
+    static List<int[]> getList(int size) {
+        // iterate through octagonal seeds
+        // for each polygonal (3 .. 7): attempt to add one new cyclical polygonal
+        // track 1) partial solution, 2) polygonal id (3 .. 7) and 3) n in f(n) to attempt
+        // recursive call
+        return getList(size, null, 8, 1);
+    }
+
+    static List<int[]> getList(int size, List<int[]> partial, int seed, int seedStart) {
+        if (size == 1) return makeList(seed, seedStart);
+        if (seed < 3) return null;
+        while (true) {
+            int[] polygonal = new int[]{seed, seedStart};
+            if (digitCount(polygonal) > 4) {
+                seed++;
+                seedStart = 0;
+            } else {
+                checkSolution(partial, polygonal);
+                if (partial == null) {
+                    
+                }
+            }
+        }
+    }
+
+    private static List<int[]> checkSolution(List<int[]> partial, int[] polygonal) {
+        partial.add(polygonal);
+        if (isSolution(partial)) return partial;
         return null;
     }
 
-    static long getSum(Set<Integer> set) {
+    static boolean isSolution(List<int[]> solution) {
+        return false;
+    }
+
+    static List<int[]> makeList(int polygonal, int n) {
+        List<int[]> list = new ArrayList<>();
+        list.add(new int[]{polygonal, n});
+        return list;
+    }
+
+    static long getSum(List<int[]> list) {
         long sum = 0;
-        for (Integer i : set) sum += i;
+        long value = 0;
+        for (int[] item : list) {
+            switch (item[0]) {
+                case 3:
+                    value = triangular.function(item[1]);
+                case 4:
+                    value = square.function(item[1]);
+                case 5:
+                    value = pentagonal.function(item[1]);
+                case 6:
+                    value = hexagonal.function(item[1]);
+                case 7:
+                    value = heptagonal.function(item[1]);
+                case 8:
+                    value = octagonal.function(item[1]);
+            }
+            sum += value;
+        }
         return sum;
     }
 }
