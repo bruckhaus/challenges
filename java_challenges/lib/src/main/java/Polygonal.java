@@ -1,5 +1,3 @@
-import com.sun.glass.ui.Pen;
-
 abstract class Polygonal {
     private long index = 0;
     protected long current = 0;
