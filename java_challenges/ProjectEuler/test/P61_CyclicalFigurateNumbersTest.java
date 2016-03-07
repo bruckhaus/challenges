@@ -8,13 +8,41 @@ import static org.junit.Assert.*;
 public class P61_CyclicalFigurateNumbersTest {
 
     @Test
-    public void testGetList() throws Exception {
-
+    public void testGetList1() throws Exception {
+        List<int[]> solution = new ArrayList<>();
+        int[] polygonal = new int[]{8, 19};
+        assertEquals(1045, P61_CyclicalFigurateNumbers.getValue(polygonal));
+        solution.add(polygonal);
+        assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.findSolutionList(1).toArray());
     }
 
     @Test
-    public void testGetList1() throws Exception {
+    public void testGetList2() throws Exception {
+        List<int[]> solution = new ArrayList<>();
+        int[] polygonal;
+        polygonal = new int[]{8, 36};
+        assertEquals(3816, P61_CyclicalFigurateNumbers.getValue(polygonal));
+        solution.add(polygonal);
+        polygonal = new int[]{8, 24};
+        assertEquals(1680, P61_CyclicalFigurateNumbers.getValue(polygonal));
+        solution.add(polygonal);
+        assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.findSolutionList(2).toArray());
+    }
 
+    @Test
+    public void testGetList3() throws Exception {
+        List<int[]> solution = new ArrayList<>();
+        int[] triangle = {3, 127};
+        int[] pentagonal = {5, 44};
+        int[] square = {4, 91};
+        solution.add(triangle);
+        solution.add(pentagonal);
+        solution.add(square);
+        assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.findSolutionList(3).toArray());
+    }
+
+    @Test
+    public void testGetListWithThreeArgs() throws Exception {
     }
 
     @Test
@@ -25,21 +53,22 @@ public class P61_CyclicalFigurateNumbersTest {
         int[] triangle = {3, 127};
         newSolution = P61_CyclicalFigurateNumbers.checkSolution(solution, triangle);
         assert newSolution != null;
+        assertEquals(1, solution.size());
+        assertEquals(1, newSolution.size());
         assertArrayEquals(solution.toArray(), newSolution.toArray());
 
-        solution.add(triangle);
         int[] pentagonal = {5, 44};
         newSolution = P61_CyclicalFigurateNumbers.checkSolution(solution, pentagonal);
-        System.out.println("solution = " + solution.toString());
-        System.out.println("newSolution = " + newSolution);
         assert newSolution != null;
-        assertEquals(P61_CyclicalFigurateNumbers.getSum(solution), P61_CyclicalFigurateNumbers.getSum(newSolution));
+        assertEquals(2, solution.size());
+        assertEquals(2, newSolution.size());
+        assertArrayEquals(solution.toArray(), newSolution.toArray());
 
-        solution.add(pentagonal);
         int[] square = {4, 91};
-        solution.add(square);
-        newSolution = P61_CyclicalFigurateNumbers.checkSolution(solution, triangle);
+        newSolution = P61_CyclicalFigurateNumbers.checkSolution(solution, square);
         assert newSolution != null;
+        assertEquals(3, solution.size());
+        assertEquals(3, newSolution.size());
         assertArrayEquals(solution.toArray(), newSolution.toArray());
     }
 
@@ -71,12 +100,12 @@ public class P61_CyclicalFigurateNumbersTest {
         assertEquals(8128, P61_CyclicalFigurateNumbers.getValue(triangle));
         assertEquals(8281, P61_CyclicalFigurateNumbers.getValue(square));
         assertEquals(2882, P61_CyclicalFigurateNumbers.getValue(pentagonal));
-        assert P61_CyclicalFigurateNumbers.isCyclic(triangle, pentagonal);
-        assert P61_CyclicalFigurateNumbers.isCyclic(pentagonal, square);
-        assert P61_CyclicalFigurateNumbers.isCyclic(square, triangle);
-        assert !P61_CyclicalFigurateNumbers.isCyclic(pentagonal, triangle);
-        assert !P61_CyclicalFigurateNumbers.isCyclic(square, pentagonal);
-        assert !P61_CyclicalFigurateNumbers.isCyclic(triangle, square);
+        assert P61_CyclicalFigurateNumbers.isCyclic(triangle, pentagonal, 4);
+        assert P61_CyclicalFigurateNumbers.isCyclic(pentagonal, square, 4);
+        assert P61_CyclicalFigurateNumbers.isCyclic(square, triangle, 4);
+        assert !P61_CyclicalFigurateNumbers.isCyclic(pentagonal, triangle, 4);
+        assert !P61_CyclicalFigurateNumbers.isCyclic(square, pentagonal, 4);
+        assert !P61_CyclicalFigurateNumbers.isCyclic(triangle, square, 4);
     }
 
     @Test
@@ -137,5 +166,37 @@ public class P61_CyclicalFigurateNumbersTest {
         assertEquals(6, P61_CyclicalFigurateNumbers.getValue(new int[]{3, 3}));
         assertEquals(16, P61_CyclicalFigurateNumbers.getValue(new int[]{4, 4}));
         assertEquals(35, P61_CyclicalFigurateNumbers.getValue(new int[]{5, 5}));
+    }
+
+    @Test
+    public void testGetFirstDigits() throws Exception {
+        int[] polygonal = {3, 1};
+        assertEquals(1, P61_CyclicalFigurateNumbers.getValue(polygonal));
+        assert "1".equals(P61_CyclicalFigurateNumbers.getFirstDigits(polygonal, 2));
+        polygonal = new int[]{4, 5};
+        assertEquals(25, P61_CyclicalFigurateNumbers.getValue(polygonal));
+        assert "25".equals(P61_CyclicalFigurateNumbers.getFirstDigits(polygonal, 2));
+        polygonal = new int[]{8, 19};
+        assertEquals(1045, P61_CyclicalFigurateNumbers.getValue(polygonal));
+        assert "10".equals(P61_CyclicalFigurateNumbers.getFirstDigits(polygonal, 2));
+        polygonal = new int[]{8, 192};
+        assertEquals(110208, P61_CyclicalFigurateNumbers.getValue(polygonal));
+        assert "11".equals(P61_CyclicalFigurateNumbers.getFirstDigits(polygonal, 2));
+    }
+
+    @Test
+    public void testGetLastDigits() throws Exception {
+        int[] polygonal = {3, 1};
+        assertEquals(1, P61_CyclicalFigurateNumbers.getValue(polygonal));
+        assert "1".equals(P61_CyclicalFigurateNumbers.getLastDigits(polygonal, 2));
+        polygonal = new int[]{4, 5};
+        assertEquals(25, P61_CyclicalFigurateNumbers.getValue(polygonal));
+        assert "25".equals(P61_CyclicalFigurateNumbers.getLastDigits(polygonal, 2));
+        polygonal = new int[]{8, 19};
+        assertEquals(1045, P61_CyclicalFigurateNumbers.getValue(polygonal));
+        assert "45".equals(P61_CyclicalFigurateNumbers.getLastDigits(polygonal, 2));
+        polygonal = new int[]{8, 192};
+        assertEquals(110208, P61_CyclicalFigurateNumbers.getValue(polygonal));
+        assert "08".equals(P61_CyclicalFigurateNumbers.getLastDigits(polygonal, 2));
     }
 }

@@ -26,7 +26,7 @@ public class P61_CyclicalFigurateNumbers {
                 "triangle, square, pentagonal, hexagonal, heptagonal, and octagonal, " +
                 "is represented by a different number in the set is %,d\n" +
                 "The set is: %s\n";
-        List<int[]> solution = P61_CyclicalFigurateNumbers.getList(6);
+        List<int[]> solution = P61_CyclicalFigurateNumbers.findSolutionList(6);
         long sum = P61_CyclicalFigurateNumbers.getSum(solution);
         System.out.printf(message, sum, solution.toString());
     }
@@ -38,30 +38,49 @@ public class P61_CyclicalFigurateNumbers {
     private static Polygonal heptagonal = new Heptagonal();
     private static Polygonal octagonal = new Octagonal();
 
-    static List<int[]> getList(int size) {
+    static List<int[]> findSolutionList(int size) {
         // iterate through octagonal seeds
         // for each polygonal (3 .. 7): attempt to add one new cyclical polygonal
         // track 1) partial solution, 2) polygonal id (3 .. 7) and 3) n in f(n) to attempt
         // recursive call
-        return getList(size, 8, 1);
+        return findSolutionList(size, 8, 1);
     }
 
-    static List<int[]> getList(int size, int seed, Integer seedOffset) {
-        if (size == 1) return makeList(seed, seedOffset);
-        if (seed < 3) return null;
+    static List<int[]> findSolutionList(int size, int order, int offset) {
+        showCall(size, order, offset);
+        if (order < 3) return null;
+        if (digitCount(makePolygonal(order, offset)) > 4) return null;
+        if (size == 1) return makeList(order, offset);
+        int[] polygonal;
+        List<int[]> solution;
+        List<int[]> partial;
+        int partialOrder = 8;
         int partialOffset = 1;
         while (true) {
-            int[] polygonal = makePolygonal(seed, seedOffset);
-            if (digitCount(polygonal) > 4) {
-                seed--;
-                seedOffset = 1;
+            polygonal = makePolygonal(order, offset);
+            showStep(order, offset, polygonal);
+            if (order < 3) {
+                return null;
+            } else if (digitCount(polygonal) < 4) {
+                offset++;
+            } else if (digitCount(polygonal) > 4) {
+                order--;
+                offset = 1;
+                partialOrder = 8;
+                partialOffset = 1;
             } else {
-                List<int[]> partial = getList(size - 1, 8, partialOffset);
-                List<int[]> solution = checkSolution(partial, polygonal);
-                if (solution == null) {
-                    partialOffset++;
+                partial = findSolutionList(size - 1, partialOrder, partialOffset);
+                showPartial(partial);
+                if (partial == null) {
+                    offset++;
+                    partialOffset = 1;
                 } else {
-                    return partial;
+                    solution = checkSolution(partial, polygonal);
+                    if (solution == null) {
+                        partialOffset++;
+                    } else {
+                        return solution;
+                    }
                 }
             }
         }
@@ -73,23 +92,42 @@ public class P61_CyclicalFigurateNumbers {
         return null;
     }
 
-    static boolean isSolution(List<int[]> solution) {
-        if (solution.size() < 1) return true;
-        int[] item = solution.get(0);
-        for (int i = 1; i < solution.size() - 1; i++) {
-            int[] next = solution.get(i);
-            if (!isCyclic(item, next)) return false;
-            item = next;
+    static boolean isSolution(List<int[]> list) {
+        // todo: check that each order occurs only once
+        switch (list.size()) {
+            case 0:
+                return true;
+            case 1:
+                return digitCount(list.get(0)) == 4;
+            default:
+                int[] item = list.get(0);
+                if (digitCount(item) != 4) return false;
+                for (int i = 1; i < list.size(); i++) {
+                    int[] next = list.get(i);
+                    if (digitCount(next) != 4) return false;
+                    if (!isCyclic(item, next, 4)) return false;
+                    item = next;
+                }
+                return true;
         }
-        return true;
     }
 
-    static boolean isCyclic(int[] polygonal1, int[] polygonal2) {
-        String first = "" + P61_CyclicalFigurateNumbers.getValue(polygonal1);
-        String second = "" + P61_CyclicalFigurateNumbers.getValue(polygonal2);
-        String lastTwoDigits = first.substring(first.length() - 2);
-        String firstTwoDigits = second.substring(0, 2);
-        return lastTwoDigits.equals(firstTwoDigits);
+    static boolean isCyclic(int[] polygonal1, int[] polygonal2, int size) {
+        return digitCount(polygonal1) == size &&
+                digitCount(polygonal2) == size &&
+                getLastDigits(polygonal1, 2).equals(getFirstDigits(polygonal2, 2));
+    }
+
+    static String getFirstDigits(int[] polygonal, int count) {
+        String s = "" + P61_CyclicalFigurateNumbers.getValue(polygonal);
+        if (s.length() < count) return s;
+        return s.substring(0, count);
+    }
+
+    static String getLastDigits(int[] polygonal1, int count) {
+        String s = "" + P61_CyclicalFigurateNumbers.getValue(polygonal1);
+        if (s.length() < count) return s;
+        return s.substring(s.length() - count);
     }
 
     static List<int[]> makeList(int order, Integer n) {
@@ -135,6 +173,27 @@ public class P61_CyclicalFigurateNumbers {
                 return octagonal.function(item[1]);
             default:
                 return -1;
+        }
+    }
+
+    private static void showCall(int size, int order, int offset) {
+        System.out.printf("size: %d, order: %d, offset: %d\n", size, order, offset);
+    }
+
+    private static void showStep(int order, Integer offset, int[] polygonal) {
+        long value = P61_CyclicalFigurateNumbers.getValue(polygonal);
+        int length = digitCount(polygonal);
+        System.out.printf("\npolygonal: %s, value: %,d, length: %d, order: %d, offset: %d\n",
+                Arrays.toString(polygonal), value, length, order, offset);
+    }
+
+    private static void showPartial(List<int[]> partial) {
+        if (partial != null) {
+            for (int i = 0; i < partial.size(); i++) {
+                System.out.printf("partial[%d]: %,d\n", i, getValue(partial.get(0)));
+            }
+        } else {
+            System.out.println("partial: null");
         }
     }
 }
