@@ -19,10 +19,10 @@ public class P61_CyclicalFigurateNumbersTest {
     @Test
     public void testGetList2() throws Exception {
         List<int[]> solution = new ArrayList<>();
-        int[] p1 = new int[]{8, 19};
-        int[] p2 = new int[]{5, 55};
-        assertEquals(1045, P61_CyclicalFigurateNumbers.getValue(p1));
-        assertEquals(4510, P61_CyclicalFigurateNumbers.getValue(p2));
+        int[] p1 = new int[]{5, 55};
+        int[] p2 = new int[]{8, 19};
+        assertEquals(4510, P61_CyclicalFigurateNumbers.getValue(p1));
+        assertEquals(1045, P61_CyclicalFigurateNumbers.getValue(p2));
         solution.add(p1);
         solution.add(p2);
         assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.findSolutionList(2).toArray());
@@ -30,14 +30,15 @@ public class P61_CyclicalFigurateNumbersTest {
 
     @Test
     public void testGetList3() throws Exception {
-        List<int[]> solution = new ArrayList<>();
-        int[] triangle = {5, 52};
-        int[] pentagonal = {7, 35};
-        int[] square = {8, 19};
-        solution.add(triangle);
-        solution.add(pentagonal);
-        solution.add(square);
-        assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.findSolutionList(3).toArray());
+        List<int[]> result = P61_CyclicalFigurateNumbers.findSolutionList(3);
+        List<int[]> expected = new ArrayList<>();
+        int[] triangle = {5, 52}; // fixme: bad variable name or value
+        int[] pentagonal = {7, 35}; // fixme: bad variable name or value
+        int[] square = {8, 19}; // fixme: bad variable name or value
+        expected.add(triangle);
+        expected.add(pentagonal);
+        expected.add(square);
+        assertArrayEquals(expected.toArray(), result.toArray());
     }
 
     @Test

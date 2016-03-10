@@ -51,9 +51,9 @@ public class P61_CyclicalFigurateNumbers {
 //        return findSolutionList(size, 8, 1);
     }
 
-    static List<int[]> findSolutionList(int solutionSize, int size, int order, int offset) {
+    static List<int[]> findSolutionList(int solutionSize, int size, int partialOrder, int partialOffset) {
         // order and offset define polygonal
-        // anchor: for size 1, get valid polygonal, for this order, and for offset no smaller than passed offset
+        // anchor: for size 1, get valid polygonal, for this order, and valid offset
         // partialOrder and partialOffset define partial
         // iterate over partials modifying partialOrder and partialOffset
         // if partial is null, increment offset
@@ -61,46 +61,41 @@ public class P61_CyclicalFigurateNumbers {
         // return null if no partials work for this order, i.e., partialOrder underflow
 //        showCall(size, order, offset);
         int[] polygonal;
-        int[] nextPolygonal;
+        int[] partialPolygonal;
         List<int[]> solution;
         List<int[]> partial;
-        int partialOrder = 8;
-        int partialOffset = 1;
+        int order = 8;
+        int offset = 1;
         while (true) {
             polygonal = makePolygonal(order, offset);
-            showStep(order, offset, polygonal);
+//            showStep(order, offset, polygonal);
             if (order < 3) {
-                System.out.println("order underflow: order = " + order);
+                System.out.printf("no polygonal found for size: %d, order: %d, offset: %d\n", size, order, offset);
                 return null;
             } else if (digitCount(polygonal) < 4) {
                 offset++;
             } else if (digitCount(polygonal) > 4) {
                 order--;
                 offset = 1;
-                partialOrder = 8;
-                partialOffset = 1;
             } else if (size == 1) {
-                return makeList(order, offset);
-            } else if (partialOrder < 3) {
-                order--;
-                offset = 1;
-                partialOrder = 8;
-                partialOffset = 1;
+                return makeList(order, offset); // fixme: for size 1 always returns lowest offset for highest order
             } else {
-                nextPolygonal = makePolygonal(partialOrder, partialOffset);
-                if (digitCount(nextPolygonal) < 4) {
+                partialPolygonal = makePolygonal(partialOrder, partialOffset);
+                if (partialOrder < 3) {
+                    return null;
+                } else if (digitCount(partialPolygonal) < 4) {
                     partialOffset++;
-                } else if (digitCount(nextPolygonal) > 4) {
+                } else if (digitCount(partialPolygonal) > 4) {
                     partialOrder--;
                     partialOffset = 1;
                 } else {
                     // todo: avoid making the same partial again if order and offset did not change:
                     partial = findSolutionList(solutionSize, size - 1, partialOrder, partialOffset);
-                    showList(partial);
                     if (partial == null) {
-                        partialOffset++;
+                        offset++;
                     } else {
-                        solution = checkSolution(solutionSize, partial, nextPolygonal);
+//                        showList(partial);
+                        solution = checkSolution(solutionSize, partial, polygonal);
                         if (solution == null) {
                             partialOffset++;
                         } else {
@@ -137,7 +132,7 @@ public class P61_CyclicalFigurateNumbers {
                 isPartialOrWraps(size, list);
     }
 
-     static boolean hasUniqueOrders(List<int[]> list) {
+    static boolean hasUniqueOrders(List<int[]> list) {
         Set<Integer> orders = new HashSet<>();
         for (int[] polygonal : list) {
             int order = polygonal[0];
@@ -147,22 +142,22 @@ public class P61_CyclicalFigurateNumbers {
         return true;
     }
 
-     static boolean isPartialOrWraps(int size, List<int[]> list) {
+    static boolean isPartialOrWraps(int size, List<int[]> list) {
         return list.size() != size ||
                 isCyclicSolutionPair(list, list.size() - 1, 0);
     }
 
-     static boolean isCyclicList(List<int[]> list) {
+    static boolean isCyclicList(List<int[]> list) {
         for (int i = 1; i < list.size(); i++) if (!isCyclicWithPrevious(list, i)) return false;
         return true;
     }
 
-     static boolean hasRequiredDigitCounts(List<int[]> list) {
+    static boolean hasRequiredDigitCounts(List<int[]> list) {
         for (int[] item : list) if (digitCount(item) != 4) return false;
         return true;
     }
 
-     static boolean isCyclicWithPrevious(List<int[]> list, int i) {
+    static boolean isCyclicWithPrevious(List<int[]> list, int i) {
         return isCyclicSolutionPair(list, i - 1, i);
     }
 
