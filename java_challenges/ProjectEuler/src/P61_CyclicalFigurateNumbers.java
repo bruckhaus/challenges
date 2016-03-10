@@ -52,38 +52,61 @@ public class P61_CyclicalFigurateNumbers {
     }
 
     static List<int[]> findSolutionList(int solutionSize, int size, int order, int offset) {
+        // order and offset define polygonal
+        // anchor: for size 1, get valid polygonal, for this order, and for offset no smaller than passed offset
+        // partialOrder and partialOffset define partial
+        // iterate over partials modifying partialOrder and partialOffset
+        // if partial is null, increment offset
+        // modify partialOrder, partialOffset if partial is valid but does not form solution with polygonal
+        // return null if no partials work for this order, i.e., partialOrder underflow
 //        showCall(size, order, offset);
-        if (order < 3) return null;
-        if (digitCount(makePolygonal(order, offset)) > 4) return null;
-        if (size == 1) return makeList(order, offset);
         int[] polygonal;
+        int[] nextPolygonal;
         List<int[]> solution;
-        List<int[]> partial = new ArrayList<>();
-        int nextOrder = 8;
-        int nextOffset = 1;
+        List<int[]> partial;
+        int partialOrder = 8;
+        int partialOffset = 1;
         while (true) {
-            partial = findSolutionList(solutionSize, size - 1, order, offset);
-            polygonal = makePolygonal(nextOrder, nextOffset);
-            showStep(nextOrder, nextOffset, polygonal);
-            if (partial == null) {
-                order--;
-                offset = 1;
-            } else if (order < 3) {
+            polygonal = makePolygonal(order, offset);
+            showStep(order, offset, polygonal);
+            if (order < 3) {
+                System.out.println("order underflow: order = " + order);
                 return null;
-            } else if (nextOrder < 3) {
+            } else if (digitCount(polygonal) < 4) {
+                offset++;
+            } else if (digitCount(polygonal) > 4) {
                 order--;
                 offset = 1;
-            } else if (digitCount(polygonal) < 4) {
-                nextOffset++;
-            } else if (digitCount(polygonal) > 4) {
-                nextOrder--;
-                nextOffset = 1;
+                partialOrder = 8;
+                partialOffset = 1;
+            } else if (size == 1) {
+                return makeList(order, offset);
+            } else if (partialOrder < 3) {
+                order--;
+                offset = 1;
+                partialOrder = 8;
+                partialOffset = 1;
             } else {
-                solution = checkSolution(solutionSize, partial, polygonal);
-                if (solution == null) {
-                    nextOffset++;
+                nextPolygonal = makePolygonal(partialOrder, partialOffset);
+                if (digitCount(nextPolygonal) < 4) {
+                    partialOffset++;
+                } else if (digitCount(nextPolygonal) > 4) {
+                    partialOrder--;
+                    partialOffset = 1;
                 } else {
-                    return solution;
+                    // todo: avoid making the same partial again if order and offset did not change:
+                    partial = findSolutionList(solutionSize, size - 1, partialOrder, partialOffset);
+                    showList(partial);
+                    if (partial == null) {
+                        partialOffset++;
+                    } else {
+                        solution = checkSolution(solutionSize, partial, nextPolygonal);
+                        if (solution == null) {
+                            partialOffset++;
+                        } else {
+                            return solution;
+                        }
+                    }
                 }
             }
         }
@@ -108,35 +131,53 @@ public class P61_CyclicalFigurateNumbers {
     }
 
     private static boolean isCyclicSolution(int size, List<int[]> list) {
-        for (int[] item : list) if (digitCount(item) != 4) return false;
-        for (int i = 1; i < list.size(); i++) if (!isCyclicWithPrevious(list, i)) return false;
-        return list.size() != size || isCyclicSolutionPair(list, list.size() - 1, 0);
+        return hasRequiredDigitCounts(list) &&
+                isCyclicList(list) &&
+                hasUniqueOrders(list) &&
+                isPartialOrWraps(size, list);
     }
 
-    private static boolean isCyclicWithPrevious(List<int[]> list, int i) {
+     static boolean hasUniqueOrders(List<int[]> list) {
+        Set<Integer> orders = new HashSet<>();
+        for (int[] polygonal : list) {
+            int order = polygonal[0];
+            if (orders.contains(order)) return false;
+            orders.add(order);
+        }
+        return true;
+    }
+
+     static boolean isPartialOrWraps(int size, List<int[]> list) {
+        return list.size() != size ||
+                isCyclicSolutionPair(list, list.size() - 1, 0);
+    }
+
+     static boolean isCyclicList(List<int[]> list) {
+        for (int i = 1; i < list.size(); i++) if (!isCyclicWithPrevious(list, i)) return false;
+        return true;
+    }
+
+     static boolean hasRequiredDigitCounts(List<int[]> list) {
+        for (int[] item : list) if (digitCount(item) != 4) return false;
+        return true;
+    }
+
+     static boolean isCyclicWithPrevious(List<int[]> list, int i) {
         return isCyclicSolutionPair(list, i - 1, i);
     }
 
-    private static boolean isCyclicSolutionPair(List<int[]> list, int index1, int index2) {
-        return isCyclic(list.get(index1), list.get(index2));
+    static boolean isCyclicSolutionPair(List<int[]> list, int index1, int index2) {
+        try {
+            return isCyclic(list.get(index1), list.get(index2));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        } catch (IndexOutOfBoundsException e) {
+            return false;
+        }
     }
 
     static boolean isCyclic(int[] polygonal1, int[] polygonal2) {
         return getLastDigits(polygonal1, 2).equals(getFirstDigits(polygonal2, 2));
-    }
-
-    private static int getNextOrder(List<int[]> partial, int order) {
-        order = 8;
-        while (!isAvailable(partial, order)) order--;
-        return order;
-    }
-
-    private static boolean isAvailable(List<int[]> partial, int order) {
-        if (partial == null) return true;
-        for (int[] polygonal : partial) {
-            if (polygonal[0] == order) return false;
-        }
-        return true;
     }
 
     static String getFirstDigits(int[] polygonal, int count) {
