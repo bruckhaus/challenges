@@ -51,7 +51,7 @@ public class P61_CyclicalFigurateNumbers {
 //        return findSolutionList(size, 8, 1);
     }
 
-    static List<int[]> findSolutionList(int solutionSize, int size, int partialOrder, int partialOffset) {
+    static List<int[]> findSolutionList(int solutionSize, int size, int order, int offset) {
         // order and offset define polygonal
         // anchor: for size 1, get valid polygonal, for this order, and valid offset
         // partialOrder and partialOffset define partial
@@ -64,11 +64,10 @@ public class P61_CyclicalFigurateNumbers {
         int[] partialPolygonal;
         List<int[]> solution;
         List<int[]> partial;
-        int order = 8;
-        int offset = 1;
+        int partialOrder = 8;
+        int partialOffset = 1;
         while (true) {
             polygonal = makePolygonal(order, offset);
-//            showStep(order, offset, polygonal);
             if (order < 3) {
                 System.out.printf("no polygonal found for size: %d, order: %d, offset: %d\n", size, order, offset);
                 return null;
@@ -77,8 +76,10 @@ public class P61_CyclicalFigurateNumbers {
             } else if (digitCount(polygonal) > 4) {
                 order--;
                 offset = 1;
+                partialOrder = 8;
+                partialOffset = 1;
             } else if (size == 1) {
-                return makeList(order, offset); // fixme: for size 1 always returns lowest offset for highest order
+                return makeList(order, offset);
             } else {
                 partialPolygonal = makePolygonal(partialOrder, partialOffset);
                 if (partialOrder < 3) {
@@ -89,12 +90,10 @@ public class P61_CyclicalFigurateNumbers {
                     partialOrder--;
                     partialOffset = 1;
                 } else {
-                    // todo: avoid making the same partial again if order and offset did not change:
                     partial = findSolutionList(solutionSize, size - 1, partialOrder, partialOffset);
                     if (partial == null) {
                         offset++;
                     } else {
-//                        showList(partial);
                         solution = checkSolution(solutionSize, partial, polygonal);
                         if (solution == null) {
                             partialOffset++;
