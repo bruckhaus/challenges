@@ -26,7 +26,7 @@ public class P61_CyclicalFigurateNumbers {
                 "triangle, square, pentagonal, hexagonal, heptagonal, and octagonal, " +
                 "is represented by a different number in the set is %,d\n" +
                 "The set is: %s\n";
-        List<int[]> solution = P61_CyclicalFigurateNumbers.findSolutionList(6);
+        List<int[]> solution = P61_CyclicalFigurateNumbers.find(6);
         long sum = P61_CyclicalFigurateNumbers.getSum(solution);
         System.out.printf(message, sum, solution.toString());
     }
@@ -37,73 +37,68 @@ public class P61_CyclicalFigurateNumbers {
     private static Polygonal hexagonal = new Hexagonal();
     private static Polygonal heptagonal = new Heptagonal();
     private static Polygonal octagonal = new Octagonal();
+    private static int[] startPolygonal = new int[]{8, 1};
 
-    static List<int[]> findSolutionList(int size) {
+    static List<int[]> find(int size) {
         // iterate through octagonal seeds
         // for each polygonal (3 .. 7): attempt to add one new cyclical polygonal
         // track 1) partial solution, 2) polygonal id (3 .. 7) and 3) n in f(n) to attempt
         // recursive call
-        List<int[]> solution = P61_CyclicalFigurateNumbers.findSolutionList(size, size, 8, 1);
+        List<int[]> solution = P61_CyclicalFigurateNumbers.find(
+                size, size, getStart(), getStart());
         long sum = P61_CyclicalFigurateNumbers.getSum(solution);
         showList(solution);
         System.out.printf("sum: %d\n", sum);
         return solution;
-//        return findSolutionList(size, 8, 1);
+//        return find(size, 8, 1);
     }
 
-    static List<int[]> findSolutionList(int solutionSize, int size, int order, int offset) {
-        // order and offset define polygonal
-        // anchor: for size 1, get valid polygonal, for this order, and valid offset
-        // partialOrder and partialOffset define partial
-        // iterate over partials modifying partialOrder and partialOffset
-        // if partial is null, increment offset
-        // modify partialOrder, partialOffset if partial is valid but does not form solution with polygonal
-        // return null if no partials work for this order, i.e., partialOrder underflow
-//        showCall(size, order, offset);
-        int[] polygonal;
-        int[] partialPolygonal;
-        List<int[]> solution;
+    static List<int[]> find(int solutionSize, int size, int[] seed, int[] anchor) {
+        showCall(size, seed, anchor);
         List<int[]> partial;
-        int partialOrder = 8;
-        int partialOffset = 1;
+        List<int[]> solution;
+        int[] offset = getStart();
         while (true) {
-            polygonal = makePolygonal(order, offset);
-            if (order < 3) {
-                System.out.printf("no polygonal found for size: %d, order: %d, offset: %d\n", size, order, offset);
-                return null;
-            } else if (digitCount(polygonal) < 4) {
-                offset++;
-            } else if (digitCount(polygonal) > 4) {
-                order--;
-                offset = 1;
-                partialOrder = 8;
-                partialOffset = 1;
-            } else if (size == 1) {
-                return makeList(order, offset);
-            } else {
-                partialPolygonal = makePolygonal(partialOrder, partialOffset);
-                if (partialOrder < 3) {
-                    return null;
-                } else if (digitCount(partialPolygonal) < 4) {
-                    partialOffset++;
-                } else if (digitCount(partialPolygonal) > 4) {
-                    partialOrder--;
-                    partialOffset = 1;
-                } else {
-                    partial = findSolutionList(solutionSize, size - 1, partialOrder, partialOffset);
-                    if (partial == null) {
-                        offset++;
-                    } else {
-                        solution = checkSolution(solutionSize, partial, polygonal);
-                        if (solution == null) {
-                            partialOffset++;
-                        } else {
-                            return solution;
-                        }
-                    }
+            if (isUnderflow(seed)) return null;
+            else if (isWrongSize(seed)) seed = getNext(seed);
+            else if (size == 1) return makeList(seed);
+            else if (isUnderflow(offset)) return null;
+            else {
+                partial = find(solutionSize, size - 1, anchor, offset);
+                if (partial == null) return null;
+                else {
+                    solution = checkSolution(solutionSize, partial, seed);
+                    if (solution == null) offset = getNext(offset);
+                    else return solution;
                 }
             }
         }
+    }
+
+    private static int[] getStart() {
+        return startPolygonal.clone();
+    }
+
+    private static boolean isUnderflow(int[] polygonal) {
+        return polygonal[0] < 3;
+    }
+
+    private static int[] getNext(int[] polygonal) {
+        int[] result = polygonal.clone();
+        if (digitCount(polygonal) < 4) result[1] = result[1] + 1;
+        else result[0] = result[0] - 1;
+        return result;
+    }
+
+    private static boolean isWrongSize(int[] polygonal) {
+        return digitCount(polygonal) != 4;
+    }
+
+    private static List<int[]> makeList(int[] seed) {
+        if (digitCount(seed) != 4) return null;
+        List<int[]> list = new ArrayList<>();
+        list.add(seed);
+        return list;
     }
 
     static List<int[]> checkSolution(int size, List<int[]> partial, int[] polygonal) {
@@ -233,8 +228,9 @@ public class P61_CyclicalFigurateNumbers {
         }
     }
 
-    private static void showCall(int size, int order, int offset) {
-        System.out.printf("size: %d, order: %d, offset: %d\n", size, order, offset);
+    private static void showCall(int size, int[] seed, int[] anchor) {
+        System.out.printf("size: %d, seed, anchor indices: %s, %s, values: %d, %d\n",
+                size, Arrays.toString(seed), Arrays.toString(anchor), getValue(seed), getValue(anchor));
     }
 
     private static void showStep(int order, Integer offset, int[] polygonal) {

@@ -13,7 +13,7 @@ public class P61_CyclicalFigurateNumbersTest {
         int[] polygonal = new int[]{8, 19};
         assertEquals(1045, P61_CyclicalFigurateNumbers.getValue(polygonal));
         solution.add(polygonal);
-        assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.findSolutionList(1).toArray());
+        assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.find(1).toArray());
     }
 
     @Test
@@ -25,12 +25,12 @@ public class P61_CyclicalFigurateNumbersTest {
         assertEquals(1045, P61_CyclicalFigurateNumbers.getValue(p2));
         solution.add(p1);
         solution.add(p2);
-        assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.findSolutionList(2).toArray());
+        assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.find(2).toArray());
     }
 
     @Test
     public void testGetList3() throws Exception {
-        List<int[]> result = P61_CyclicalFigurateNumbers.findSolutionList(3);
+        List<int[]> result = P61_CyclicalFigurateNumbers.find(3);
         List<int[]> expected = new ArrayList<>();
         int[] triangle = {5, 52}; // fixme: bad variable name or value
         int[] pentagonal = {7, 35}; // fixme: bad variable name or value
