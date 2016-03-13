@@ -32,38 +32,39 @@ public class P61_CyclicalFigurateNumbers {
         System.out.printf(message, sum, solution.toString());
     }
 
+    public static final int MIN_ORDER = 3;
     public static final int LENGTH = 4;
     private static boolean diagnosticsToStdOut = false;
 
     static List<int[]> find(int size) {
-        return P61_CyclicalFigurateNumbers.find(size, size, CyclicPolygonal.getStart(8));
+        return P61_CyclicalFigurateNumbers.find(size, size, getStart());
     }
 
     static List<int[]> find(int solutionSize, int size, int[] seed) {
         showCall(size, seed);
         List<int[]> partial;
         List<int[]> solution;
-        int[] anchor = CyclicPolygonal.getStart(8);
+        int[] anchor = getStart();
         while (true) {
-            if (CyclicPolygonal.isUnderflow(seed, 3)) return null;
-            else if (CyclicPolygonal.isTooSmall(seed, LENGTH)) seed = CyclicPolygonal.getNext(seed, LENGTH);
-            else if (CyclicPolygonal.isTooLarge(seed, LENGTH)) {
-                seed = CyclicPolygonal.getNext(seed, LENGTH);
-                anchor = CyclicPolygonal.getStart(8);
-            } else if (size == 1) return CyclicPolygonal.makeList(seed);
-            else if (CyclicPolygonal.isUnderflow(anchor, 3)) {
-                seed = CyclicPolygonal.getNext(seed, LENGTH);
-                anchor = CyclicPolygonal.getStart(8);
-            } else if (CyclicPolygonal.isWrongSize(anchor, LENGTH)) anchor = CyclicPolygonal.getNext(anchor, LENGTH);
+            if (isUnderflow(seed)) return null;
+            else if (isTooSmall(seed)) seed = getNext(seed);
+            else if (isTooLarge(seed)) {
+                seed = getNext(seed);
+                anchor = getStart();
+            } else if (size == 1) return makeList(seed);
+            else if (isUnderflow(anchor)) {
+                seed = getNext(seed);
+                anchor = getStart();
+            } else if (isWrongSize(anchor)) anchor = getNext(anchor);
             else {
                 partial = find(solutionSize, size - 1, anchor);
                 showStep(size, seed, anchor, partial);
                 if (partial == null) {
-                    seed = CyclicPolygonal.getNext(seed, LENGTH);
-                    anchor = CyclicPolygonal.getStart(8);
+                    seed = getNext(seed);
+                    anchor = getStart();
                 } else {
                     solution = checkSolution(solutionSize, partial, seed);
-                    if (solution == null) anchor = CyclicPolygonal.getNext(anchor, LENGTH);
+                    if (solution == null) anchor = getNext(anchor);
                     else return solution;
                 }
             }
@@ -115,5 +116,33 @@ public class P61_CyclicalFigurateNumbers {
         } else {
             System.out.println("partial: null");
         }
+    }
+
+    private static List<int[]> makeList(int[] polygonal) {
+        return CyclicPolygonal.makeList(polygonal);
+    }
+
+    private static int[] getStart() {
+        return CyclicPolygonal.getStart(8);
+    }
+
+    private static boolean isUnderflow(int[] polygonal) {
+        return CyclicPolygonal.isUnderflow(polygonal, MIN_ORDER);
+    }
+
+    private static boolean isWrongSize(int[] polygonal) {
+        return CyclicPolygonal.isWrongSize(polygonal, LENGTH);
+    }
+
+    private static boolean isTooSmall(int[] polygonal) {
+        return CyclicPolygonal.isTooSmall(polygonal, LENGTH);
+    }
+
+    private static boolean isTooLarge(int[] polygonal) {
+        return CyclicPolygonal.isTooLarge(polygonal, LENGTH);
+    }
+
+    private static int[] getNext(int[] polygonal) {
+        return CyclicPolygonal.getNext(polygonal, LENGTH);
     }
 }
