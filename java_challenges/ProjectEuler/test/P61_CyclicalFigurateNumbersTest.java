@@ -32,12 +32,12 @@ public class P61_CyclicalFigurateNumbersTest {
     public void testGetList3() throws Exception {
         List<int[]> result = P61_CyclicalFigurateNumbers.find(3);
         List<int[]> expected = new ArrayList<>();
-        int[] triangle = {5, 52}; // fixme: bad variable name or value
-        int[] pentagonal = {7, 35}; // fixme: bad variable name or value
-        int[] square = {8, 19}; // fixme: bad variable name or value
-        expected.add(triangle);
+        int[] pentagonal = {5, 59};
+        int[] square = {4, 96};
+        int[] heptagonal = {7, 26};
         expected.add(pentagonal);
         expected.add(square);
+        expected.add(heptagonal);
         assertArrayEquals(expected.toArray(), result.toArray());
     }
 

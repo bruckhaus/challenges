@@ -26,7 +26,7 @@ public class P61_CyclicalFigurateNumbers {
                 "triangle, square, pentagonal, hexagonal, heptagonal, and octagonal, " +
                 "is represented by a different number in the set is %,d\n" +
                 "The set is: %s\n";
-        List<int[]> solution = P61_CyclicalFigurateNumbers.find(6);
+        List<int[]> solution = P61_CyclicalFigurateNumbers.find(4);
         long sum = P61_CyclicalFigurateNumbers.getSum(solution);
         System.out.printf(message, sum, solution.toString());
     }
@@ -58,13 +58,19 @@ public class P61_CyclicalFigurateNumbers {
         int[] anchor = getStart();
         while (true) {
             if (isUnderflow(seed)) return null;
-            else if (isWrongSize(seed)) {
+            else if (isTooSmall(seed)) seed = getNext(seed);
+            else if (isTooLarge(seed)) {
                 seed = getNext(seed);
                 anchor = getStart();
             } else if (size == 1) return makeList(seed);
+            else if (isUnderflow(anchor)) {
+                seed = getNext(seed);
+                anchor = getStart();
+            }
+            else if (isWrongSize(anchor)) anchor = getNext(anchor);
             else {
                 partial = find(solutionSize, size - 1, anchor);
-                showStep(seed, anchor);
+//                showStep(seed, anchor);
                 if (partial == null) {
                     seed = getNext(seed);
                     anchor = getStart();
@@ -88,12 +94,23 @@ public class P61_CyclicalFigurateNumbers {
     private static int[] getNext(int[] polygonal) {
         int[] result = polygonal.clone();
         if (digitCount(polygonal) <= 4) result[1] = result[1] + 1;
-        else result[0] = result[0] - 1;
+        else {
+            result[0] = result[0] - 1;
+            result[1] = 1;
+        }
         return result;
     }
 
     private static boolean isWrongSize(int[] polygonal) {
         return digitCount(polygonal) != 4;
+    }
+
+    private static boolean isTooLarge(int[] polygonal) {
+        return digitCount(polygonal) > 4;
+    }
+
+    private static boolean isTooSmall(int[] polygonal) {
+        return digitCount(polygonal) < 4;
     }
 
     private static List<int[]> makeList(int[] seed) {
