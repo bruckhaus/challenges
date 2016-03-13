@@ -44,31 +44,33 @@ public class P61_CyclicalFigurateNumbers {
         // for each polygonal (3 .. 7): attempt to add one new cyclical polygonal
         // track 1) partial solution, 2) polygonal id (3 .. 7) and 3) n in f(n) to attempt
         // recursive call
-        List<int[]> solution = P61_CyclicalFigurateNumbers.find(
-                size, size, getStart(), getStart());
+        List<int[]> solution = P61_CyclicalFigurateNumbers.find(size, size, getStart());
         long sum = P61_CyclicalFigurateNumbers.getSum(solution);
         showList(solution);
         System.out.printf("sum: %d\n", sum);
         return solution;
-//        return find(size, 8, 1);
     }
 
-    static List<int[]> find(int solutionSize, int size, int[] seed, int[] anchor) {
-        showCall(size, seed, anchor);
+    static List<int[]> find(int solutionSize, int size, int[] seed) {
+//        showCall(size, seed);
         List<int[]> partial;
         List<int[]> solution;
-        int[] offset = getStart();
+        int[] anchor = getStart();
         while (true) {
             if (isUnderflow(seed)) return null;
-            else if (isWrongSize(seed)) seed = getNext(seed);
-            else if (size == 1) return makeList(seed);
-            else if (isUnderflow(offset)) return null;
+            else if (isWrongSize(seed)) {
+                seed = getNext(seed);
+                anchor = getStart();
+            } else if (size == 1) return makeList(seed);
             else {
-                partial = find(solutionSize, size - 1, anchor, offset);
-                if (partial == null) return null;
-                else {
+                partial = find(solutionSize, size - 1, anchor);
+                showStep(seed, anchor);
+                if (partial == null) {
+                    seed = getNext(seed);
+                    anchor = getStart();
+                } else {
                     solution = checkSolution(solutionSize, partial, seed);
-                    if (solution == null) offset = getNext(offset);
+                    if (solution == null) anchor = getNext(anchor);
                     else return solution;
                 }
             }
@@ -85,7 +87,7 @@ public class P61_CyclicalFigurateNumbers {
 
     private static int[] getNext(int[] polygonal) {
         int[] result = polygonal.clone();
-        if (digitCount(polygonal) < 4) result[1] = result[1] + 1;
+        if (digitCount(polygonal) <= 4) result[1] = result[1] + 1;
         else result[0] = result[0] - 1;
         return result;
     }
@@ -228,16 +230,13 @@ public class P61_CyclicalFigurateNumbers {
         }
     }
 
-    private static void showCall(int size, int[] seed, int[] anchor) {
-        System.out.printf("size: %d, seed, anchor indices: %s, %s, values: %d, %d\n",
-                size, Arrays.toString(seed), Arrays.toString(anchor), getValue(seed), getValue(anchor));
+    private static void showCall(int size, int[] seed) {
+        System.out.printf("size: %d, seed: %s, %d\n", size, Arrays.toString(seed), getValue(seed));
     }
 
-    private static void showStep(int order, Integer offset, int[] polygonal) {
-        long value = P61_CyclicalFigurateNumbers.getValue(polygonal);
-        int length = digitCount(polygonal);
-        System.out.printf("polygonal: %s, value: %,d, length: %d, order: %d, offset: %d\n",
-                Arrays.toString(polygonal), value, length, order, offset);
+    private static void showStep(int[] seed, int[] anchor) {
+        System.out.printf("seed: %s, %,d, anchor: %s, %d\n",
+                Arrays.toString(seed), getValue(seed), Arrays.toString(anchor), getValue(anchor));
     }
 
     static void showList(List<int[]> partial) {
