@@ -74,7 +74,6 @@ public class P61_CyclicalFigurateNumbersTest {
 
     @Test
     public void testIsSolution() throws Exception {
-        // todo: positive and negative tests to check that last is cyclic with first
         List<int[]> solution = new ArrayList<>();
         assert P61_CyclicalFigurateNumbers.isSolution(3, solution);
         solution.add(new int[]{3, 127});
