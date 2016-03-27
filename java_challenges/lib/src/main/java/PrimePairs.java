@@ -4,14 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 
 class PrimePairs {
-    // Two primes p and q are a prime pair if the concatenations of p and q, as well as q and p are prime.
+    // Two primes p and q form a prime pair if the concatenations of p and q, as well as q and p are prime.
 
     private static Prime1stMillion primes;
-    private static List<List<Integer>> pairsList;
+    private static List<List<Integer>> pairsLists;
     private static int lastIndex = -1;
 
     static {
-        pairsList = new ArrayList<>();
+        pairsLists = new ArrayList<>();
         try {
             primes = new Prime1stMillion();
         } catch (IOException e) {
@@ -20,16 +20,16 @@ class PrimePairs {
     }
 
     static List<Integer> get(int index) {
-        buildPairs(index);
-        return pairsList.get(index);
+        buildPairsLists(index);
+        return pairsLists.get(index);
     }
 
-    static List<Integer> buildPairs(int index) {
+    static List<Integer> buildPairsLists(int index) {
         while (lastIndex < index) {
             lastIndex++;
-            pairsList.add(lastIndex, getPairs(lastIndex));
+            pairsLists.add(lastIndex, getPairs(lastIndex));
         }
-        return pairsList.get(index);
+        return pairsLists.get(index);
     }
 
     static List<Integer> getPairs(int index) {
@@ -68,7 +68,7 @@ class PrimePairs {
     static boolean isPair(Integer index1, Integer index2) {
         Integer larger = Math.max(index1, index2);
         Integer smaller = Math.min(index1, index2);
-        buildPairs(larger);
+        buildPairsLists(larger);
         return get(larger).contains(smaller);
     }
 

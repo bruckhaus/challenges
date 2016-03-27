@@ -24,16 +24,16 @@ public class PrimePairsTest {
 
     @Test
     public void testBuildPairs() throws Exception {
-        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(0).toArray());
-        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(1).toArray());
-        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(2).toArray());
-        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(3).toArray());
-        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairs(4).toArray());
-        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairs(5).toArray());
-        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(6).toArray());
-        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairs(6).toArray());
-        assertArrayEquals(new Integer[]{4, 6}, PrimePairs.buildPairs(8).toArray());
-        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairs(5).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairsLists(0).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairsLists(1).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairsLists(2).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairsLists(3).toArray());
+        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairsLists(4).toArray());
+        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairsLists(5).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairsLists(6).toArray());
+        assertArrayEquals(new Integer[]{}, PrimePairs.buildPairsLists(6).toArray());
+        assertArrayEquals(new Integer[]{4, 6}, PrimePairs.buildPairsLists(8).toArray());
+        assertArrayEquals(new Integer[]{2}, PrimePairs.buildPairsLists(5).toArray());
     }
 
     @Test
@@ -51,6 +51,7 @@ public class PrimePairsTest {
         assertArrayEquals(new Integer[0], PrimePairs.getPairs(10).toArray());     // no pairs for 29
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void testGetPrimePair() throws Exception {
         assertNull(PrimePairs.getPrimePair(1, 2));
