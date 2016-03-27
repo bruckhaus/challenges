@@ -33,11 +33,12 @@ public class P61_CyclicalFigurateNumbers {
     }
 
     private static final int MIN_ORDER = 3;
+    private static final int MAX_ORDER = 8;
     private static final int LENGTH = 4;
     private static boolean diagnosticsToStdOut = false;
 
     static List<int[]> find(int size) {
-        return P61_CyclicalFigurateNumbers.find(size, size, getStart());
+        return find(size, size, getStart());
     }
 
     static List<int[]> find(int solutionSize, int size, int[] seed) {
@@ -71,6 +72,8 @@ public class P61_CyclicalFigurateNumbers {
         }
     }
 
+    // Solution evaluation:
+
     static List<int[]> checkSolution(int size, List<int[]> partial, int[] polygonal) {
         partial.add(polygonal);
         if (isSolution(size, partial)) return partial;
@@ -93,6 +96,8 @@ public class P61_CyclicalFigurateNumbers {
                 CyclicPolygonal.hasUniqueOrders(list) &&
                 CyclicPolygonal.isCyclicAndWraps(size, list);
     }
+
+    // Diagnostics:
 
     private static void showCall(int size, int[] seed) {
         if (!diagnosticsToStdOut) return;
@@ -118,12 +123,14 @@ public class P61_CyclicalFigurateNumbers {
         }
     }
 
+    // CyclicPolygonal wrappers:
+
     private static List<int[]> makeList(int[] polygonal) {
         return CyclicPolygonal.makeList(polygonal);
     }
 
     private static int[] getStart() {
-        return CyclicPolygonal.getStart(8);
+        return CyclicPolygonal.getStart(MAX_ORDER);
     }
 
     private static boolean isUnderflow(int[] polygonal) {
