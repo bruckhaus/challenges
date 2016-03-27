@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class CyclicPolygonal {
+class CyclicPolygonal {
 
     private static Polygonal triangular = new Triangular();
     private static Polygonal square = new Square();

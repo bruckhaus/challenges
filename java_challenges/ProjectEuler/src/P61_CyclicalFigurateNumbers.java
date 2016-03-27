@@ -32,8 +32,8 @@ public class P61_CyclicalFigurateNumbers {
         System.out.printf(message, sum, solution.toString());
     }
 
-    public static final int MIN_ORDER = 3;
-    public static final int LENGTH = 4;
+    private static final int MIN_ORDER = 3;
+    private static final int LENGTH = 4;
     private static boolean diagnosticsToStdOut = false;
 
     static List<int[]> find(int size) {
