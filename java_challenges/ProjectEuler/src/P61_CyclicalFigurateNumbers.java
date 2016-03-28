@@ -35,10 +35,31 @@ public class P61_CyclicalFigurateNumbers {
     private static final int MIN_ORDER = 3;
     private static final int MAX_ORDER = 8;
     private static final int LENGTH = 4;
+    private static boolean bruteForce = false;
     private static boolean diagnosticsToStdOut = false;
+    private static Map<Integer, List<Integer>> listMap;
 
     static List<int[]> find(int size) {
-        return find(size, size, getStart());
+        return bruteForce ? find(size, size, getStart()) : findPairs(size, size, 0, 0);
+    }
+
+    private static List<int[]> findPairs(int solutionSize, int size, int seed, int offset) {
+        if (listMap == null) buildListMap();
+        // todo: fill recursive search of solution using listMap
+        return null;
+    }
+
+    private static void buildListMap() {
+        listMap = new HashMap<>();
+        int[] polygonal = getStart();
+        while (true) {
+            if (isUnderflow(polygonal)) return;
+            if (!isWrongSize(polygonal)) {
+                long value = CyclicPolygonal.getValue(polygonal);
+                // todo: fill map construction logic here
+            }
+            getNext(polygonal);
+        }
     }
 
     static List<int[]> find(int solutionSize, int size, int[] seed) {
