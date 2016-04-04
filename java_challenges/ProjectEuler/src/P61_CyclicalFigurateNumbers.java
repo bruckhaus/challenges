@@ -37,7 +37,7 @@ public class P61_CyclicalFigurateNumbers {
     private static final int LENGTH = 4;
     private static boolean bruteForce = false;
     private static boolean diagnosticsToStdOut = false;
-    private static Map<Integer, List<Integer>> listMap;
+    private static Map<String, List<String>> listMap;
 
     static List<int[]> find(int size) {
         return bruteForce ? find(size, size, getStart()) : findPairs(size, size, 0, 0);
@@ -50,16 +50,33 @@ public class P61_CyclicalFigurateNumbers {
     }
 
     private static void buildListMap() {
-        listMap = new HashMap<>();
+        listMap = new TreeMap<>();
         int[] polygonal = getStart();
+        int count = 0;
         while (true) {
-            if (isUnderflow(polygonal)) return;
+            if (isUnderflow(polygonal)) break;
             if (!isWrongSize(polygonal)) {
-                long value = CyclicPolygonal.getValue(polygonal);
-                // todo: fill map construction logic here
+                System.out.println("polygonal = " + Arrays.toString(polygonal));
+                count++;
+                String key = CyclicPolygonal.getFirstDigits(polygonal, 2);
+                String value = CyclicPolygonal.getLastDigits(polygonal, 2);
+                List<String> list = listMap.get(key);
+                if (list == null) {
+                    list = new ArrayList<>();
+                    listMap.put(key, list);
+                }
+                list.add(value);
             }
-            getNext(polygonal);
+            polygonal = getNext(polygonal);
         }
+        System.out.println("count = " + count);
+        int count2 = 0;
+        for (String key : listMap.keySet()) {
+            List<String> value = listMap.get(key);
+            System.out.printf("%s: %s\n", key, value);
+            count2 += value.size();
+        }
+        System.out.println("count2 = " + count2);
     }
 
     static List<int[]> find(int solutionSize, int size, int[] seed) {

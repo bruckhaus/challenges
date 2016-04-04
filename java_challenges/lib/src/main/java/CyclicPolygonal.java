@@ -140,7 +140,6 @@ class CyclicPolygonal {
         return getLastDigits(polygonal1, 2).equals(getFirstDigits(polygonal2, 2));
     }
 
-
     static String getFirstDigits(int[] polygonal, int count) {
         String s = "" + getValue(polygonal);
         if (s.length() < count) return s;
@@ -152,6 +151,4 @@ class CyclicPolygonal {
         if (s.length() < count) return s;
         return s.substring(s.length() - count);
     }
-
-
 }
