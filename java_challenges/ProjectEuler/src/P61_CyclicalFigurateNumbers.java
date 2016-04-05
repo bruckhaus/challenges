@@ -40,13 +40,20 @@ public class P61_CyclicalFigurateNumbers {
     private static Map<String, List<String>> listMap;
 
     static List<int[]> find(int size) {
-        return bruteForce ? find(size, size, getStart()) : findPairs(size, size, 0, 0);
+        return findPairs(size, size, 0, 0);
     }
 
     private static List<int[]> findPairs(int solutionSize, int size, int seed, int offset) {
+        List partial = new ArrayList();
+        List solution = new ArrayList();
         if (listMap == null) buildListMap();
-        // todo: fill recursive search of solution using listMap
-        return null;
+        if (size == 1) return makeList(new int[]{seed, offset});
+        partial = findPairs(solutionSize, size - 1, seed, offset);
+        
+        for (String key : listMap.keySet()) {
+        }
+
+        return solution;
     }
 
     private static void buildListMap() {
@@ -77,37 +84,6 @@ public class P61_CyclicalFigurateNumbers {
             count2 += value.size();
         }
         System.out.println("count2 = " + count2);
-    }
-
-    static List<int[]> find(int solutionSize, int size, int[] seed) {
-        showCall(size, seed);
-        List<int[]> partial;
-        List<int[]> solution;
-        int[] anchor = getStart();
-        while (true) {
-            if (isUnderflow(seed)) return null;
-            else if (isTooSmall(seed)) seed = getNext(seed);
-            else if (isTooLarge(seed)) {
-                seed = getNext(seed);
-                anchor = getStart();
-            } else if (size == 1) return makeList(seed);
-            else if (isUnderflow(anchor)) {
-                seed = getNext(seed);
-                anchor = getStart();
-            } else if (isWrongSize(anchor)) anchor = getNext(anchor);
-            else {
-                partial = find(solutionSize, size - 1, anchor);
-                showStep(size, seed, anchor, partial);
-                if (partial == null) {
-                    seed = getNext(seed);
-                    anchor = getStart();
-                } else {
-                    solution = checkSolution(solutionSize, partial, seed);
-                    if (solution == null) anchor = getNext(anchor);
-                    else return solution;
-                }
-            }
-        }
     }
 
     // Solution evaluation:
@@ -163,8 +139,8 @@ public class P61_CyclicalFigurateNumbers {
 
     // CyclicPolygonal wrappers:
 
-    private static List<int[]> makeList(int[] polygonal) {
-        return CyclicPolygonal.makeList(polygonal);
+    private static List<int[]> makeList(int[] ints) {
+        return CyclicPolygonal.makeList(ints);
     }
 
     private static int[] getStart() {
