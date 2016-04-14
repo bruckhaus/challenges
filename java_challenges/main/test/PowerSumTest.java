@@ -13,6 +13,6 @@ public class PowerSumTest {
         assertEquals(61, PowerSum.countPowerNumbers(0, 100));
         assertEquals(500, PowerSum.countPowerNumbers(0, 1000));
         assertEquals(4174, PowerSum.countPowerNumbers(0, 10000));
-//        assertEquals(9570, PowerSum.countPowerNumbers(0, 25000));
+        assertEquals(9570, PowerSum.countPowerNumbers(0, 25000));
     }
 }
