@@ -57,7 +57,7 @@ public class Prime {
         throw new NotImplementedException();
     }
 
-    public static Set<Long> getFactorSet(long l) {
+    static Set<Long> getFactorSet(long l) {
         Set<Long> factorSet = new TreeSet<>();
         long candidate = 2;
         while (l > 1) {
@@ -71,7 +71,7 @@ public class Prime {
         return factorSet;
     }
 
-    public static Boolean checkPrime(long p) {
+    static Boolean checkPrime(long p) {
         p = Math.abs(p);
         if (p < 2) return false;
         if (p == 2) return true;

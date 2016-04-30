@@ -1,4 +1,7 @@
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class PowerSum {
     // PowerSum - Coding - Simple maths maths medium - QUESTION DESCRIPTION
@@ -20,7 +23,7 @@ public class PowerSum {
     // Sample Output #1:
     // 2
     // Explanation #1:
-    // 0 and 1 both are Power Numbers. 0 = 02+02. 1 = 12+02.
+    // 0 and 1 both are Power Numbers. 0 = 0^2 + 0^2. 1 = 1^2 + 0^2.
     // Sample Input #2:
     // l = 25
     // r = 30
@@ -28,15 +31,16 @@ public class PowerSum {
     // 5
     // Explanation #2:
     // Except 30, all are Power Numbers.
-    //    25 = 52 + 02,
-    //    26 = 52 + 12,
-    //    27 = 33 + 02,
-    //    28 = 33 + 12,
-    //    29 = 55 + 22.
+    //    25 = 5^2 + 0^2,
+    //    26 = 5^2 + 1^2,
+    //    27 = 3^3 + 0^2,
+    //    28 = 3^3 + 1^2,
+    //    29 = 5^2 + 2^2.
 
-    private static HashSet<Integer> powerSums = new HashSet<>();
+    private static List<Long> powerNumbers = new ArrayList<>();
+    private static Set<Long> powerSums = new HashSet<>();
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         int i = 25;
         int j = 30;
         int sum = countPowerNumbers(i, j);
@@ -44,27 +48,26 @@ public class PowerSum {
     }
 
     static int countPowerNumbers(int l, int r) {
-        initializePowerSums(r);
-        int count = 0;
-        for (int i = l; i <= r; i++) {
-            if (powerSums.contains(i)) {
-                count ++;
+        powerSums.clear();
+        initializePowerNumbers(r);
+        for (Long p1 : powerNumbers) {
+            for (Long p2 : powerNumbers) {
+                if (p1 + p2 >= l && p1 + p2 <= r) powerSums.add(p1 + p2);
             }
         }
-        return count;
+        return powerSums.size();
     }
 
-    private static void initializePowerSums(int limit) {
-        for (int a = 0; a <= limit; a++){
-            for (int b = a; a + b <= limit; b++) {
-                for (int p = 2; Math.pow(a, p) <= limit; p++) {
-                    for (int q = 2; Math.pow(a, p) + Math.pow(b, q) <= limit; q++) {
-                        int powerNumber = (int) (Math.pow(a, p) + Math.pow(b, q));
-                        powerSums.add(powerNumber);
-                        if (b <= 1) break;
-                    }
-                    if (a <= 1) break;
-                }
+    private static void initializePowerNumbers(int limit) {
+        powerNumbers.clear();
+        powerNumbers.add(0L);
+        powerNumbers.add(1L);
+        for (int i = 2; i <= limit; i++) {
+            Long powerNumber = (long) i * i;
+            while (true) {
+                if (powerNumber > limit) break;
+                powerNumbers.add(powerNumber);
+                powerNumber *= i;
             }
         }
     }
