@@ -27,5 +27,4 @@ public class StringSimilarityTest {
         assertEquals("[987654321, 87654321, 7654321, 654321, 54321, 4321, 321, 21, 1]",
                 StringSimilarity.getSuffixes("987654321").toString());
     }
-
 }
