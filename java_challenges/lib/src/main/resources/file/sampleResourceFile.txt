@@ -1,0 +1,4 @@
+This is a
+sample
+resource file.
+It has 4 lines.

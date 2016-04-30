@@ -22,7 +22,7 @@ class TestStringDistance(unittest.TestCase):
                     ["abaababababbbbabaaababababbabbbbb", "a", 28]]
 
         for fixture in fixtures:
-            self.assertEquals(fixture[2], string_distance.string_distance(fixture[0], fixture[1]))
+            self.assertEquals(fixture[2], string_distance.string_distance(fixture[1], fixture[0]))
 
 if __name__ == '__main__':
     unittest.main()

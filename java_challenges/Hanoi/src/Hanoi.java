@@ -10,11 +10,11 @@ class Hanoi {
     Stack<Integer> peg_2 = new Stack<>();
     Stack<Integer> peg_3 = new Stack<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         new Hanoi().solve();
     }
 
-    private void solve() {
+    private void solve() throws InterruptedException {
         setUp();
         board.start();
         board.show(this);
@@ -22,7 +22,10 @@ class Hanoi {
         board.done();
     }
 
-    private void move(int n, Stack<Integer> sourcePeg, Stack<Integer> helperPeg, Stack<Integer> targetPeg) {
+    private void move(int n,
+                      Stack<Integer> sourcePeg,
+                      Stack<Integer> helperPeg,
+                      Stack<Integer> targetPeg) throws InterruptedException {
         if (n > 0) {
             move(n - 1, sourcePeg, targetPeg, helperPeg);
             targetPeg.push(sourcePeg.pop());

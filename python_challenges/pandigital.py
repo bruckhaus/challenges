@@ -1,4 +1,4 @@
-__author__ = 'tilmannbruckhaus'
+from lib.prime import Prime
 
 
 class Pandigital:
@@ -15,12 +15,11 @@ class Pandigital:
         """
         largest_pandigital_prime = -1
         for check_length in [4, 7]:
-            print "checking length:", check_length
             self.length = check_length
             candidate = self.current()
             while self.length == check_length:
                 if candidate > largest_pandigital_prime:
-                    if is_prime(candidate):
+                    if Prime.is_prime(candidate):
                         largest_pandigital_prime = candidate
                 candidate = self.next()
         return largest_pandigital_prime
@@ -62,24 +61,3 @@ class Pandigital:
             self.length += 1
             self.positions = 9 * [0]
             return self.current()
-
-
-def is_prime(n):
-    """Check if integer n is a prime."""
-    # ensure n is a positive integer
-    n = abs(int(n))
-    # 0 and 1 are not primes
-    if n < 2:
-        return False
-    # 2 is the only even prime number
-    if n == 2:
-        return True
-    # all other even numbers are not primes
-    if not n & 1:
-        return False
-    # range starts with 3 and only needs to go up the square root of n
-    # for all odd numbers
-    for x in range(3, int(n ** 0.5) + 1, 2):
-        if n % x == 0:
-            return False
-    return True
