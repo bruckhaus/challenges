@@ -1,61 +1,50 @@
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class FuzzySearch {
+// Implement a fuzzy search like the path search on Github, where a path matches a pattern if all characters in the
+// pattern appear in the same order in the path.  Return all matching paths in a path catalog.
+// E.g., pattern "tilmann" matches path "java_challenges/out/production/java_challenges/RomanNumeral.class"
+//                                                         ^        ^           ^         ^^^^
 
-    public static final String FILE_CATALOG_FILENAME = "files.txt";
-    public static final String FILE_CATALOG_FILE = "test/resources";
-    private List<String> FILE_CATALOG = new ArrayList<>();
-    private static final HashMap<String, String[]> LOOKUP = new HashMap<>();
 
-    public FuzzySearch() throws IOException {
-        populateFileCatalog();
+    private static final String FILE_CATALOG_FILE = "file/files.txt";
+    private List FILE_CATALOG;
 
-        String fileName = "java_challenges/Hanoi/src/CharacterDisplay.java";
-        populateSearchTree(fileName, fileName);
-
-//        for (String fileName : FILE_CATALOG) {
-//            populateSearchTree(fileName, fileName);
-//            System.out.println();
-//        }
+    FuzzySearch(String catalogFile) throws IOException {
+        FILE_CATALOG = new ResourceFile(catalogFile).getLines();
     }
 
-    private void populateSearchTree(String partialName, String fileName) {
-        boolean found = LOOKUP.containsKey(partialName);
-        if (found) {
-            String[] fileList = LOOKUP.get(partialName);
-            if (!fileList[fileList.length - 1].equals(fileName)) {
-                System.out.println("partialName = " + partialName);
-                fileList[fileList.length] = fileName;
-                LOOKUP.put(partialName, fileList);
-            }
-        } else {
-            System.out.println("partialName = " + partialName);
-            LOOKUP.put(partialName, new String[]{fileName});
-            for (int i = 0; i < partialName.length(); i++) {
-                String front = (i == 0) ? "" : partialName.substring(0, i);
-                String back = (i >= partialName.length() - 1) ? "" : partialName.substring(i + 1, partialName.length());
-                if (partialName.length() > 1) {
-                    populateSearchTree(front + back, fileName);
-                }
+    public static void main(String[] args) throws IOException {
+        FuzzySearch fuzzy = new FuzzySearch(FILE_CATALOG_FILE);
+        String input = "tilmann";
+        List matches = fuzzy.getMatches(input);
+        System.out.printf("\"%s\" matches:\n%s\n", input, matches);
+    }
+
+    List getMatches(String pattern) {
+        List<String> result = new ArrayList<>();
+        for (Object item : FILE_CATALOG) {
+            String path = item.toString();
+            if (isMatch(path, pattern)) result.add(path);
+        }
+        return result;
+    }
+
+    private boolean isMatch(String path, String pattern) {
+        path = path.toLowerCase();
+        pattern = pattern.toLowerCase();
+        int i = 0;
+        int j = 0;
+        while (i < path.length() && j < pattern.length()) {
+            if (path.charAt(i) == pattern.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                i++;
             }
         }
-    }
-
-    private void populateFileCatalog() throws IOException {
-        Path catalogFile = FileSystems.getDefault().getPath(FILE_CATALOG_FILE, FILE_CATALOG_FILENAME);
-        FILE_CATALOG = Files.readAllLines(catalogFile, StandardCharsets.UTF_8);
-    }
-
-    public String[] find(String pattern) {
-        String s = FILE_CATALOG.get(0);
-        System.out.println("s = " + s);
-        return new String[]{};
+        return j == pattern.length();
     }
 }
