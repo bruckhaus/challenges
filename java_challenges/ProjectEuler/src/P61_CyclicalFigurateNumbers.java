@@ -40,15 +40,15 @@ public class P61_CyclicalFigurateNumbers {
     private static Map<String, List<String>> listMap;
 
     static List<int[]> find(int size) {
-        return findPairs(size, size, 0, 0);
+        return find(size, size, 0, 0);
     }
 
-    private static List<int[]> findPairs(int solutionSize, int size, int seed, int offset) {
+    private static List<int[]> find(int solutionSize, int size, int seed, int offset) {
+        if (listMap == null) buildListMap();
         List partial = new ArrayList();
         List solution = new ArrayList();
-        if (listMap == null) buildListMap();
         if (size == 1) return makeList(new int[]{seed, offset});
-        partial = findPairs(solutionSize, size - 1, seed, offset);
+        partial = find(solutionSize, size - 1, seed, offset);
         
         for (String key : listMap.keySet()) {
         }
@@ -65,25 +65,22 @@ public class P61_CyclicalFigurateNumbers {
             if (!isWrongSize(polygonal)) {
                 System.out.println("polygonal = " + Arrays.toString(polygonal));
                 count++;
-                String key = CyclicPolygonal.getFirstDigits(polygonal, 2);
-                String value = CyclicPolygonal.getLastDigits(polygonal, 2);
-                List<String> list = listMap.get(key);
-                if (list == null) {
-                    list = new ArrayList<>();
-                    listMap.put(key, list);
-                }
-                list.add(value);
+                addToListMap(polygonal);
             }
             polygonal = getNext(polygonal);
         }
-        System.out.println("count = " + count);
-        int count2 = 0;
-        for (String key : listMap.keySet()) {
-            List<String> value = listMap.get(key);
-            System.out.printf("%s: %s\n", key, value);
-            count2 += value.size();
+        showListCheck(count);
+    }
+
+    private static void addToListMap(int[] polygonal) {
+        String key = getHead(polygonal);
+        String value = getTail(polygonal);
+        List<String> list = listMap.get(key);
+        if (list == null) {
+            list = new ArrayList<>();
+            listMap.put(key, list);
         }
-        System.out.println("count2 = " + count2);
+        list.add(value);
     }
 
     // Solution evaluation:
@@ -126,6 +123,17 @@ public class P61_CyclicalFigurateNumbers {
         showList(partial);
     }
 
+    private static void showListCheck(int count) {
+        System.out.println("count = " + count);
+        int count2 = 0;
+        for (String key : listMap.keySet()) {
+            List<String> value = listMap.get(key);
+            System.out.printf("%s: %s\n", key, value);
+            count2 += value.size();
+        }
+        System.out.println("count2 = " + count2);
+    }
+
     private static void showList(List<int[]> partial) {
         if (!diagnosticsToStdOut) return;
         if (partial != null) {
@@ -138,6 +146,14 @@ public class P61_CyclicalFigurateNumbers {
     }
 
     // CyclicPolygonal wrappers:
+
+    private static String getHead(int[] polygonal) {
+        return CyclicPolygonal.getFirstDigits(polygonal, LENGTH / 2);
+    }
+
+    private static String getTail(int[] polygonal) {
+        return CyclicPolygonal.getLastDigits(polygonal, LENGTH / 2);
+    }
 
     private static List<int[]> makeList(int[] ints) {
         return CyclicPolygonal.makeList(ints);
