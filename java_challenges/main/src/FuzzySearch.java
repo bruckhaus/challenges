@@ -32,7 +32,7 @@ public class FuzzySearch {
         return result;
     }
 
-    private boolean isMatch(String path, String pattern) {
+    static boolean isMatch(String path, String pattern) {
         path = path.toLowerCase();
         pattern = pattern.toLowerCase();
         int i = 0;
