@@ -27,23 +27,23 @@ public class P61_CyclicalFigurateNumbers {
                 "triangle, square, pentagonal, hexagonal, heptagonal, and octagonal, " +
                 "is represented by a different number in the set is %,d\n" +
                 "The set is: %s\n";
-        List<String> solution = P61_CyclicalFigurateNumbers.find(6);
+        P61_CyclicalFigurateNumbers p = new P61_CyclicalFigurateNumbers();
+        List<String> solution = p.find(6);
         long sum = getSum(solution);
         System.out.printf(message, sum, solution.toString());
     }
 
-    private static final int MIN_ORDER = 3;
-    private static final int MAX_ORDER = 8;
-    private static final int LENGTH = 4;
+    private final int MIN_ORDER = 3;
+    private final int MAX_ORDER = 8;
+    private final int LENGTH = 4;
     private static boolean diagnosticsToStdOut = false;
-    private static TreeMap<String, List<String>> polygonals;
+    private TreeMap<String, List<String>> polygonals = buildPolygonals();
 
-    static List<String> find(int size) {
+    List<String> find(int size) {
         return find(size, size, 0, 0);
     }
 
-    private static List<String> find(int solutionSize, int size, int seed, int offset) {
-        if (polygonals == null) buildPolygonals();
+    private List<String> find(int solutionSize, int size, int seed, int offset) {
         if (size == 1) return makeList(seed, offset);
         List solution = new ArrayList();
         List partial = find(solutionSize, size - 1, seed, offset);
@@ -53,7 +53,7 @@ public class P61_CyclicalFigurateNumbers {
         return solution;
     }
 
-    private static void buildPolygonals() {
+    private TreeMap<String, List<String>> buildPolygonals() {
         polygonals = new TreeMap<>();
         int[] polygonal = getStart();
         int count = 0;
@@ -67,9 +67,10 @@ public class P61_CyclicalFigurateNumbers {
             polygonal = getNext(polygonal);
         }
         showListCheck(count);
+        return polygonals;
     }
 
-    private static void addPolygonal(int[] polygonal) {
+    private void addPolygonal(int[] polygonal) {
         String key = getHead(polygonal);
         String value = getTail(polygonal);
         List<String> list = polygonals.get(key);
@@ -80,7 +81,7 @@ public class P61_CyclicalFigurateNumbers {
         list.add(value);
     }
 
-    private static List<String> makeList(int seed, int offset) {
+    private List<String> makeList(int seed, int offset) {
         List<String> list = new ArrayList<>();
         String chunk = polygonals.firstKey();
         for (int i = 0; i < seed; i++) chunk = polygonals.higherKey(chunk);
@@ -103,13 +104,13 @@ public class P61_CyclicalFigurateNumbers {
 
     // Solution evaluation:
 
-    static List<int[]> checkSolution(int size, List<int[]> partial, int[] polygonal) {
+    List<int[]> checkSolution(int size, List<int[]> partial, int[] polygonal) {
         partial.add(polygonal);
         if (isSolution(size, partial)) return partial;
         return null;
     }
 
-    static boolean isSolution(int size, List<int[]> list) {
+    boolean isSolution(int size, List<int[]> list) {
         switch (list.size()) {
             case 0:
                 return true;
@@ -120,7 +121,7 @@ public class P61_CyclicalFigurateNumbers {
         }
     }
 
-    private static boolean isCyclicSolution(int size, List<int[]> list) {
+    private boolean isCyclicSolution(int size, List<int[]> list) {
         return CyclicPolygonal.hasRequiredDigitCounts(list, LENGTH) &&
                 CyclicPolygonal.hasUniqueOrders(list) &&
                 CyclicPolygonal.isCyclicAndWraps(size, list);
@@ -128,12 +129,12 @@ public class P61_CyclicalFigurateNumbers {
 
     // Diagnostics:
 
-    private static void showCall(int size, int[] seed) {
+    private void showCall(int size, int[] seed) {
         if (!diagnosticsToStdOut) return;
         System.out.printf("size: %d, seed: %s, %d\n", size, Arrays.toString(seed), CyclicPolygonal.getValue(seed));
     }
 
-    private static void showStep(int size, int[] seed, int[] anchor, List<int[]> partial) {
+    private void showStep(int size, int[] seed, int[] anchor, List<int[]> partial) {
         if (!diagnosticsToStdOut) return;
         System.out.printf("size: %d, seed: %s, %,d, anchor: %s, %d\n", size,
                 Arrays.toString(seed), CyclicPolygonal.getValue(seed),
@@ -141,7 +142,7 @@ public class P61_CyclicalFigurateNumbers {
         showList(partial);
     }
 
-    private static void showListCheck(int count) {
+    private void showListCheck(int count) {
         System.out.println("count = " + count);
         int count2 = 0;
         for (String key : polygonals.keySet()) {
@@ -152,7 +153,7 @@ public class P61_CyclicalFigurateNumbers {
         System.out.println("count2 = " + count2);
     }
 
-    private static void showList(List<int[]> partial) {
+    private void showList(List<int[]> partial) {
         if (!diagnosticsToStdOut) return;
         if (partial != null) {
             for (int i = 0; i < partial.size(); i++) {
@@ -165,35 +166,35 @@ public class P61_CyclicalFigurateNumbers {
 
     // CyclicPolygonal wrappers:
 
-    private static String getHead(int[] polygonal) {
+    private String getHead(int[] polygonal) {
         return CyclicPolygonal.getFirstDigits(polygonal, LENGTH / 2);
     }
 
-    private static String getTail(int[] polygonal) {
+    private String getTail(int[] polygonal) {
         return CyclicPolygonal.getLastDigits(polygonal, LENGTH / 2);
     }
 
-    private static int[] getStart() {
+    private int[] getStart() {
         return CyclicPolygonal.getStart(MAX_ORDER);
     }
 
-    private static boolean isUnderflow(int[] polygonal) {
+    private boolean isUnderflow(int[] polygonal) {
         return CyclicPolygonal.isUnderflow(polygonal, MIN_ORDER);
     }
 
-    private static boolean isWrongSize(int[] polygonal) {
+    private boolean isWrongSize(int[] polygonal) {
         return CyclicPolygonal.isWrongSize(polygonal, LENGTH);
     }
 
-    private static boolean isTooSmall(int[] polygonal) {
+    private boolean isTooSmall(int[] polygonal) {
         return CyclicPolygonal.isTooSmall(polygonal, LENGTH);
     }
 
-    private static boolean isTooLarge(int[] polygonal) {
+    private boolean isTooLarge(int[] polygonal) {
         return CyclicPolygonal.isTooLarge(polygonal, LENGTH);
     }
 
-    private static int[] getNext(int[] polygonal) {
+    private int[] getNext(int[] polygonal) {
         return CyclicPolygonal.getNext(polygonal, LENGTH);
     }
 }
