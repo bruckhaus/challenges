@@ -43,13 +43,13 @@ public class P61_CyclicalFigurateNumbers {
         return find(size, size, 0, 0);
     }
 
-    private List<String> find(int solutionSize, int size, int seed, int offset) {
-        if (size == 1) return makeList(seed, offset);
+    private List<String> find(int solutionSize, int size, int base, int exponent) {
+        if (size == 1) return makeList(base, exponent);
         List solution = new ArrayList();
-        List partial = find(solutionSize, size - 1, seed, offset);
-//        while (true) {
-//
-//        }
+        List partial = find(solutionSize, size - 1, base, exponent);
+        while (true) {
+
+        }
         return solution;
     }
 
@@ -83,10 +83,11 @@ public class P61_CyclicalFigurateNumbers {
 
     private List<String> makeList(int seed, int offset) {
         List<String> list = new ArrayList<>();
-        String chunk = polygonals.firstKey();
-        for (int i = 0; i < seed; i++) chunk = polygonals.higherKey(chunk);
-        list.add(chunk);
-        list.add(polygonals.get(chunk).get(offset));
+        String head = polygonals.firstKey();
+        for (int i = 0; i < seed; i++) head = polygonals.higherKey(head);
+        String tail = polygonals.get(head).get(offset);
+        list.add(head);
+        list.add(tail);
         return list;
     }
 
