@@ -28,7 +28,7 @@ public class P61_CyclicalFigurateNumbers {
                 "is represented by a different number in the set is %,d\n" +
                 "The set is: %s\n";
         P61_CyclicalFigurateNumbers p = new P61_CyclicalFigurateNumbers();
-        List<String> solution = p.find(6);
+        List<Long> solution = p.find(6);
         long sum = getSum(solution);
         System.out.printf(message, sum, solution.toString());
     }
@@ -37,23 +37,40 @@ public class P61_CyclicalFigurateNumbers {
     private final int MAX_ORDER = 8;
     private final int LENGTH = 4;
     private static boolean diagnosticsToStdOut = false;
-    private TreeMap<String, List<String>> polygonals = buildPolygonals();
+    private TreeMap<Long, List<Long>> polygonals = buildPolygonals();
 
-    List<String> find(int size) {
+    List<Long> find(int size) {
         return find(size, size, 0, 0);
     }
 
-    private List<String> find(int solutionSize, int size, int base, int exponent) {
-        if (size == 1) return makeList(base, exponent);
-        List solution = new ArrayList();
-        List partial = find(solutionSize, size - 1, base, exponent);
+    private List<Long> find(int solutionSize, int size, int seed, int offset) {
+        if (size == 1) return makeList(seed, offset);
+        List<Long> solution;
+        int key = 0;
+        Long value = 0L;
         while (true) {
-
+            List<Long> partial = find(solutionSize, size - 1, key, value);
+            solution = append(partial, value);
+            return solution;
         }
-        return solution;
     }
 
-    private TreeMap<String, List<String>> buildPolygonals() {
+    private List<Long> append(List<Long> partial, Long value) {
+        partial.add(value);
+        return partial;
+    }
+
+    private List<Long> makeList(int seed, int offset) {
+        List<Long> list = new ArrayList<>();
+        Long head = polygonals.firstKey();
+        for (int i = 0; i < seed; i++) head = polygonals.higherKey(head);
+        Long tail = polygonals.get(head).get(offset);
+        list.add(head);
+        list.add(tail);
+        return list;
+    }
+
+    private TreeMap<Long, List<Long>> buildPolygonals() {
         polygonals = new TreeMap<>();
         int[] polygonal = getStart();
         int count = 0;
@@ -71,9 +88,9 @@ public class P61_CyclicalFigurateNumbers {
     }
 
     private void addPolygonal(int[] polygonal) {
-        String key = getHead(polygonal);
-        String value = getTail(polygonal);
-        List<String> list = polygonals.get(key);
+        long value = CyclicPolygonal.getValue(polygonal);
+        Long key = getHead(polygonal);
+        List<Long> list = polygonals.get(key);
         if (list == null) {
             list = new ArrayList<>();
             polygonals.put(key, list);
@@ -81,23 +98,13 @@ public class P61_CyclicalFigurateNumbers {
         list.add(value);
     }
 
-    private List<String> makeList(int seed, int offset) {
-        List<String> list = new ArrayList<>();
-        String head = polygonals.firstKey();
-        for (int i = 0; i < seed; i++) head = polygonals.higherKey(head);
-        String tail = polygonals.get(head).get(offset);
-        list.add(head);
-        list.add(tail);
-        return list;
-    }
-
-    static long getSum(List<String> list) {
+    static long getSum(List<Long> list) {
         if (list.size() < 1) return 0;
-        long sum = 0;
-        int last = Integer.valueOf(list.get(0));
+        Long sum = 0L;
+        Long last = list.get(0);
         for (int i = 1, listSize = list.size(); i < listSize; i++) {
             sum += last * 100;
-            last = Integer.valueOf(list.get(i));
+            last = list.get(i);
             sum += last;
         }
         return sum;
@@ -146,8 +153,8 @@ public class P61_CyclicalFigurateNumbers {
     private void showListCheck(int count) {
         System.out.println("count = " + count);
         int count2 = 0;
-        for (String key : polygonals.keySet()) {
-            List<String> value = polygonals.get(key);
+        for (Long key : polygonals.keySet()) {
+            List<Long> value = polygonals.get(key);
             System.out.printf("%s: %s\n", key, value);
             count2 += value.size();
         }
@@ -167,11 +174,11 @@ public class P61_CyclicalFigurateNumbers {
 
     // CyclicPolygonal wrappers:
 
-    private String getHead(int[] polygonal) {
+    private Long getHead(int[] polygonal) {
         return CyclicPolygonal.getFirstDigits(polygonal, LENGTH / 2);
     }
 
-    private String getTail(int[] polygonal) {
+    private Long getTail(int[] polygonal) {
         return CyclicPolygonal.getLastDigits(polygonal, LENGTH / 2);
     }
 

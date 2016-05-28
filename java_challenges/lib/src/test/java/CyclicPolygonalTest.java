@@ -22,7 +22,13 @@ public class CyclicPolygonalTest {
     }
 
     @Test
-    public void testMakeList() throws Exception {
+    public void testMakeList1() throws Exception {
+        List<int[]> list = CyclicPolygonal.makeList(new int[]{3, 3});
+        assertArrayEquals(new int[][]{{3, 3}}, list.toArray());
+    }
+
+    @Test
+    public void testMakeList2() throws Exception {
         List<int[]> list = CyclicPolygonal.makeList(3, 3);
         assertArrayEquals(new int[][]{{3, 3}}, list.toArray());
     }
