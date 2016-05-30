@@ -47,7 +47,7 @@ public class CyclicPolygonalSequence {
     }
 
     boolean isCyclicWithPrevious(int i) {
-        return hasCyclicListMembers(list, i - 1, i);
+        return hasCyclicListMembers(i - 1, i);
     }
 
     boolean hasCyclicListMembers(int index1, int index2) {
@@ -61,6 +61,6 @@ public class CyclicPolygonalSequence {
     }
 
     boolean isCyclic(PolygonalForEuler61 polygonal1, PolygonalForEuler61 polygonal2) {
-        return getLastDigits(polygonal1, 2).equals(getFirstDigits(polygonal2, 2));
+        return polygonal1.getTail().equals(polygonal2.getHead());
     }
 }

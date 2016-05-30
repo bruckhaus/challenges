@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
 public class CyclicPolygonalSequenceTest {
     @Test
     public void getSum() throws Exception {
-        List<int[]> list = new ArrayList<>();
-        assertEquals(0, PolygonalForEuler61.getSum(list));
+        CyclicPolygonalSequence list = new CyclicPolygonalSequence();
+        assertEquals(0, list.getSum());
         list.add(new int[]{3, 10});
         assertEquals(55, PolygonalForEuler61.getSum(list));
         list.add(new int[]{4, 11});
