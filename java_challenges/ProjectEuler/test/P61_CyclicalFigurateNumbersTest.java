@@ -27,7 +27,7 @@ public class P61_CyclicalFigurateNumbersTest {
     public void testGetList1() throws Exception {
         List<int[]> solution = new ArrayList<>();
         int[] polygonal = new int[]{8, 19};
-        assertEquals(1045, CyclicPolygonal.getValue(polygonal));
+        assertEquals(1045, PolygonalForEuler61.calculate(polygonal));
         solution.add(polygonal);
         assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.find(1).toArray());
     }
@@ -37,8 +37,8 @@ public class P61_CyclicalFigurateNumbersTest {
         List<int[]> solution = new ArrayList<>();
         int[] p1 = new int[]{5, 55};
         int[] p2 = new int[]{8, 19};
-        assertEquals(4510, CyclicPolygonal.getValue(p1));
-        assertEquals(1045, CyclicPolygonal.getValue(p2));
+        assertEquals(4510, PolygonalForEuler61.calculate(p1));
+        assertEquals(1045, PolygonalForEuler61.calculate(p2));
         solution.add(p1);
         solution.add(p2);
         assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.find(2).toArray());

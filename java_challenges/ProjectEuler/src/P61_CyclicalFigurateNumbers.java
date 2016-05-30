@@ -46,17 +46,19 @@ public class P61_CyclicalFigurateNumbers {
     private List<Long> find(int solutionSize, int size, int seed, int offset) {
         if (size == 1) return makeList(seed, offset);
         List<Long> solution;
-        int key = 0;
-        Long value = 0L;
+        int nextSeed = 0;
+        int nextOffset = 0;
         while (true) {
-            List<Long> partial = find(solutionSize, size - 1, key, value);
-            solution = append(partial, value);
+            List<Long> partial = find(solutionSize, size - 1, nextSeed, nextOffset);
+            solution = checkSolution(size, partial, nextSeed, nextOffset);
             return solution;
         }
     }
 
-    private List<Long> append(List<Long> partial, Long value) {
-        partial.add(value);
+    private List<Long> append(List<Long> partial, int key, int value) {
+        int[] array = new int[]{key, value};
+        Long polygonal = PolygonalForEuler61.calculate(array);
+        partial.add(polygonal);
         return partial;
     }
 
@@ -88,7 +90,7 @@ public class P61_CyclicalFigurateNumbers {
     }
 
     private void addPolygonal(int[] polygonal) {
-        long value = CyclicPolygonal.getValue(polygonal);
+        long value = PolygonalForEuler61.calculate(polygonal);
         Long key = getHead(polygonal);
         List<Long> list = polygonals.get(key);
         if (list == null) {
@@ -112,41 +114,41 @@ public class P61_CyclicalFigurateNumbers {
 
     // Solution evaluation:
 
-    List<int[]> checkSolution(int size, List<int[]> partial, int[] polygonal) {
-        partial.add(polygonal);
+    List<Long> checkSolution(int size, List<Long> partial, int key, int value) {
+        List<Long> solution = append(partial, key, value);
         if (isSolution(size, partial)) return partial;
         return null;
     }
 
-    boolean isSolution(int size, List<int[]> list) {
+    boolean isSolution(int size, List<Long> list) {
         switch (list.size()) {
             case 0:
                 return true;
             case 1:
-                return CyclicPolygonal.getDigitCount(list.get(0)) == LENGTH;
+                return PolygonalForEuler61.getDigitCount(list.get(0)) == LENGTH;
             default:
                 return isCyclicSolution(size, list);
         }
     }
 
-    private boolean isCyclicSolution(int size, List<int[]> list) {
-        return CyclicPolygonal.hasRequiredDigitCounts(list, LENGTH) &&
-                CyclicPolygonal.hasUniqueOrders(list) &&
-                CyclicPolygonal.isCyclicAndWraps(size, list);
+    private boolean isCyclicSolution(int size, List<Long> list) {
+        return PolygonalForEuler61.hasRequiredDigitCounts(list, LENGTH) &&
+                PolygonalForEuler61.hasUniqueOrders(list) &&
+                PolygonalForEuler61.isCyclicAndWraps(size, list);
     }
 
     // Diagnostics:
 
     private void showCall(int size, int[] seed) {
         if (!diagnosticsToStdOut) return;
-        System.out.printf("size: %d, seed: %s, %d\n", size, Arrays.toString(seed), CyclicPolygonal.getValue(seed));
+        System.out.printf("size: %d, seed: %s, %d\n", size, Arrays.toString(seed), PolygonalForEuler61.calculate(seed));
     }
 
     private void showStep(int size, int[] seed, int[] anchor, List<int[]> partial) {
         if (!diagnosticsToStdOut) return;
         System.out.printf("size: %d, seed: %s, %,d, anchor: %s, %d\n", size,
-                Arrays.toString(seed), CyclicPolygonal.getValue(seed),
-                Arrays.toString(anchor), CyclicPolygonal.getValue(anchor));
+                Arrays.toString(seed), PolygonalForEuler61.calculate(seed),
+                Arrays.toString(anchor), PolygonalForEuler61.calculate(anchor));
         showList(partial);
     }
 
@@ -165,7 +167,7 @@ public class P61_CyclicalFigurateNumbers {
         if (!diagnosticsToStdOut) return;
         if (partial != null) {
             for (int i = 0; i < partial.size(); i++) {
-                System.out.printf("partial[%d]: %,d\n", i, CyclicPolygonal.getValue(partial.get(i)));
+                System.out.printf("partial[%d]: %,d\n", i, PolygonalForEuler61.calculate(partial.get(i)));
             }
         } else {
             System.out.println("partial: null");
@@ -175,34 +177,34 @@ public class P61_CyclicalFigurateNumbers {
     // CyclicPolygonal wrappers:
 
     private Long getHead(int[] polygonal) {
-        return CyclicPolygonal.getFirstDigits(polygonal, LENGTH / 2);
+        return PolygonalForEuler61.getHead(polygonal, LENGTH / 2);
     }
 
     private Long getTail(int[] polygonal) {
-        return CyclicPolygonal.getLastDigits(polygonal, LENGTH / 2);
+        return PolygonalForEuler61.getTail(polygonal, LENGTH / 2);
     }
 
     private int[] getStart() {
-        return CyclicPolygonal.getStart(MAX_ORDER);
+        return PolygonalForEuler61.getStart(MAX_ORDER);
     }
 
     private boolean isUnderflow(int[] polygonal) {
-        return CyclicPolygonal.isUnderflow(polygonal, MIN_ORDER);
+        return PolygonalForEuler61.isUnderflow(polygonal, MIN_ORDER);
     }
 
     private boolean isWrongSize(int[] polygonal) {
-        return CyclicPolygonal.isWrongSize(polygonal, LENGTH);
+        return PolygonalForEuler61.isWrongSize(polygonal, LENGTH);
     }
 
     private boolean isTooSmall(int[] polygonal) {
-        return CyclicPolygonal.isTooSmall(polygonal, LENGTH);
+        return PolygonalForEuler61.isTooSmall(polygonal, LENGTH);
     }
 
     private boolean isTooLarge(int[] polygonal) {
-        return CyclicPolygonal.isTooLarge(polygonal, LENGTH);
+        return PolygonalForEuler61.isTooLarge(polygonal, LENGTH);
     }
 
     private int[] getNext(int[] polygonal) {
-        return CyclicPolygonal.getNext(polygonal, LENGTH);
+        return PolygonalForEuler61.getNext(polygonal, LENGTH);
     }
 }
