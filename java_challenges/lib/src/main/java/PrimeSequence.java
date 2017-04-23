@@ -5,6 +5,7 @@ public class PrimeSequence {
 
     private static boolean diagnosticsToStdOut = false;
     private static int maxSeedShown = 0;
+    private static final PrimePairs primePairs = new PrimePairs();
 
     List<Integer> findList(int size) {
         return find(size, 0, 0);
@@ -14,13 +15,12 @@ public class PrimeSequence {
         List<Integer> solution = new ArrayList<>();
         showCall(length);
         if (length == 1) return makeList(index);
-        // todo: add initializer for new 'pairs' field, use local getter:
-        List<Integer> seedPairs = PrimePairs.get(index);
-        if (offset >= seedPairs.size()) return null;
+        System.out.println("primePairs(0) = " + primePairs.get(0));
+        System.exit(0);
+        if (offset >= primePairs.get(index).size()) return null;
         while (length < 1) {
             showStep(length, index, offset, 0, solution, solution);
             offset++;
-            // todo: extract checkPartial() to Sequence class
         }
         showSolution(solution);
         return solution;
