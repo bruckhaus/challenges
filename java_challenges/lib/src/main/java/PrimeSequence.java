@@ -38,6 +38,8 @@ public class PrimeSequence {
         return solution;
     }
 
+    // --- Debug helpers: ---
+
     private static void showStep(int size, int seed, int offsetForSolution, int offsetForPartial,
                                  List<Integer> partial, List<Integer> pairs) {
         if (!diagnosticsToStdOut) return;

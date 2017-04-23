@@ -7,14 +7,6 @@ import static org.junit.Assert.*;
 public class PrimeSequenceTest {
 
     @Test
-    public void find() throws Exception {
-    }
-
-    @Test
-    public void checkPartial() throws Exception {
-    }
-
-    @Test
     public void findList() throws Exception {
         PrimeSequence p = new PrimeSequence();                                               // indices:
         assertEquals("2", p.findList(1).toString());                          // 1
@@ -26,7 +18,7 @@ public class PrimeSequenceTest {
 
     @SuppressWarnings("ConstantConditions")
     @Test
-    public void testFindIndexArray2() throws Exception {
+    public void testFind() throws Exception {
         PrimeSequence p = new PrimeSequence();
         assertArrayEquals(new Integer[]{2, 4, 29, 122}, p.find(4, 122, 0).toArray());
         assertArrayEquals(new Integer[]{9, 64, 123, 144}, p.find(4, 144, 0).toArray());
@@ -37,21 +29,6 @@ public class PrimeSequenceTest {
         assertNull(p.find(4, 123, 0));
         assertNull(p.find(4, 143, 0));
         assertNull(p.find(4, 145, 0));
-    }
-
-    @Test
-    public void testPairsForSizeFiveSolution() throws Exception {
-        assert (PrimePairs.get(692).contains(6));
-        assert (PrimePairs.get(751).contains(6));
-        assert (PrimePairs.get(751).contains(692));
-        assert (PrimePairs.get(868).contains(6));
-        assert (PrimePairs.get(868).contains(692));
-        assert (PrimePairs.get(868).contains(751));
-        assert (PrimePairs.get(1051).contains(6));
-        assert (PrimePairs.get(1051).contains(692));
-        assert (PrimePairs.get(1051).contains(751));
-        assert (PrimePairs.get(1051).contains(868));
-        assert (!PrimePairs.get(1051).contains(869));
     }
 
     @Test
