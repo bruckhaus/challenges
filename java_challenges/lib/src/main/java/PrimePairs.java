@@ -19,17 +19,22 @@ class PrimePairs {
         }
     }
 
+    static void reset() {
+        pairsList = new ArrayList<>();
+        lastIndex = -1;
+    }
+
     static List<Integer> get(int index) {
         buildPairs(index);
         return pairsList.get(index);
     }
 
-    static List<Integer> buildPairs(int index) {
+    static List<List<Integer>> buildPairs(int index) {
         while (lastIndex < index) {
             lastIndex++;
             pairsList.add(lastIndex, getPairs(lastIndex));
         }
-        return pairsList.get(index);
+        return pairsList;
     }
 
     static List<Integer> getPairs(int index) {
