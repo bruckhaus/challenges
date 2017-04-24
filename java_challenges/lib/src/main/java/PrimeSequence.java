@@ -7,30 +7,26 @@ public class PrimeSequence {
     private static int maxSeedShown = 0;
 
     List<Integer> findList(int size) {
-        for (int index = 0; true; index++) {
-            List<Integer> result = find(size, index, 0);
+        for (int seed = 0; true; seed++) {
+            List<Integer> result = find(size, seed, 0);
             if (result != null) return result;
         }
     }
 
-    public List<Integer> find(int length, Integer index, Integer offset) {
-        if (length == 1) return makeList(index);
-        List<Integer> headList = PrimePairs.get(index);
-        if (offset >= headList.size()) return null;
-        Integer nextHead = headList.get(offset);
-        List<Integer> solution;
-        List<Integer> partial;
-        int nextOffset = 0;
+    public List<Integer> find(int size, Integer seed, Integer seedOffset) {
+        if (size == 1) return makeList(seed);
+        List<Integer> seedPairs = PrimePairs.get(seed);
+        int partialOffset = 0;
         while (true) {
-            List<Integer> nextHeadList = PrimePairs.get(nextHead);
-            if (nextOffset >= nextHeadList.size()) return null;
-            partial = find(length - 1, nextHead, nextOffset);
+            if (seedOffset > seedPairs.size() - 1) return null;
+            List<Integer> partial = find(size - 1, seedPairs.get(seedOffset), partialOffset);
             if (partial == null) {
-                nextOffset++;
+                seedOffset++;
+                partialOffset = 0;
             } else {
-                solution = checkPartial(partial, index);
+                List<Integer> solution = checkPartial(partial, seed);
                 if (solution == null) {
-                    nextOffset++;
+                    partialOffset++;
                 } else {
                     return solution;
                 }
