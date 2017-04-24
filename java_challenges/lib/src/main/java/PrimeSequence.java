@@ -5,29 +5,41 @@ public class PrimeSequence {
 
     private static boolean diagnosticsToStdOut = false;
     private static int maxSeedShown = 0;
-    private static final PrimePairs primePairs = new PrimePairs();
 
     List<Integer> findList(int size) {
-        return find(size, 0, 0);
+        for (int index = 0; true; index++) {
+            List<Integer> result = find(size, index, 0);
+            if (result != null) return result;
+        }
     }
 
     public List<Integer> find(int length, Integer index, Integer offset) {
-        List<Integer> solution = new ArrayList<>();
-        showCall(length);
         if (length == 1) return makeList(index);
-        System.out.println("primePairs(0) = " + primePairs.get(0));
-        System.exit(0);
-        if (offset >= primePairs.get(index).size()) return null;
-        while (length < 1) {
-            showStep(length, index, offset, 0, solution, solution);
-            offset++;
+        List<Integer> headList = PrimePairs.get(index);
+        if (offset >= headList.size()) return null;
+        Integer nextHead = headList.get(offset);
+        List<Integer> solution;
+        List<Integer> partial;
+        int nextOffset = 0;
+        while (true) {
+            List<Integer> nextHeadList = PrimePairs.get(nextHead);
+            if (nextOffset >= nextHeadList.size()) return null;
+            partial = find(length - 1, nextHead, nextOffset);
+            if (partial == null) {
+                nextOffset++;
+            } else {
+                solution = checkPartial(partial, index);
+                if (solution == null) {
+                    nextOffset++;
+                } else {
+                    return solution;
+                }
+            }
         }
-        showSolution(solution);
-        return solution;
     }
 
-    static List<Integer> checkPartial(List<Integer> partial, int seed) {
-        partial.add(seed);
+    static List<Integer> checkPartial(List<Integer> partial, int index) {
+        partial.add(index);
         if (PrimePairs.isConcatenable(partial)) return partial;
         return null;
     }

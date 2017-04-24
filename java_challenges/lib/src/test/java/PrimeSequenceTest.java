@@ -9,8 +9,8 @@ public class PrimeSequenceTest {
     @Test
     public void findList() throws Exception {
         PrimeSequence p = new PrimeSequence();                                               // indices:
-        assertEquals("2", p.findList(1).toString());                          // 1
-        assertEquals("3, 7", p.findList(2).toString());                       // 2, 4
+        assertEquals("[0]", p.findList(1).toString());                          // 1
+        assertEquals("[4, 8]", p.findList(2).toString());                       // 2, 4
         assertEquals("3, 37, 67", p.findList(3).toString());                  // 2, 12, 19
         assertEquals("3, 7, 109, 673", p.findList(4).toString());             // 2, 4, 29, 122
         assertEquals("13, 5197, 5701, 6733, 8389", p.findList(5).toString()); // 6, 692, 751, 868, 1051
