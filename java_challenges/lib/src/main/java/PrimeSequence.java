@@ -3,8 +3,15 @@ import java.util.List;
 
 public class PrimeSequence {
 
+    List<Long> findPrimes(int size) {
+        List<Integer> indexList = findList(size);
+        List<Long> primeList = new ArrayList<>();
+        for (Integer i : indexList) primeList.add(PrimePairs.getPrime(i));
+        return primeList;
+    }
+
     List<Integer> findList(int size) {
-        for (int head = 0; true; head++) {
+        for (int head = 1; true; head++) {
             List<Integer> result = find(size, head, 0);
             if (result != null) return result;
         }
@@ -38,9 +45,9 @@ public class PrimeSequence {
         return null;
     }
 
-    static List<Integer> makeList(int seed) {
+    static List<Integer> makeList(int head) {
         List<Integer> solution = new ArrayList<>();
-        solution.add(seed);
+        solution.add(head);
         return solution;
     }
 }

@@ -7,13 +7,23 @@ import static org.junit.Assert.*;
 public class PrimeSequenceTest {
 
     @Test
+    public void testFindPrimes() throws Exception {
+        PrimeSequence p = new PrimeSequence();
+        assertEquals("[2]", p.findPrimes(1).toString());
+        assertEquals("[3, 7]", p.findPrimes(2).toString());
+        assertEquals("[3, 37, 67]", p.findPrimes(3).toString());
+        assertEquals("[3, 7, 109, 673]", p.findPrimes(4).toString());
+        assertEquals("[13, 5197, 5701, 6733, 8389]", p.findPrimes(5).toString());
+    }
+
+    @Test
     public void testFindList() throws Exception {
-        PrimeSequence p = new PrimeSequence();                                             // primes:
-        assertEquals("[0]", p.findList(1).toString());                      // 2
-        assertEquals("[2, 4]", p.findList(2).toString());                   // 5, 11
-        assertEquals("[2, 12, 19]", p.findList(3).toString());              // 3, 37, 67
-        assertEquals("[2, 4, 29, 122]", p.findList(4).toString());          // 3, 7, 109, 673
-        assertEquals("[6, 692, 751, 868, 1051]", p.findList(5).toString()); // 13, 5197, 5701, 6733, 8389
+        PrimeSequence p = new PrimeSequence();
+        assertEquals("[1]", p.findList(1).toString());
+        assertEquals("[2, 4]", p.findList(2).toString());
+        assertEquals("[2, 12, 19]", p.findList(3).toString());
+        assertEquals("[2, 4, 29, 122]", p.findList(4).toString());
+        assertEquals("[6, 692, 751, 868, 1051]", p.findList(5).toString());
     }
 
     @Test

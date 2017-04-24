@@ -23,33 +23,33 @@ public class PrimePairsTest {
     }
 
     @Test
-    public void testAddPairs() throws Exception {
-        assertArrayEquals(new Integer[0], PrimePairs.getPairs(0).toArray());      // no prime for index 0
-        assertArrayEquals(new Integer[0], PrimePairs.getPairs(1).toArray());      // no pairs for 2
-        assertArrayEquals(new Integer[0], PrimePairs.getPairs(2).toArray());      // no pairs for 3
-        assertArrayEquals(new Integer[0], PrimePairs.getPairs(3).toArray());      // no pairs for 5
-        assertArrayEquals(new Integer[]{2}, PrimePairs.getPairs(4).toArray());    // 7: 37, 73
-        assertArrayEquals(new Integer[]{2}, PrimePairs.getPairs(5).toArray());    // 11: 311, 113
-        assertArrayEquals(new Integer[0], PrimePairs.getPairs(6).toArray());      // no pairs for 13
-        assertArrayEquals(new Integer[]{2}, PrimePairs.getPairs(7).toArray());    // 17: 317, 173
-        assertArrayEquals(new Integer[]{4, 6}, PrimePairs.getPairs(8).toArray()); // 19: 719, 197 + 1317, 1713
-        assertArrayEquals(new Integer[]{5}, PrimePairs.getPairs(9).toArray());    // 23: 1123, 2311
-        assertArrayEquals(new Integer[0], PrimePairs.getPairs(10).toArray());     // no pairs for 29
+    public void testGetPairs() throws Exception {
+        assertEquals("[]", PrimePairs.getPairs(0).toString());     // no prime for index 0
+        assertEquals("[]", PrimePairs.getPairs(1).toString());     // 2: no pairs
+        assertEquals("[]", PrimePairs.getPairs(2).toString());     // 3: no pairs
+        assertEquals("[]", PrimePairs.getPairs(3).toString());     // 5: no pairs
+        assertEquals("[2]", PrimePairs.getPairs(4).toString());    // 7: 37, 73
+        assertEquals("[2]", PrimePairs.getPairs(5).toString());    // 11: 311, 113
+        assertEquals("[]", PrimePairs.getPairs(6).toString());     // 13: no pairs
+        assertEquals("[2]", PrimePairs.getPairs(7).toString());    // 17: 317, 173
+        assertEquals("[4, 6]", PrimePairs.getPairs(8).toString()); // 19: 719, 197 + 1319, 1913
+        assertEquals("[5]", PrimePairs.getPairs(9).toString());    // 23: 1123, 2311
+        assertEquals("[]", PrimePairs.getPairs(10).toString());    // 29: no pairs
     }
 
     @Test
     public void testGet() throws Exception {
-        assertArrayEquals(new Integer[0], PrimePairs.get(0).toArray());      // no prime for index 0
-        assertArrayEquals(new Integer[0], PrimePairs.get(1).toArray());      // 2: no pairs
-        assertArrayEquals(new Integer[0], PrimePairs.get(2).toArray());      // 3: no pairs
-        assertArrayEquals(new Integer[0], PrimePairs.get(3).toArray());      // 5: no pairs
-        assertArrayEquals(new Integer[]{2}, PrimePairs.get(4).toArray());    // 7: 37, 73
-        assertArrayEquals(new Integer[]{2}, PrimePairs.get(5).toArray());    // 11: 311, 113
-        assertArrayEquals(new Integer[0], PrimePairs.get(6).toArray());      // 13: no pairs
-        assertArrayEquals(new Integer[]{2}, PrimePairs.get(7).toArray());    // 17: 317, 173
-        assertArrayEquals(new Integer[]{4, 6}, PrimePairs.get(8).toArray()); // 19: 719, 197 + 1317, 1713
-        assertArrayEquals(new Integer[]{5}, PrimePairs.get(9).toArray());    // 23: 1123, 2311
-        assertArrayEquals(new Integer[0], PrimePairs.get(10).toArray());     // no pairs for 29
+        assertEquals("[]", PrimePairs.get(0).toString());     // no prime for index 0
+        assertEquals("[]", PrimePairs.get(1).toString());     // 2: no pairs
+        assertEquals("[]", PrimePairs.get(2).toString());     // 3: no pairs
+        assertEquals("[]", PrimePairs.get(3).toString());     // 5: no pairs
+        assertEquals("[2]", PrimePairs.get(4).toString());    // 7: 37, 73
+        assertEquals("[2]", PrimePairs.get(5).toString());    // 11: 311, 113
+        assertEquals("[]", PrimePairs.get(6).toString());     // 13: no pairs
+        assertEquals("[2]", PrimePairs.get(7).toString());    // 17: 317, 173
+        assertEquals("[4, 6]", PrimePairs.get(8).toString()); // 19: 719, 197 + 1319, 1913
+        assertEquals("[5]", PrimePairs.get(9).toString());    // 23: 1123, 2311
+        assertEquals("[]", PrimePairs.get(10).toString());    // no pairs for 29
     }
 
     @Test

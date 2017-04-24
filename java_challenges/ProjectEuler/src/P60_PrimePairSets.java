@@ -12,19 +12,19 @@ public class P60_PrimePairSets {
 
     public static void main(String[] args) {
         PrimeSequence primeSequence = new PrimeSequence();
-        List<Integer> solutionList = primeSequence.findList(PRIME_ARRAY_SIZE);
+        List<Long> solutionList = primeSequence.findPrimes(PRIME_ARRAY_SIZE);
 
         String message = "Solution prime set = %s.\n" +
                 "The lowest sum for a set of five primes " +
                 "for which any two primes concatenate to produce another prime is %d.\n";
         String solutionArrayString = solutionList.toString();
-        Integer solutionSum = getSum(solutionList);
+        Long solutionSum = getSum(solutionList);
         System.out.printf(message, solutionArrayString, solutionSum);
     }
 
-    static Integer getSum(List<Integer> ints) {
-        Integer sum = 0;
-        for (Integer i : ints) sum += i;
+    static Long getSum(List<Long> ints) {
+        Long sum = 0l;
+        for (Long l : ints) sum += l;
         return sum;
     }
 }

@@ -9,10 +9,10 @@ public class P60_PrimePairSetsTest {
 
     @Test
     public void testGetSum() throws Exception {
-        assertEquals(Integer.valueOf(10), P60_PrimePairSets.getSum(new ArrayList<>(Arrays.asList(1, 2, 3, 4))));
-        assertEquals(Integer.valueOf(10), P60_PrimePairSets.getSum(new ArrayList<>(Arrays.asList(1, 2, 3, 4))));
-        assertEquals(Integer.valueOf(10), P60_PrimePairSets.getSum(new ArrayList<>(Arrays.asList(3, 7))));
-        assertEquals(Integer.valueOf(107), P60_PrimePairSets.getSum(new ArrayList<>(Arrays.asList(3, 37, 67))));
-        assertEquals(Integer.valueOf(792), P60_PrimePairSets.getSum(new ArrayList<>(Arrays.asList(3, 7, 109, 673))));
+        assertEquals(Long.valueOf(10), P60_PrimePairSets.getSum(new ArrayList<>(Arrays.asList(1l, 2l, 3l, 4l))));
+        assertEquals(Long.valueOf(10), P60_PrimePairSets.getSum(new ArrayList<>(Arrays.asList(1l, 2l, 3l, 4l))));
+        assertEquals(Long.valueOf(10), P60_PrimePairSets.getSum(new ArrayList<>(Arrays.asList(3l, 7l))));
+        assertEquals(Long.valueOf(107), P60_PrimePairSets.getSum(new ArrayList<>(Arrays.asList(3l, 37l, 67l))));
+        assertEquals(Long.valueOf(792), P60_PrimePairSets.getSum(new ArrayList<>(Arrays.asList(3l, 7l, 109l, 673l))));
     }
 }
