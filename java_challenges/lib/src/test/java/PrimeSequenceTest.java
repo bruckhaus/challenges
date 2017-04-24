@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class PrimeSequenceTest {
 
     @Test
-    public void findList() throws Exception {
+    public void testFindList() throws Exception {
         PrimeSequence p = new PrimeSequence();                                             // primes:
         assertEquals("[0]", p.findList(1).toString());                      // 2
         assertEquals("[2, 4]", p.findList(2).toString());                   // 5, 11
@@ -16,7 +16,6 @@ public class PrimeSequenceTest {
         assertEquals("[6, 692, 751, 868, 1051]", p.findList(5).toString()); // 13, 5197, 5701, 6733, 8389
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Test
     public void testFind() throws Exception {
         PrimeSequence p = new PrimeSequence();
@@ -32,12 +31,6 @@ public class PrimeSequenceTest {
     }
 
     @Test
-    public void testMakeList() throws Exception {
-        assertArrayEquals(new Integer[]{1}, PrimeSequence.makeList(1).toArray());
-        assertArrayEquals(new Integer[]{777}, PrimeSequence.makeList(777).toArray());
-    }
-
-    @Test
     public void testCheckPartial() throws Exception {
         List<Integer> result;
         result = PrimeSequence.checkPartial(PrimeSequence.makeList(2), 3);
@@ -46,5 +39,11 @@ public class PrimeSequenceTest {
         result = PrimeSequence.checkPartial(PrimeSequence.makeList(2), 4);
         assertNotNull(result);
         assertArrayEquals(new Integer[]{2, 4}, result.toArray());
+    }
+
+    @Test
+    public void testMakeList() throws Exception {
+        assertArrayEquals(new Integer[]{1}, PrimeSequence.makeList(1).toArray());
+        assertArrayEquals(new Integer[]{777}, PrimeSequence.makeList(777).toArray());
     }
 }
