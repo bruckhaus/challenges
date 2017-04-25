@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class CyclicPolygonalSequence {
 
-    private List<PolygonalForEuler61> list;
+    private List<PolygonalNumber> list;
 
     CyclicPolygonalSequence() {
         list = new ArrayList<>();
@@ -14,13 +14,13 @@ public class CyclicPolygonalSequence {
     long getSum() {
         if (list == null) return 0;
         long sum = 0;
-        for (PolygonalForEuler61 item : list) sum += (long) item.getValue();
+        for (PolygonalNumber item : list) sum += (long) item.getValue();
         return sum;
     }
 
     boolean hasUniqueOrders() {
         Set<Integer> orders = new HashSet<>();
-        for (PolygonalForEuler61 polygonal : list) {
+        for (PolygonalNumber polygonal : list) {
             int base = polygonal.getBase();
             if (orders.contains(base)) return false;
             orders.add(base);
@@ -29,7 +29,7 @@ public class CyclicPolygonalSequence {
     }
 
     boolean hasRequiredDigitCounts() {
-        for (PolygonalForEuler61 item : list) if (!item.hasValidLength()) return false;
+        for (PolygonalNumber item : list) if (!item.hasValidLength()) return false;
         return true;
     }
 
@@ -60,7 +60,7 @@ public class CyclicPolygonalSequence {
         }
     }
 
-    boolean isCyclic(PolygonalForEuler61 polygonal1, PolygonalForEuler61 polygonal2) {
+    boolean isCyclic(PolygonalNumber polygonal1, PolygonalNumber polygonal2) {
         return polygonal1.getTail().equals(polygonal2.getHead());
     }
 }

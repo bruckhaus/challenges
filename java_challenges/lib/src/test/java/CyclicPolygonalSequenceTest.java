@@ -1,8 +1,5 @@
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class CyclicPolygonalSequenceTest {
@@ -11,11 +8,11 @@ public class CyclicPolygonalSequenceTest {
         CyclicPolygonalSequence list = new CyclicPolygonalSequence();
         assertEquals(0, list.getSum());
         list.add(new int[]{3, 10});
-        assertEquals(55, PolygonalForEuler61.getSum(list));
+        assertEquals(55, PolygonalNumber.getSum(list));
         list.add(new int[]{4, 11});
-        assertEquals(176, PolygonalForEuler61.getSum(list));
+        assertEquals(176, PolygonalNumber.getSum(list));
         list.add(new int[]{6, 12});
-        assertEquals(452, PolygonalForEuler61.getSum(list));
+        assertEquals(452, PolygonalNumber.getSum(list));
     }
 
 

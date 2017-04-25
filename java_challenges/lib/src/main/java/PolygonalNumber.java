@@ -1,4 +1,4 @@
-class PolygonalForEuler61 {
+class PolygonalNumber {
 
     private static Polygonal triangular = new Triangular();
     private static Polygonal square = new Square();
@@ -7,46 +7,25 @@ class PolygonalForEuler61 {
     private static Polygonal heptagonal = new Heptagonal();
     private static Polygonal octagonal = new Octagonal();
 
-    private int LENGTH = 4;
-    private int HALF_LENGTH = 2;
-    private int MIN_ORDER = 3;
-    private int MAX_ORDER = 8;
-    private int MIN_VALUE = 1000;
-    private int MAX_VALUE = 9999;
 
-    private int base;
-    private int exponent;
-    private int value;
+    private Integer base;
+    private Integer exponent;
+    private Long value;
 
-    PolygonalForEuler61(int base, int exponent) {
+    PolygonalNumber(Integer base, Integer exponent) {
         this.base = base;
         this.exponent = exponent;
-        this.value = (int) calculate();
+        this.value = calculate();
     }
 
-    boolean hasValidLength() {
-        return this.getLength() == LENGTH;
-    }
-
-    Long getHead() {
-        String s = "" + getValue();
-        if (s.length() < HALF_LENGTH) return Long.parseLong(s);
-        return Long.parseLong(s.substring(0, HALF_LENGTH));
-    }
-
-    Long getTail() {
-        String s = "" + getValue();
-        if (s.length() < HALF_LENGTH) return Long.parseLong(s);
-        return Long.parseLong(s.substring(s.length() - HALF_LENGTH));
-    }
     // ---
     // getters and setters:
 
-    int getValue() {
+    Long getValue() {
         return value;
     }
 
-    int getBase() {
+    Integer getBase() {
         return base;
     }
 
@@ -57,7 +36,7 @@ class PolygonalForEuler61 {
     // ---
     // private methods:
 
-    private long calculate() {
+    public Long calculate() {
         switch (base) {
             case 3:
                 return triangular.function(exponent);
@@ -72,7 +51,7 @@ class PolygonalForEuler61 {
             case 8:
                 return octagonal.function(exponent);
             default:
-                return -1;
+                return -1l;
         }
     }
 }

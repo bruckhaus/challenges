@@ -21,83 +21,15 @@ public class P61_CyclicalFigurateNumbers {
     // is represented by a different number in the set.
 
     public static void main(String[] args) {
-        diagnosticsToStdOut = false;
         String message = "The sum of the only ordered set of six cyclic 4-digit numbers " +
                 "for which each polygonal type: " +
                 "triangle, square, pentagonal, hexagonal, heptagonal, and octagonal, " +
                 "is represented by a different number in the set is %,d\n" +
                 "The set is: %s\n";
-        P61_CyclicalFigurateNumbers p = new P61_CyclicalFigurateNumbers();
-        List<Long> solution = p.find(6);
+        CyclicalFigurateNumbers c = new CyclicalFigurateNumbers();
+        List<Long> solution = c.find(6);
         long sum = getSum(solution);
         System.out.printf(message, sum, solution.toString());
-    }
-
-    private final int MIN_ORDER = 3;
-    private final int MAX_ORDER = 8;
-    private final int LENGTH = 4;
-    private static boolean diagnosticsToStdOut = false;
-    private TreeMap<Long, List<Long>> polygonals = buildPolygonals();
-
-    List<Long> find(int size) {
-        return find(size, size, 0, 0);
-    }
-
-    private List<Long> find(int solutionSize, int size, int seed, int offset) {
-        if (size == 1) return makeList(seed, offset);
-        List<Long> solution;
-        int nextSeed = 0;
-        int nextOffset = 0;
-        while (true) {
-            List<Long> partial = find(solutionSize, size - 1, nextSeed, nextOffset);
-            solution = checkSolution(size, partial, nextSeed, nextOffset);
-            return solution;
-        }
-    }
-
-    private List<Long> append(List<Long> partial, int key, int value) {
-        int[] array = new int[]{key, value};
-        Long polygonal = PolygonalForEuler61.calculate(array);
-        partial.add(polygonal);
-        return partial;
-    }
-
-    private List<Long> makeList(int seed, int offset) {
-        List<Long> list = new ArrayList<>();
-        Long head = polygonals.firstKey();
-        for (int i = 0; i < seed; i++) head = polygonals.higherKey(head);
-        Long tail = polygonals.get(head).get(offset);
-        list.add(head);
-        list.add(tail);
-        return list;
-    }
-
-    private TreeMap<Long, List<Long>> buildPolygonals() {
-        polygonals = new TreeMap<>();
-        int[] polygonal = getStart();
-        int count = 0;
-        while (true) {
-            if (isUnderflow(polygonal)) break;
-            if (!isWrongSize(polygonal)) {
-                System.out.println("polygonal = " + Arrays.toString(polygonal));
-                count++;
-                addPolygonal(polygonal);
-            }
-            polygonal = getNext(polygonal);
-        }
-        showListCheck(count);
-        return polygonals;
-    }
-
-    private void addPolygonal(int[] polygonal) {
-        long value = PolygonalForEuler61.calculate(polygonal);
-        Long key = getHead(polygonal);
-        List<Long> list = polygonals.get(key);
-        if (list == null) {
-            list = new ArrayList<>();
-            polygonals.put(key, list);
-        }
-        list.add(value);
     }
 
     static long getSum(List<Long> list) {
@@ -110,101 +42,5 @@ public class P61_CyclicalFigurateNumbers {
             sum += last;
         }
         return sum;
-    }
-
-    // Solution evaluation:
-
-    List<Long> checkSolution(int size, List<Long> partial, int key, int value) {
-        List<Long> solution = append(partial, key, value);
-        if (isSolution(size, partial)) return partial;
-        return null;
-    }
-
-    boolean isSolution(int size, List<Long> list) {
-        switch (list.size()) {
-            case 0:
-                return true;
-            case 1:
-                return PolygonalForEuler61.getDigitCount(list.get(0)) == LENGTH;
-            default:
-                return isCyclicSolution(size, list);
-        }
-    }
-
-    private boolean isCyclicSolution(int size, List<Long> list) {
-        return PolygonalForEuler61.hasRequiredDigitCounts(list, LENGTH) &&
-                PolygonalForEuler61.hasUniqueOrders(list) &&
-                PolygonalForEuler61.isCyclicAndWraps(size, list);
-    }
-
-    // Diagnostics:
-
-    private void showCall(int size, int[] seed) {
-        if (!diagnosticsToStdOut) return;
-        System.out.printf("size: %d, seed: %s, %d\n", size, Arrays.toString(seed), PolygonalForEuler61.calculate(seed));
-    }
-
-    private void showStep(int size, int[] seed, int[] anchor, List<int[]> partial) {
-        if (!diagnosticsToStdOut) return;
-        System.out.printf("size: %d, seed: %s, %,d, anchor: %s, %d\n", size,
-                Arrays.toString(seed), PolygonalForEuler61.calculate(seed),
-                Arrays.toString(anchor), PolygonalForEuler61.calculate(anchor));
-        showList(partial);
-    }
-
-    private void showListCheck(int count) {
-        System.out.println("count = " + count);
-        int count2 = 0;
-        for (Long key : polygonals.keySet()) {
-            List<Long> value = polygonals.get(key);
-            System.out.printf("%s: %s\n", key, value);
-            count2 += value.size();
-        }
-        System.out.println("count2 = " + count2);
-    }
-
-    private void showList(List<int[]> partial) {
-        if (!diagnosticsToStdOut) return;
-        if (partial != null) {
-            for (int i = 0; i < partial.size(); i++) {
-                System.out.printf("partial[%d]: %,d\n", i, PolygonalForEuler61.calculate(partial.get(i)));
-            }
-        } else {
-            System.out.println("partial: null");
-        }
-    }
-
-    // CyclicPolygonal wrappers:
-
-    private Long getHead(int[] polygonal) {
-        return PolygonalForEuler61.getHead(polygonal, LENGTH / 2);
-    }
-
-    private Long getTail(int[] polygonal) {
-        return PolygonalForEuler61.getTail(polygonal, LENGTH / 2);
-    }
-
-    private int[] getStart() {
-        return PolygonalForEuler61.getStart(MAX_ORDER);
-    }
-
-    private boolean isUnderflow(int[] polygonal) {
-        return PolygonalForEuler61.isUnderflow(polygonal, MIN_ORDER);
-    }
-
-    private boolean isWrongSize(int[] polygonal) {
-        return PolygonalForEuler61.isWrongSize(polygonal, LENGTH);
-    }
-
-    private boolean isTooSmall(int[] polygonal) {
-        return PolygonalForEuler61.isTooSmall(polygonal, LENGTH);
-    }
-
-    private boolean isTooLarge(int[] polygonal) {
-        return PolygonalForEuler61.isTooLarge(polygonal, LENGTH);
-    }
-
-    private int[] getNext(int[] polygonal) {
-        return PolygonalForEuler61.getNext(polygonal, LENGTH);
     }
 }
