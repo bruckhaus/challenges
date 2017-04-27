@@ -26,7 +26,7 @@ public class P61_CyclicalFigurateNumbers {
                 "triangle, square, pentagonal, hexagonal, heptagonal, and octagonal, " +
                 "is represented by a different number in the set is %,d\n" +
                 "The set is: %s\n";
-        CyclicalFigurateNumbers c = new CyclicalFigurateNumbers();
+        CyclicalFigurate c = new CyclicalFigurate();
         List<Long> solution = c.find(6);
         long sum = getSum(solution);
         System.out.printf(message, sum, solution.toString());
