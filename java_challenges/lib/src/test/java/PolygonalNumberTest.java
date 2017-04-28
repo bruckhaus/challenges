@@ -28,6 +28,18 @@ public class PolygonalNumberTest {
     }
 
     @Test
+    public void testGetPrefix() {
+        assertEquals(new Long(77), new PolygonalNumber(4, 88).getPrefix()); // p(4,88)=7744
+        assertEquals(new Long(6228), new PolygonalNumber(8, 456).getPrefix()); // p(8,456)=6228_96
+    }
+
+    @Test
+    public void testGetPostfix() {
+        assertEquals(new Long(44), new PolygonalNumber(4, 88).getPostfix()); // p(4,88)=7744
+        assertEquals(new Long(96), new PolygonalNumber(8, 456).getPostfix()); // p(8,456)=6228_96
+    }
+
+    @Test
     public void testCalculate() throws Exception {
         assertEquals(new Long(-1), new PolygonalNumber(2, 18).calculate());
         assertEquals(new Long(-1), new PolygonalNumber(9, 18).calculate());

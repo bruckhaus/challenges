@@ -11,11 +11,17 @@ class PolygonalNumber {
     private Integer base;
     private Integer exponent;
     private Long value;
+    private Long prefix;
+    private Long postfix;
+    private int length;
 
     PolygonalNumber(Integer base, Integer exponent) {
         this.base = base;
         this.exponent = exponent;
-        this.value = calculate();
+        value = calculate();
+        length = ("" + value).length();
+        prefix = value / 100;
+        postfix = value % 100;
     }
 
     public String toString() {
@@ -34,7 +40,15 @@ class PolygonalNumber {
     }
 
     int getLength() {
-        return ("" + value).length();
+        return length;
+    }
+
+    Long getPrefix() {
+        return prefix;
+    }
+
+    Long getPostfix() {
+        return postfix;
     }
 
     // ---
