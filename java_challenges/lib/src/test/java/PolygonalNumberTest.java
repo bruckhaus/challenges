@@ -23,8 +23,8 @@ public class PolygonalNumberTest {
 
     @Test
     public void testGetLength() throws Exception {
-        PolygonalNumber p = new PolygonalNumber(3, 88);
-        assertEquals(4, p.getLength()); // p(3,88)=7744, a four-digit number
+        PolygonalNumber p = new PolygonalNumber(6, 123);
+        assertEquals(5, p.getLength()); // p(6,123)=30_135, a five-digit number
     }
 
     @Test
