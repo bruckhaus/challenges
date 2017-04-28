@@ -17,8 +17,8 @@ public class CyclicalFigurate {
         return find(size, size, 0, 0);
     }
 
-    private List<Long> find(int solutionSize, int size, int seed, int offset) {
-        if (size == 1) return makeList(seed, offset);
+    private List<Long> find(int solutionSize, int size, int head, int offset) {
+//        if (size == 1) return makeList(head, offset);
         List<Long> solution;
         int nextSeed = 0;
         int nextOffset = 0;
@@ -29,10 +29,11 @@ public class CyclicalFigurate {
         }
     }
 
-    private TreeMap<Integer, List<PolygonalNumber>> buildPolygonals() {
+    TreeMap<Integer, List<PolygonalNumber>> buildPolygonals() {
         polygonals = new TreeMap<>();
         int base = MIN_ORDER;
         int exponent = 0;
+        int count = 0;
         while (true) {
             PolygonalNumber p = new PolygonalNumber(base, exponent);
             if (base > MAX_ORDER) break;
@@ -40,8 +41,8 @@ public class CyclicalFigurate {
             else if (p.getValue() > MAX_VALUE) {
                 base++;
                 exponent = 0;
-            }
-            else {
+            } else {
+                count++;
                 addPolygonal(p);
                 exponent++;
             }
@@ -50,24 +51,24 @@ public class CyclicalFigurate {
         return polygonals;
     }
 
-    private List<Long> makeList(int seed, int offset) {
-        List<Integer> list = new ArrayList<>();
-        Integer head = polygonals.firstKey();
-        for (int i = 0; i < seed; i++) head = polygonals.higherKey(head);
-        Long tail = polygonals.get(head).get(offset);
-        list.add(head);
-        list.add(tail);
-        return list;
-    }
+//    private List<Long> makeList(int seed, int offset) {
+//        List<Integer> list = new ArrayList<>();
+//        Integer head = polygonals.firstKey();
+//        for (int i = 0; i < seed; i++) head = polygonals.higherKey(head);
+//        Long tail = polygonals.get(head).get(offset);
+//        list.add(head);
+//        list.add(tail);
+//        return list;
+//    }
 
     private void addPolygonal(PolygonalNumber p) {
         Integer base = p.getBase();
-        List<Long> list = polygonals.get(base);
+        List<PolygonalNumber> list = polygonals.get(base);
         if (list == null) {
             list = new ArrayList<>();
             polygonals.put(base, list);
         }
-        list.add(value);
+        list.add(p);
     }
 
     // checkers:
@@ -92,7 +93,7 @@ public class CyclicalFigurate {
     // Solution evaluation:
 
     List<Long> checkSolution(int size, List<Long> partial, int key, int value) {
-        List<Long> solution = append(partial, key, value);
+//        List<Long> solution = append(partial, key, value);
         if (isSolution(size, partial)) return partial;
         return null;
     }
@@ -109,42 +110,45 @@ public class CyclicalFigurate {
     }
 
     private boolean isCyclicSolution(int size, List<Long> list) {
-        return PolygonalNumber.hasRequiredDigitCounts(list, LENGTH) &&
-                PolygonalNumber.hasUniqueOrders(list) &&
-                PolygonalNumber.isCyclicAndWraps(size, list);
+        return false;
+//                PolygonalNumber.hasRequiredDigitCounts(list, LENGTH) &&
+//                PolygonalNumber.hasUniqueOrders(list) &&
+//                PolygonalNumber.isCyclicAndWraps(size, list);
     }
 
     // Diagnostics:
 
     private void showCall(int size, int[] seed) {
         if (!diagnosticsToStdOut) return;
-        System.out.printf("size: %d, seed: %s, %d\n", size, Arrays.toString(seed), PolygonalNumber.calculate(seed));
+//        System.out.printf("size: %d, seed: %s, %d\n", size, Arrays.toString(seed), PolygonalNumber.calculate(seed));
     }
 
     private void showStep(int size, int[] seed, int[] anchor, List<int[]> partial) {
         if (!diagnosticsToStdOut) return;
-        System.out.printf("size: %d, seed: %s, %,d, anchor: %s, %d\n", size,
-                Arrays.toString(seed), PolygonalNumber.calculate(seed),
-                Arrays.toString(anchor), PolygonalNumber.calculate(anchor));
+        System.out.printf("size: %d, seed: %s, %,d, anchor: %s, %d\n", size
+//                Arrays.toString(seed), PolygonalNumber.calculate(seed),
+//                Arrays.toString(anchor), PolygonalNumber.calculate(anchor)
+        );
         showList(partial);
     }
 
-    private void showListCheck(int count) {
-        System.out.println("count = " + count);
-        int count2 = 0;
-        for (Long key : polygonals.keySet()) {
-            List<Long> value = polygonals.get(key);
+    private void showListCheck(int steps) {
+        System.out.println("polygonals = " + polygonals);
+        System.out.println("step count = " + steps);
+        int polygonalCount = 0;
+        for (Integer key : polygonals.keySet()) {
+            List<PolygonalNumber> value = polygonals.get(key);
             System.out.printf("%s: %s\n", key, value);
-            count2 += value.size();
+            polygonalCount += value.size();
         }
-        System.out.println("count2 = " + count2);
+        System.out.println("polygonals = " + polygonalCount);
     }
 
     private void showList(List<int[]> partial) {
         if (!diagnosticsToStdOut) return;
         if (partial != null) {
             for (int i = 0; i < partial.size(); i++) {
-                System.out.printf("partial[%d]: %,d\n", i, PolygonalNumber.calculate(partial.get(i)));
+//                System.out.printf("partial[%d]: %,d\n", i, PolygonalNumber.calculate(partial.get(i)));
             }
         } else {
             System.out.println("partial: null");
@@ -154,24 +158,24 @@ public class CyclicalFigurate {
 //public class CyclicPolygonalSequence {
 
     long getSum() {
-        if (list == null) return 0;
+//        if (list == null) return 0;
         long sum = 0;
-        for (PolygonalNumber item : list) sum += (long) item.getValue();
+//        for (PolygonalNumber item : list) sum += (long) item.getValue();
         return sum;
     }
 
     boolean hasUniqueOrders() {
         Set<Integer> orders = new HashSet<>();
-        for (PolygonalNumber polygonal : list) {
-            int base = polygonal.getBase();
-            if (orders.contains(base)) return false;
-            orders.add(base);
-        }
+//        for (PolygonalNumber polygonal : list) {
+//            int base = polygonal.getBase();
+//            if (orders.contains(base)) return false;
+//            orders.add(base);
+//        }
         return true;
     }
 
     boolean hasRequiredDigitCounts() {
-        for (PolygonalNumber item : list) if (!item.hasValidLength()) return false;
+//        for (PolygonalNumber item : list) if (!item.hasValidLength()) return false;
         return true;
     }
 
@@ -180,12 +184,13 @@ public class CyclicalFigurate {
     }
 
     boolean hasCyclicItems() {
-        for (int i = 1; i < list.size(); i++) if (!isCyclicWithPrevious(i)) return false;
+//        for (int i = 1; i < list.size(); i++) if (!isCyclicWithPrevious(i)) return false;
         return true;
     }
 
     boolean isPartialOrWraps(int maxSize) {
-        return list.size() != maxSize || hasCyclicListMembers(list.size() - 1, 0);
+//        return list.size() != maxSize || hasCyclicListMembers(list.size() - 1, 0);
+        return false;
     }
 
     boolean isCyclicWithPrevious(int i) {
@@ -194,15 +199,17 @@ public class CyclicalFigurate {
 
     boolean hasCyclicListMembers(int index1, int index2) {
         try {
-            return isCyclic(list.get(index1), list.get(index2));
+//            return isCyclic(list.get(index1), list.get(index2));
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
         } catch (IndexOutOfBoundsException e) {
             return false;
         }
+        return false;
     }
 
     boolean isCyclic(PolygonalNumber polygonal1, PolygonalNumber polygonal2) {
-        return polygonal1.getTail().equals(polygonal2.getHead());
+//        return polygonal1.getTail().equals(polygonal2.getHead());
+        return false;
     }
 }

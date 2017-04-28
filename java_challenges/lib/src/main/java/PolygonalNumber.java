@@ -18,6 +18,10 @@ class PolygonalNumber {
         this.value = calculate();
     }
 
+    public String toString() {
+        return base + "^" + exponent + "=" + value;
+    }
+
     // ---
     // getters and setters:
 
