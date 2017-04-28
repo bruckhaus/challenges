@@ -10,7 +10,7 @@ public class CyclicalFigurate {
     private int MAX_VALUE = 9999;
 
     private static boolean diagnosticsToStdOut = false;
-    private TreeMap<Integer, List<PolygonalNumber>> polygonals = buildPolygonals();
+    TreeMap<Integer, List<PolygonalNumber>> polygonals = buildPolygonals();
 
 
     List<Long> find(int size) {
@@ -30,6 +30,7 @@ public class CyclicalFigurate {
     }
 
     TreeMap<Integer, List<PolygonalNumber>> buildPolygonals() {
+        // TODO: use 2-digit prefix of value of p as key, instead of base as key
         polygonals = new TreeMap<>();
         int base = MIN_ORDER;
         int exponent = 0;
@@ -47,7 +48,6 @@ public class CyclicalFigurate {
                 exponent++;
             }
         }
-        showListCheck(count);
         return polygonals;
     }
 
@@ -130,18 +130,6 @@ public class CyclicalFigurate {
 //                Arrays.toString(anchor), PolygonalNumber.calculate(anchor)
         );
         showList(partial);
-    }
-
-    private void showListCheck(int steps) {
-        System.out.println("polygonals = " + polygonals);
-        System.out.println("step count = " + steps);
-        int polygonalCount = 0;
-        for (Integer key : polygonals.keySet()) {
-            List<PolygonalNumber> value = polygonals.get(key);
-            System.out.printf("%s: %s\n", key, value);
-            polygonalCount += value.size();
-        }
-        System.out.println("polygonals = " + polygonalCount);
     }
 
     private void showList(List<int[]> partial) {

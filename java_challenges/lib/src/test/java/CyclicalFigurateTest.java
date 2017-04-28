@@ -10,58 +10,14 @@ public class CyclicalFigurateTest {
     @Test
     public void testBuildPolygonals() {
         CyclicalFigurate c = new CyclicalFigurate();
+        int polygonalCount = 0;
+        for (Integer key : c.polygonals.keySet()) {
+            List<PolygonalNumber> value = c.polygonals.get(key);
+            polygonalCount += value.size();
+        }
+        assertEquals(351, polygonalCount);
     }
 
-//    @Test
-//    public void getSum() throws Exception {
-//        CyclicPolygonalSequence list = new CyclicPolygonalSequence();
-//        assertEquals(0, list.getSum());
-//        list.add(new int[]{3, 10});
-//        assertEquals(55, PolygonalNumber.getSum(list));
-//        list.add(new int[]{4, 11});
-//        assertEquals(176, PolygonalNumber.getSum(list));
-//        list.add(new int[]{6, 12});
-//        assertEquals(452, PolygonalNumber.getSum(list));
-//    }
-
-
-//    @Test
-//    public void testGetValue() throws Exception {
-//        assertEquals(-1, new PolygonalNumber(-1, -1).getValue());
-//        assertEquals(-1, new PolygonalNumber(1, -1).getValue());
-//        assertEquals(-1, new PolygonalNumber(-1, 1).getValue());
-//        assertEquals(-1, new PolygonalNumber(0, 0).getValue());
-//        assertEquals(-1, new PolygonalNumber(1, 1).getValue());
-//        assertEquals(-1, new PolygonalNumber(2, 1).getValue());
-//        assertEquals(1, new PolygonalNumber(3, 1).getValue());
-//        assertEquals(6, new PolygonalNumber(3, 3).getValue());
-//        assertEquals(16, new PolygonalNumber(4, 4).getValue());
-//        assertEquals(35, new PolygonalNumber(5, 5).getValue());
-//    }
-//
-//    @Test
-//    public void testDigitCount() throws Exception {
-//        assertEquals(0, PolygonalNumber.getDigitCount(new int[]{1, 1}));
-//        assertEquals(3, PolygonalNumber.getDigitCount(new int[]{3, 20}));
-//        assertEquals(4, PolygonalNumber.getDigitCount(new int[]{3, 50}));
-//        assertEquals(5, PolygonalNumber.getDigitCount(new int[]{3, 200}));
-//        assertEquals(3, PolygonalNumber.getDigitCount(new int[]{4, 30}));
-//        assertEquals(4, PolygonalNumber.getDigitCount(new int[]{4, 90}));
-//        assertEquals(5, PolygonalNumber.getDigitCount(new int[]{4, 190}));
-//        assertEquals(3, PolygonalNumber.getDigitCount(new int[]{5, 20}));
-//        assertEquals(4, PolygonalNumber.getDigitCount(new int[]{5, 40}));
-//        assertEquals(5, PolygonalNumber.getDigitCount(new int[]{5, 120}));
-//        assertEquals(3, PolygonalNumber.getDigitCount(new int[]{6, 20}));
-//        assertEquals(4, PolygonalNumber.getDigitCount(new int[]{6, 40}));
-//        assertEquals(5, PolygonalNumber.getDigitCount(new int[]{6, 120}));
-//        assertEquals(3, PolygonalNumber.getDigitCount(new int[]{7, 20}));
-//        assertEquals(4, PolygonalNumber.getDigitCount(new int[]{7, 40}));
-//        assertEquals(5, PolygonalNumber.getDigitCount(new int[]{7, 120}));
-//        assertEquals(3, PolygonalNumber.getDigitCount(new int[]{8, 10}));
-//        assertEquals(4, PolygonalNumber.getDigitCount(new int[]{8, 20}));
-//        assertEquals(5, PolygonalNumber.getDigitCount(new int[]{8, 80}));
-//    }
-//
 //    @Test
 //    public void testHasUniqueOrders() throws Exception {
 //        List<int[]> solution = new ArrayList<>();
