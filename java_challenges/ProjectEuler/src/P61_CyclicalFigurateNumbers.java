@@ -35,12 +35,7 @@ public class P61_CyclicalFigurateNumbers {
     static long getSum(List<Long> list) {
         if (list.size() < 1) return 0;
         Long sum = 0L;
-        Long last = list.get(0);
-        for (int i = 1, listSize = list.size(); i < listSize; i++) {
-            sum += last * 100;
-            last = list.get(i);
-            sum += last;
-        }
+        for (Long l : list) sum += l;
         return sum;
     }
 }
