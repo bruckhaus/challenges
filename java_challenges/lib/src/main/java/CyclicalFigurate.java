@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class CyclicalFigurate {
+class CyclicalFigurate {
 
     private final int MIN_ORDER = 3;
     private final int MAX_ORDER = 8;
@@ -10,8 +10,37 @@ public class CyclicalFigurate {
     private int MAX_VALUE = 9999;
 
     private static boolean diagnosticsToStdOut = false;
-    TreeMap<Integer, List<PolygonalNumber>> polygonals = buildPolygonals();
+    private TreeMap<Long, List<PolygonalNumber>> polygonals = buildPolygonals();
 
+
+    TreeMap<Long, List<PolygonalNumber>> buildPolygonals() {
+        polygonals = new TreeMap<Long, List<PolygonalNumber>>();
+        int base = MIN_ORDER;
+        int exponent = 0;
+        while (true) {
+            PolygonalNumber p = new PolygonalNumber(base, exponent);
+            if (base > MAX_ORDER) break;
+            else if (p.getValue() < MIN_VALUE) exponent++;
+            else if (p.getValue() > MAX_VALUE) {
+                base++;
+                exponent = 0;
+            } else {
+                addPolygonal(p);
+                exponent++;
+            }
+        }
+        return polygonals;
+    }
+
+    private void addPolygonal(PolygonalNumber p) {
+        Long prefix = p.getPrefix();
+        List<PolygonalNumber> list = polygonals.get(prefix);
+        if (list == null) {
+            list = new ArrayList<>();
+            polygonals.put(prefix, list);
+        }
+        list.add(p);
+    }
 
     List<Long> find(int size) {
         return find(size, size, 0, 0);
@@ -29,28 +58,6 @@ public class CyclicalFigurate {
         }
     }
 
-    TreeMap<Integer, List<PolygonalNumber>> buildPolygonals() {
-        // TODO: use 2-digit prefix of value of p as key, instead of base as key
-        polygonals = new TreeMap<>();
-        int base = MIN_ORDER;
-        int exponent = 0;
-        int count = 0;
-        while (true) {
-            PolygonalNumber p = new PolygonalNumber(base, exponent);
-            if (base > MAX_ORDER) break;
-            else if (p.getValue() < MIN_VALUE) exponent++;
-            else if (p.getValue() > MAX_VALUE) {
-                base++;
-                exponent = 0;
-            } else {
-                count++;
-                addPolygonal(p);
-                exponent++;
-            }
-        }
-        return polygonals;
-    }
-
 //    private List<Long> makeList(int seed, int offset) {
 //        List<Integer> list = new ArrayList<>();
 //        Integer head = polygonals.firstKey();
@@ -60,16 +67,6 @@ public class CyclicalFigurate {
 //        list.add(tail);
 //        return list;
 //    }
-
-    private void addPolygonal(PolygonalNumber p) {
-        Integer base = p.getBase();
-        List<PolygonalNumber> list = polygonals.get(base);
-        if (list == null) {
-            list = new ArrayList<>();
-            polygonals.put(base, list);
-        }
-        list.add(p);
-    }
 
     // checkers:
     // TODO: refactor this section

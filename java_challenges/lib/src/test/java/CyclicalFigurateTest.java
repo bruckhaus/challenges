@@ -2,6 +2,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import static org.junit.Assert.*;
 
@@ -10,12 +11,18 @@ public class CyclicalFigurateTest {
     @Test
     public void testBuildPolygonals() {
         CyclicalFigurate c = new CyclicalFigurate();
+        TreeMap<Long, List<PolygonalNumber>> p = c.buildPolygonals();
         int polygonalCount = 0;
-        for (Integer key : c.polygonals.keySet()) {
-            List<PolygonalNumber> value = c.polygonals.get(key);
+        for (Long key : p.keySet()) {
+            List<PolygonalNumber> value = p.get(key);
             polygonalCount += value.size();
         }
         assertEquals(351, polygonalCount);
+        // We know that 8128, 2882, and 8281 must be in the polygonal map (see Euler problem 61 definition):
+        assertEquals("[p(3,128)=8256, p(4,91)=8281]", p.get(82L).toString());
+        assertEquals("[p(3,127)=8128, p(4,90)=8100, p(5,74)=8177, p(6,64)=8128]", p.get(81L).toString());
+        assertEquals("[p(3,75)=2850, p(4,53)=2809, p(5,44)=2882, p(6,38)=2850, p(7,34)=2839, p(8,31)=2821]",
+                p.get(28L).toString());
     }
 
 //    @Test
