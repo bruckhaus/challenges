@@ -19,7 +19,7 @@ class PolygonalNumber {
     }
 
     public String toString() {
-        return base + "^" + exponent + "=" + value;
+        return "p(" + base + "," + exponent + ")=" + value;
     }
 
     // ---
@@ -40,7 +40,7 @@ class PolygonalNumber {
     // ---
     // private methods:
 
-    public Long calculate() {
+    Long calculate() {
         switch (base) {
             case 3:
                 return triangular.function(exponent);
