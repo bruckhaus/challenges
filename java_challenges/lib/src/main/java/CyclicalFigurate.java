@@ -2,16 +2,15 @@ import java.util.*;
 
 class CyclicalFigurate {
 
-    private final int MIN_ORDER = 3;
-    private final int MAX_ORDER = 8;
-    private final int LENGTH = 4;
-    private int HALF_LENGTH = 2;
-    private int MIN_VALUE = 1000;
-    private int MAX_VALUE = 9999;
+    private static final int LENGTH = 4;
+
+    final int MIN_ORDER = 3;
+    final int MAX_ORDER = 8;
+    final int MIN_VALUE = 1000;
+    final int MAX_VALUE = 9999;
 
     private static boolean diagnosticsToStdOut = false;
     private TreeMap<Long, List<PolygonalNumber>> polygonals = buildPolygonals();
-
 
     TreeMap<Long, List<PolygonalNumber>> buildPolygonals() {
         polygonals = new TreeMap<Long, List<PolygonalNumber>>();
@@ -25,95 +24,131 @@ class CyclicalFigurate {
                 base++;
                 exponent = 0;
             } else {
-                addPolygonal(p);
+                polygonals = addPolygonal(polygonals, p);
                 exponent++;
             }
         }
         return polygonals;
     }
 
-    private void addPolygonal(PolygonalNumber p) {
+    TreeMap<Long, List<PolygonalNumber>> addPolygonal(TreeMap<Long, List<PolygonalNumber>> map, PolygonalNumber p) {
         Long prefix = p.getPrefix();
-        List<PolygonalNumber> list = polygonals.get(prefix);
+        List<PolygonalNumber> list = map.get(prefix);
         if (list == null) {
             list = new ArrayList<>();
-            polygonals.put(prefix, list);
+            map.put(prefix, list);
         }
         list.add(p);
+        return map;
     }
 
     List<Long> find(int size) {
-        return find(size, size, 0, 0);
+        List<Long> longs = new ArrayList<>();
+        List<PolygonalNumber> polygonals = findPolygonals(size);
+        for (PolygonalNumber p : polygonals) {
+            longs.add(p.getValue());
+        }
+        return longs;
     }
 
-    private List<Long> find(int solutionSize, int size, int head, int offset) {
-//        if (size == 1) return makeList(head, offset);
-        List<Long> solution;
-        int nextSeed = 0;
-        int nextOffset = 0;
+    List<PolygonalNumber> findPolygonals(int size) {
+        List<PolygonalNumber> result = new ArrayList<>();
+        Long head = polygonals.firstKey();
         while (true) {
-            List<Long> partial = find(solutionSize, size - 1, nextSeed, nextOffset);
-            solution = checkSolution(size, partial, nextSeed, nextOffset);
-            return solution;
+            result = find(size, size, head, 0);
+            if (result != null) return result;
+            head = polygonals.higherKey(head);
         }
     }
 
-//    private List<Long> makeList(int seed, int offset) {
-//        List<Integer> list = new ArrayList<>();
-//        Integer head = polygonals.firstKey();
-//        for (int i = 0; i < seed; i++) head = polygonals.higherKey(head);
-//        Long tail = polygonals.get(head).get(offset);
-//        list.add(head);
-//        list.add(tail);
-//        return list;
-//    }
-
-    // checkers:
-    // TODO: refactor this section
-
-    boolean hasValidLength(PolygonalNumber p) {
-        return p.getLength() == LENGTH;
+    private List<PolygonalNumber> find(int solutionSize, int size, Long head, Integer offset) {
+        if (size == 1) return makeList(head, offset);
+        List<PolygonalNumber> headList = polygonals.get(head);
+        PolygonalNumber p = headList.get(offset);
+        int nextOffset = 0;
+        while (true) {
+            if (offset >= headList.size()) return null;
+            Long nextHead = headList.get(offset).getPostfix();
+            List<PolygonalNumber> partial = find(solutionSize, size - 1, nextHead, nextOffset);
+            if (partial == null) {
+                offset++;
+                nextOffset = 0;
+            } else {
+                List<PolygonalNumber> solution = checkSolution(solutionSize, partial, p);
+                if (solution == null) {
+                    nextOffset++;
+                } else {
+                    return solution;
+                }
+            }
+        }
     }
 
-    Long getHead(PolygonalNumber p) {
-        String s = "" + p.getValue();
-        if (s.length() < HALF_LENGTH) return Long.parseLong(s);
-        return Long.parseLong(s.substring(0, HALF_LENGTH));
-    }
-
-    Long getTail(PolygonalNumber p) {
-        String s = "" + p.getValue();
-        if (s.length() < HALF_LENGTH) return Long.parseLong(s);
-        return Long.parseLong(s.substring(s.length() - HALF_LENGTH));
+    private List<PolygonalNumber> makeList(Long head, int offset) {
+        List<PolygonalNumber> list = new ArrayList<>();
+        list.add(polygonals.get(head).get(offset));
+        return list;
     }
 
     // Solution evaluation:
 
-    List<Long> checkSolution(int size, List<Long> partial, int key, int value) {
-//        List<Long> solution = append(partial, key, value);
+    static List<PolygonalNumber> checkSolution(int size, List<PolygonalNumber> partial, PolygonalNumber p) {
+        partial.add(p);
         if (isSolution(size, partial)) return partial;
         return null;
     }
 
-    boolean isSolution(int size, List<Long> list) {
+    static boolean isSolution(int size, List<PolygonalNumber> list) {
         switch (list.size()) {
             case 0:
                 return true;
             case 1:
-                return false; // PolygonalForEuler61.getDigitCount(list.get(0)) == LENGTH;
+                return true;
             default:
                 return isCyclicSolution(size, list);
         }
     }
 
-    private boolean isCyclicSolution(int size, List<Long> list) {
-        return false;
-//                PolygonalNumber.hasRequiredDigitCounts(list, LENGTH) &&
-//                PolygonalNumber.hasUniqueOrders(list) &&
-//                PolygonalNumber.isCyclicAndWraps(size, list);
+    static boolean isCyclicSolution(int size, List<PolygonalNumber> list) {
+        return hasRequiredDigitCounts(list) &&
+                isCyclicAndWraps(size, list) &&
+                eachOrderHasDifferentPolygonal(list);
     }
 
-    // Diagnostics:
+    static boolean hasRequiredDigitCounts(List<PolygonalNumber> list) {
+        for (PolygonalNumber p : list) if (p.getLength() != LENGTH) return false;
+        return true;
+    }
+
+    static boolean isCyclicAndWraps(int size, List<PolygonalNumber> list) {
+        return isCyclic(list) && (isWrapping(list) || !isFullSize(size, list));
+    }
+
+    static boolean isCyclic(List<PolygonalNumber> list) {
+        Long lastPostfix = list.get(0).getPrefix();
+        for (PolygonalNumber p : list) {
+            if (!p.getPrefix().equals(lastPostfix)) return false;
+            lastPostfix = p.getPostfix();
+        }
+        return true;
+    }
+
+    static boolean isWrapping(List<PolygonalNumber> list) {
+        Long firstPrefix = list.get(0).getPrefix();
+        Long lastPostfix = list.get(list.size() - 1).getPostfix();
+        return firstPrefix.equals(lastPostfix);
+    }
+
+    static boolean isFullSize(int size, List<PolygonalNumber> list) {
+        return list.size() == size;
+    }
+
+    static boolean eachOrderHasDifferentPolygonal(List<PolygonalNumber> list) {
+        // TODO: implement this method
+        return false;
+    }
+
+    // --- diagnostics: ---
 
     private void showCall(int size, int[] seed) {
         if (!diagnosticsToStdOut) return;
@@ -139,62 +174,5 @@ class CyclicalFigurate {
             System.out.println("partial: null");
         }
     }
-
-//public class CyclicPolygonalSequence {
-
-    long getSum() {
-//        if (list == null) return 0;
-        long sum = 0;
-//        for (PolygonalNumber item : list) sum += (long) item.getValue();
-        return sum;
-    }
-
-    boolean hasUniqueOrders() {
-        Set<Integer> orders = new HashSet<>();
-//        for (PolygonalNumber polygonal : list) {
-//            int base = polygonal.getBase();
-//            if (orders.contains(base)) return false;
-//            orders.add(base);
-//        }
-        return true;
-    }
-
-    boolean hasRequiredDigitCounts() {
-//        for (PolygonalNumber item : list) if (!item.hasValidLength()) return false;
-        return true;
-    }
-
-    boolean isCyclicAndWraps(int maxSize) {
-        return hasCyclicItems() && isPartialOrWraps(maxSize);
-    }
-
-    boolean hasCyclicItems() {
-//        for (int i = 1; i < list.size(); i++) if (!isCyclicWithPrevious(i)) return false;
-        return true;
-    }
-
-    boolean isPartialOrWraps(int maxSize) {
-//        return list.size() != maxSize || hasCyclicListMembers(list.size() - 1, 0);
-        return false;
-    }
-
-    boolean isCyclicWithPrevious(int i) {
-        return hasCyclicListMembers(i - 1, i);
-    }
-
-    boolean hasCyclicListMembers(int index1, int index2) {
-        try {
-//            return isCyclic(list.get(index1), list.get(index2));
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return false;
-        } catch (IndexOutOfBoundsException e) {
-            return false;
-        }
-        return false;
-    }
-
-    boolean isCyclic(PolygonalNumber polygonal1, PolygonalNumber polygonal2) {
-//        return polygonal1.getTail().equals(polygonal2.getHead());
-        return false;
-    }
 }
+

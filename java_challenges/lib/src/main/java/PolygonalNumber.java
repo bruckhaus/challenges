@@ -1,3 +1,5 @@
+import java.util.List;
+
 class PolygonalNumber {
 
     private static Polygonal triangular = new Triangular();

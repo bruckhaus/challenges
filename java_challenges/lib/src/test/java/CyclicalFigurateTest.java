@@ -2,6 +2,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import static org.junit.Assert.*;
@@ -9,7 +10,7 @@ import static org.junit.Assert.*;
 public class CyclicalFigurateTest {
 
     @Test
-    public void testBuildPolygonals() {
+    public void testBuildPolygonals() throws Exception {
         CyclicalFigurate c = new CyclicalFigurate();
         TreeMap<Long, List<PolygonalNumber>> p = c.buildPolygonals();
         int polygonalCount = 0;
@@ -23,6 +24,61 @@ public class CyclicalFigurateTest {
         assertEquals("[p(3,127)=8128, p(4,90)=8100, p(5,74)=8177, p(6,64)=8128]", p.get(81L).toString());
         assertEquals("[p(3,75)=2850, p(4,53)=2809, p(5,44)=2882, p(6,38)=2850, p(7,34)=2839, p(8,31)=2821]",
                 p.get(28L).toString());
+        for (Map.Entry<Long, List<PolygonalNumber>> entry : p.entrySet()) {
+            List<PolygonalNumber> list = entry.getValue();
+            for (PolygonalNumber n : list) {
+                assertTrue(n.getBase() >= c.MIN_ORDER && n.getBase() <= c.MAX_ORDER);
+                assertTrue(n.getValue() >= c.MIN_VALUE && n.getLength() <= c.MAX_VALUE);
+            }
+        }
+    }
+
+    @Test
+    public void testFind() throws Exception {
+    }
+
+    @Test
+    public void testFindPolygonals() throws Exception {
+    }
+
+    @Test
+    public void testAddPolygonal() throws Exception {
+        CyclicalFigurate c = new CyclicalFigurate();
+        TreeMap<Long, List<PolygonalNumber>> map = new TreeMap<>();
+        assertEquals("{}", map.toString());
+        map = c.addPolygonal(map, new PolygonalNumber(8, 123));
+        assertEquals("{451=[p(8,123)=45141]}", map.toString());
+        map = c.addPolygonal(map, new PolygonalNumber(7, 765));
+        assertEquals("{451=[p(8,123)=45141], 14619=[p(7,765)=1461915]}", map.toString());
+    }
+
+    @Test
+    public void checkSolution() throws Exception {
+        int size = 0;
+        List<PolygonalNumber> partial = new ArrayList<>();
+        PolygonalNumber p = new PolygonalNumber(0, 0);
+        List<PolygonalNumber> result = CyclicalFigurate.checkSolution(size, partial, p);
+        assertNull(result);
+    }
+
+    @Test
+    public void isSolution() throws Exception {
+        List<PolygonalNumber> l = new ArrayList<>();
+        assertEquals(true, CyclicalFigurate.isSolution(0, l));
+    }
+
+    @Test
+    public void hasRequiredDigitCounts() throws Exception {
+        List<PolygonalNumber> l = new ArrayList<>();
+        assertEquals(true, CyclicalFigurate.hasRequiredDigitCounts(l));
+    }
+
+    @Test
+    public void isCyclicAndWraps() throws Exception {
+    }
+
+    @Test
+    public void isCyclic() throws Exception {
     }
 
 //    @Test
