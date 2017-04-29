@@ -18,11 +18,11 @@ public class CyclicalFigurateTest {
             List<PolygonalNumber> value = p.get(key);
             polygonalCount += value.size();
         }
-        assertEquals(351, polygonalCount);
+        assertEquals(302, polygonalCount);
         // We know that 8128, 2882, and 8281 must be in the polygonal map (see Euler problem 61 definition):
         assertEquals("[p(3,128)=8256, p(4,91)=8281]", p.get(82L).toString());
-        assertEquals("[p(3,127)=8128, p(4,90)=8100, p(5,74)=8177, p(6,64)=8128]", p.get(81L).toString());
-        assertEquals("[p(3,75)=2850, p(4,53)=2809, p(5,44)=2882, p(6,38)=2850, p(7,34)=2839, p(8,31)=2821]",
+        assertEquals("[p(3,127)=8128, p(5,74)=8177, p(6,64)=8128]", p.get(81L).toString());
+        assertEquals("[p(3,75)=2850, p(5,44)=2882, p(6,38)=2850, p(7,34)=2839, p(8,31)=2821]",
                 p.get(28L).toString());
         for (Map.Entry<Long, List<PolygonalNumber>> entry : p.entrySet()) {
             List<PolygonalNumber> list = entry.getValue();
@@ -31,14 +31,6 @@ public class CyclicalFigurateTest {
                 assertTrue(n.getValue() >= c.MIN_VALUE && n.getLength() <= c.MAX_VALUE);
             }
         }
-    }
-
-    @Test
-    public void testFind() throws Exception {
-    }
-
-    @Test
-    public void testFindPolygonals() throws Exception {
     }
 
     @Test
@@ -53,284 +45,238 @@ public class CyclicalFigurateTest {
     }
 
     @Test
-    public void checkSolution() throws Exception {
-        int size = 0;
+    public void testFind() throws Exception {
+    }
+
+    @Test
+    public void testFindPolygonals() throws Exception {
+        // size 1: p(3,45)=1035
+        // size 2: p(5,55)=4510, p(8,19)=1045
+        // size 3: p(5,59)=?, p(4,96)=?, p(7,26)=?
+        CyclicalFigurate c = new CyclicalFigurate();
+        assertEquals("[p(3,45)=1035]", c.findPolygonals(1).toString());
+        assertEquals("[p(7,32)=2512, p(3,49)=1225]", c.findPolygonals(2).toString());
+//        assertEquals("[p(7,32)=2512, p(3,49)=1225]", c.findPolygonals(3).toString());
+    }
+
+    @Test
+    public void testFindStep() throws Exception {
+        CyclicalFigurate c = new CyclicalFigurate();
+        List<PolygonalNumber> list;
+        list = c.find(2, 2, 12L, 0);
+        assertEquals("[p(7,32)=2512, p(3,49)=1225]", list.toString());
+        list = c.find(3, 2, 12L, 0);
+        assertEquals("[p(7,32)=2512, p(3,49)=1225]", list.toString());
+        list = c.find(2, 2, 25L, 0);
+        assertEquals("[p(4,75)=5625, p(3,71)=2556]", list.toString());
+        list = c.find(3, 2, 25L, 0);
+        assertEquals("[p(4,75)=5625, p(3,71)=2556]", list.toString());
+    }
+
+    @Test
+    public void testMakeList() throws Exception {
+        CyclicalFigurate c = new CyclicalFigurate();
+        TreeMap<Long, List<PolygonalNumber>> p = c.buildPolygonals();
+        List<PolygonalNumber> list = p.get(10L);
+        assertEquals("[p(3,45)=1035, p(3,46)=1081, p(4,32)=1024, p(4,33)=1089, " +
+                "p(5,27)=1080, p(6,23)=1035, p(7,21)=1071, p(8,19)=1045]", list.toString());
+        assertEquals("[p(3,45)=1035]", c.makeList(10L, 0).toString());
+        assertEquals("[p(3,46)=1081]", c.makeList(10L, 1).toString());
+        assertEquals("[p(4,32)=1024]", c.makeList(10L, 2).toString());
+        assertEquals("[p(4,33)=1089]", c.makeList(10L, 3).toString());
+        assertEquals("[p(5,27)=1080]", c.makeList(10L, 4).toString());
+        assertEquals("[p(6,23)=1035]", c.makeList(10L, 5).toString());
+        assertEquals("[p(7,21)=1071]", c.makeList(10L, 6).toString());
+        assertEquals("[p(8,19)=1045]", c.makeList(10L, 7).toString());
+        assertNull(c.makeList(10L, 8));
+    }
+
+    @Test
+    public void testCheckSolution() throws Exception {
         List<PolygonalNumber> partial = new ArrayList<>();
-        PolygonalNumber p = new PolygonalNumber(0, 0);
-        List<PolygonalNumber> result = CyclicalFigurate.checkSolution(size, partial, p);
-        assertEquals("[p(0,0)=-1]", result.toString());
+        List<PolygonalNumber> solution;
+        PolygonalNumber p;
+        // any list of length 1 is a solution:
+        p = new PolygonalNumber(0, 0);
+        solution = CyclicalFigurate.checkSolution(1, partial, p);
+        assertEquals("[p(0,0)=-1]", solution.toString());
+        //  any list of length 1 is a solution:
+        partial.clear();
+        p = new PolygonalNumber(3, 127);
+        solution = CyclicalFigurate.checkSolution(3, partial, p);
+        assertEquals("[p(3,127)=8128]", solution.toString());
+        // p(3,127), p(5,44) -> pass:
+        p = new PolygonalNumber(5, 44);
+        solution = CyclicalFigurate.checkSolution(3, partial, p);
+        assertEquals("[p(3,127)=8128, p(5,44)=2882]", solution.toString());
+        // p(3,127), p(5,44), p(4,91) -> pass:
+        p = new PolygonalNumber(4, 91);
+        solution = CyclicalFigurate.checkSolution(3, partial, p);
+        assertEquals("[p(3,127)=8128, p(5,44)=2882, p(4,91)=8281]", solution.toString());
+        // p(3,127), p(5,44), p(4,91), p(4,91) -> fail:
+        solution = CyclicalFigurate.checkSolution(4, partial, p);
+        assertNull(solution);
     }
 
     @Test
-    public void isSolution() throws Exception {
-        List<PolygonalNumber> l = new ArrayList<>();
-        assertEquals(true, CyclicalFigurate.isSolution(0, l));
+    public void testIsSolution() throws Exception {
+        List<PolygonalNumber> list = new ArrayList<>();
+
+        list.clear();
+        assertTrue(CyclicalFigurate.isSolution(2, list));
+        list.add(new PolygonalNumber(5, 55));   // 4510
+        assertTrue(CyclicalFigurate.isSolution(2, list));
+        list.add(new PolygonalNumber(8, 19));   // 1045
+        assertTrue(CyclicalFigurate.isSolution(2, list));
+
+        list.clear();
+        assertTrue(CyclicalFigurate.isSolution(3, list));
+        list.add(new PolygonalNumber(3, 127));
+        assertTrue(CyclicalFigurate.isSolution(3, list));
+        list.add(new PolygonalNumber(5, 44));
+        assertTrue(CyclicalFigurate.isSolution(3, list));
+        list.add(new PolygonalNumber(4, 91));
+        assertTrue(CyclicalFigurate.isSolution(3, list));
+        list.add(new PolygonalNumber(4, 91));
+        assertTrue(!CyclicalFigurate.isSolution(3, list));
+        assertTrue(!CyclicalFigurate.isSolution(4, list));
     }
 
     @Test
-    public void hasRequiredDigitCounts() throws Exception {
-        List<PolygonalNumber> l = new ArrayList<>();
-        assertEquals(true, CyclicalFigurate.hasRequiredDigitCounts(l));
+    public void testIsCyclicSolution() throws Exception {
+        List<PolygonalNumber> list = new ArrayList<>();
+        assertTrue(CyclicalFigurate.isCyclicSolution(3, list));
+        list.add(new PolygonalNumber(3, 127));
+        assertTrue(CyclicalFigurate.isCyclicSolution(3, list));
+        list.add(new PolygonalNumber(5, 44));
+        assertTrue(CyclicalFigurate.isCyclicSolution(3, list));
+        list.add(new PolygonalNumber(4, 91));
+        assertTrue(CyclicalFigurate.isCyclicSolution(3, list));
+        list.add(new PolygonalNumber(4, 91));
+        assertTrue(!CyclicalFigurate.isCyclicSolution(3, list));
+        assertTrue(!CyclicalFigurate.isCyclicSolution(4, list));
     }
 
     @Test
-    public void isCyclicAndWraps() throws Exception {
+    public void testHasRequiredDigitCounts() throws Exception {
+        List<PolygonalNumber> list = new ArrayList<>();
+        assertEquals(true, CyclicalFigurate.hasRequiredDigitCounts(list));
+        PolygonalNumber triangle = new PolygonalNumber(3, 101);
+        PolygonalNumber square = new PolygonalNumber(4, 88);
+        PolygonalNumber pentagonal = new PolygonalNumber(5, 77);
+        PolygonalNumber hexagonal = new PolygonalNumber(6, 71);
+        assertEquals(new Long(5151), triangle.getValue());
+        assertEquals(new Long(7744), square.getValue());
+        assertEquals(new Long(8855), pentagonal.getValue());
+        assertEquals(new Long(10011), hexagonal.getValue());
+        list.add(triangle);
+        assertTrue(CyclicalFigurate.hasRequiredDigitCounts(list));
+        list.add(square);
+        assertTrue(CyclicalFigurate.hasRequiredDigitCounts(list));
+        list.add(pentagonal);
+        assertTrue(CyclicalFigurate.hasRequiredDigitCounts(list));
+        list.add(hexagonal);
+        assertFalse(CyclicalFigurate.hasRequiredDigitCounts(list));
     }
 
     @Test
-    public void isCyclic() throws Exception {
+    public void testIsCyclicAndWraps() throws Exception {
+        List<PolygonalNumber> list = new ArrayList<>();
+        PolygonalNumber triangle = new PolygonalNumber(3, 127);
+        PolygonalNumber pentagonal = new PolygonalNumber(5, 44);
+        PolygonalNumber square = new PolygonalNumber(4, 91);
+        assertEquals(new Long(8128), triangle.getValue());
+        assertEquals(new Long(2882), pentagonal.getValue());
+        assertEquals(new Long(8281), square.getValue());
+        // cyclic, does not wrap, not full size -> pass:
+        list.clear();
+        list.add(triangle);
+        list.add(pentagonal);
+        assertTrue(CyclicalFigurate.isCyclicAndWraps(3, list));
+        // cyclic, wraps, full size -> pass:
+        list.clear();
+        list.add(triangle);
+        list.add(pentagonal);
+        list.add(square);
+        assertTrue(CyclicalFigurate.isCyclicAndWraps(3, list));
+        // cyclic, does not wrap, full size -> fail:
+        list.clear();
+        list.add(triangle);
+        list.add(pentagonal);
+        assertFalse(CyclicalFigurate.isCyclicAndWraps(2, list));
     }
 
-//    @Test
-//    public void testHasUniqueOrders() throws Exception {
-//        List<int[]> solution = new ArrayList<>();
-//        int[] one = {1, 101};
-//        int[] two = {2, 202};
-//        int[] three = {3, 303};
-//        int[] dupe = {1, 404};
-//        solution.add(one);
-//        assert (PolygonalNumber.hasUniqueOrders(solution));
-//        solution.add(two);
-//        assert (PolygonalNumber.hasUniqueOrders(solution));
-//        solution.add(three);
-//        assert (PolygonalNumber.hasUniqueOrders(solution));
-//        solution.add(dupe);
-//        assert (!PolygonalNumber.hasUniqueOrders(solution));
-//    }
-//
-//    @Test
-//    public void testHasRequiredDigitCounts() throws Exception {
-//        List<int[]> solution = new ArrayList<>();
-//        int[] triangle = {3, 101};
-//        int[] square = {4, 88};
-//        int[] pentagonal = {5, 77};
-//        int[] hexagonal = {6, 71};
-//        assertEquals(5151, PolygonalNumber.calculate(triangle));
-//        assertEquals(7744, PolygonalNumber.calculate(square));
-//        assertEquals(8855, PolygonalNumber.calculate(pentagonal));
-//        assertEquals(10011, PolygonalNumber.calculate(hexagonal));
-//        solution.add(triangle);
-//        assert (PolygonalNumber.hasRequiredDigitCounts(solution, 4));
-//        solution.add(square);
-//        assert (PolygonalNumber.hasRequiredDigitCounts(solution, 4));
-//        solution.add(pentagonal);
-//        assert (PolygonalNumber.hasRequiredDigitCounts(solution, 4));
-//        solution.add(hexagonal);
-//        assert (!PolygonalNumber.hasRequiredDigitCounts(solution, 4));
-//    }
-//
-//    @Test
-//    public void testIsPartialOrWraps() throws Exception {
-//        List<int[]> solution = new ArrayList<>();
-//        int[] triangle = {3, 127};
-//        int[] pentagonal = {5, 44};
-//        int[] square = {4, 91};
-//        assertEquals(8128, PolygonalNumber.calculate(triangle));
-//        assertEquals(2882, PolygonalNumber.calculate(pentagonal));
-//        assertEquals(8281, PolygonalNumber.calculate(square));
-//        // wraps, not partial (note: not cyclic):
-//        solution.clear();
-//        solution.add(triangle);
-//        solution.add(square);
-//        assert (PolygonalNumber.isPartialOrWraps(2, solution));
-//        // partial, does not wrap (note: not cyclic):
-//        solution.clear();
-//        solution.add(triangle);
-//        solution.add(triangle);
-//        assert (PolygonalNumber.isPartialOrWraps(3, solution));
-//        // not partial, does not wrap (note: is cyclic):
-//        solution.clear();
-//        solution.add(triangle);
-//        solution.add(pentagonal);
-//        assert (!PolygonalNumber.isPartialOrWraps(2, solution));
-//    }
-//
-//    @Test
-//    public void testIsCyclicList() throws Exception {
-//        List<int[]> solution = new ArrayList<>();
-//        int[] triangle = {3, 127};
-//        int[] pentagonal = {5, 44};
-//        int[] square = {4, 91};
-//        assertEquals(8128, PolygonalNumber.calculate(triangle));
-//        assertEquals(2882, PolygonalNumber.calculate(pentagonal));
-//        assertEquals(8281, PolygonalNumber.calculate(square));
-//        solution.add(triangle);
-//        assert (PolygonalNumber.isCyclicList(solution));
-//        solution.add(pentagonal);
-//        assert (PolygonalNumber.isCyclicList(solution));
-//        solution.add(square);
-//        assert (PolygonalNumber.isCyclicList(solution));
-//    }
-//
-//    @Test
-//    public void testIsCyclicWithPrevious() throws Exception {
-//        List<int[]> solution = new ArrayList<>();
-//        int[] triangle = {3, 127};
-//        int[] pentagonal = {5, 44};
-//        int[] square = {4, 91};
-//        assertEquals(8128, PolygonalNumber.calculate(triangle));
-//        assertEquals(2882, PolygonalNumber.calculate(pentagonal));
-//        assertEquals(8281, PolygonalNumber.calculate(square));
-//        solution.add(triangle);
-//        solution.add(pentagonal);
-//        solution.add(square);
-//        solution.add(square);
-//        assert !PolygonalNumber.isCyclicWithPrevious(solution, 0);
-//        assert PolygonalNumber.isCyclicWithPrevious(solution, 1);
-//        assert PolygonalNumber.isCyclicWithPrevious(solution, 2);
-//        assert !PolygonalNumber.isCyclicWithPrevious(solution, 3);
-//        assert !PolygonalNumber.isCyclicWithPrevious(solution, 4);
-//    }
-//
-//    @Test
-//    public void testIsCyclicListMembers() throws Exception {
-//        List<int[]> solution = new ArrayList<>();
-//        int[] triangle = {3, 127};
-//        int[] pentagonal = {5, 44};
-//        int[] square = {4, 91};
-//        assertEquals(8128, PolygonalNumber.calculate(triangle));
-//        assertEquals(2882, PolygonalNumber.calculate(pentagonal));
-//        assertEquals(8281, PolygonalNumber.calculate(square));
-//        solution.add(triangle);
-//        solution.add(pentagonal);
-//        solution.add(square);
-//        solution.add(square);
-//        assert PolygonalNumber.isCyclicListMembers(solution, 0, 1);
-//        assert PolygonalNumber.isCyclicListMembers(solution, 1, 2);
-//        assert !PolygonalNumber.isCyclicListMembers(solution, 2, 3);
-//        assert !PolygonalNumber.isCyclicListMembers(solution, 3, 4);
-//        assert PolygonalNumber.isCyclicListMembers(solution, 2, 0);
-//        assert PolygonalNumber.isCyclicListMembers(solution, 3, 0);
-//    }
-//
-//    @Test
-//    public void testIsCyclic() throws Exception {
-//        // 8128, 2882, 8281 are cyclic:
-//        // triangle   P(3,127) = 8128
-//        // square     P(4, 91) = 8281
-//        // pentagonal P(5, 44) = 2882
-//        int[] triangle = {3, 127};
-//        int[] square = {4, 91};
-//        int[] pentagonal = {5, 44};
-//        assertEquals(8128, PolygonalNumber.calculate(triangle));
-//        assertEquals(8281, PolygonalNumber.calculate(square));
-//        assertEquals(2882, PolygonalNumber.calculate(pentagonal));
-//        assert PolygonalNumber.isCyclic(triangle, pentagonal);
-//        assert PolygonalNumber.isCyclic(pentagonal, square);
-//        assert PolygonalNumber.isCyclic(square, triangle);
-//        assert !PolygonalNumber.isCyclic(pentagonal, triangle);
-//        assert !PolygonalNumber.isCyclic(square, pentagonal);
-//        assert !PolygonalNumber.isCyclic(triangle, square);
-//    }
-//
-//    @Test
-//    public void testGetFirstDigits() throws Exception {
-//        int[] polygonal = {3, 1};
-//        assertEquals(1, PolygonalNumber.calculate(polygonal));
-//        assert "1".equals(PolygonalNumber.getHead(polygonal, 2));
-//        polygonal = new int[]{4, 5};
-//        assertEquals(25, PolygonalNumber.calculate(polygonal));
-//        assert "25".equals(PolygonalNumber.getHead(polygonal, 2));
-//        polygonal = new int[]{8, 19};
-//        assertEquals(1045, PolygonalNumber.calculate(polygonal));
-//        assert "10".equals(PolygonalNumber.getHead(polygonal, 2));
-//        polygonal = new int[]{8, 192};
-//        assertEquals(110208, PolygonalNumber.calculate(polygonal));
-//        assert "11".equals(PolygonalNumber.getHead(polygonal, 2));
-//    }
-//
-//    @Test
-//    public void testGetLastDigits() throws Exception {
-//        int[] polygonal = {3, 1};
-//        assertEquals(1, PolygonalNumber.calculate(polygonal));
-//        assert "1".equals(PolygonalNumber.getTail(polygonal, 2));
-//        polygonal = new int[]{4, 5};
-//        assertEquals(25, PolygonalNumber.calculate(polygonal));
-//        assert "25".equals(PolygonalNumber.getTail(polygonal, 2));
-//        polygonal = new int[]{8, 19};
-//        assertEquals(1045, PolygonalNumber.calculate(polygonal));
-//        assert "45".equals(PolygonalNumber.getTail(polygonal, 2));
-//        polygonal = new int[]{8, 192};
-//        assertEquals(110208, PolygonalNumber.calculate(polygonal));
-//        assert "08".equals(PolygonalNumber.getTail(polygonal, 2));
-//    }
-//
-//    // moved from P61_CyclicalFigurateNumbers:
-//
-//    @Test
-//    public void testGetList1() throws Exception {
-//        List<int[]> solution = new ArrayList<>();
-//        int[] polygonal = new int[]{8, 19};
-//        assertEquals(1045, PolygonalNumber.calculate(polygonal));
-//        solution.add(polygonal);
-//        assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.find(1).toArray());
-//    }
-//
-//    @Test
-//    public void testGetList2() throws Exception {
-//        List<int[]> solution = new ArrayList<>();
-//        int[] p1 = new int[]{5, 55};
-//        int[] p2 = new int[]{8, 19};
-//        assertEquals(4510, PolygonalNumber.calculate(p1));
-//        assertEquals(1045, PolygonalNumber.calculate(p2));
-//        solution.add(p1);
-//        solution.add(p2);
-//        assertArrayEquals(solution.toArray(), P61_CyclicalFigurateNumbers.find(2).toArray());
-//    }
+    @Test
+    public void testIsCyclic() throws Exception {
+        List<PolygonalNumber> list = new ArrayList<>();
+        PolygonalNumber triangle = new PolygonalNumber(3, 127);
+        PolygonalNumber pentagonal = new PolygonalNumber(5, 44);
+        PolygonalNumber square = new PolygonalNumber(4, 91);
+        assertEquals(new Long(8128), triangle.getValue());
+        assertEquals(new Long(2882), pentagonal.getValue());
+        assertEquals(new Long(8281), square.getValue());
+        list.add(triangle);
+        assertTrue(CyclicalFigurate.isCyclic(list));
+        list.add(pentagonal);
+        assertTrue(CyclicalFigurate.isCyclic(list));
+        list.add(square);
+        assertTrue(CyclicalFigurate.isCyclic(list));
+        list.add(square);
+        assertTrue(!CyclicalFigurate.isCyclic(list));
+    }
 
-//    @Test
-//    public void testGetList3() throws Exception {
-//        List<String> result = P61_CyclicalFigurateNumbers.find(3);
-//        List<int[]> expected = new ArrayList<>();
-//        int[] pentagonal = {5, 59};
-//        int[] square = {4, 96};
-//        int[] heptagonal = {7, 26};
-//        expected.add(pentagonal);
-//        expected.add(square);
-//        expected.add(heptagonal);
-//        assertArrayEquals(expected.toArray(), result.toArray());
-//    }
+    @Test
+    public void testIsWrapping() throws Exception {
+        List<PolygonalNumber> list = new ArrayList<>();
+        PolygonalNumber triangle = new PolygonalNumber(3, 127);
+        PolygonalNumber pentagonal = new PolygonalNumber(5, 44);
+        PolygonalNumber square = new PolygonalNumber(4, 91);
+        assertEquals(new Long(8128), triangle.getValue());
+        assertEquals(new Long(2882), pentagonal.getValue());
+        assertEquals(new Long(8281), square.getValue());
+        list.add(triangle);
+        assertTrue(!CyclicalFigurate.isWrapping(list));
+        list.add(pentagonal);
+        assertTrue(!CyclicalFigurate.isWrapping(list));
+        list.add(square);
+        assertTrue(CyclicalFigurate.isWrapping(list));
+        list.add(square);
+        assertTrue(CyclicalFigurate.isWrapping(list));
+    }
 
-//    @Test
-//    public void testGetListWithThreeArgs() throws Exception {
-//    }
-//
-//    @Test
-//    public void testCheckSolution() throws Exception {
-//        List<int[]> solution = new ArrayList<>();
-//        List<int[]> newSolution;
-//
-//        int[] triangle = {3, 127};
-//        newSolution = P61_CyclicalFigurateNumbers.checkSolution(3, solution, triangle);
-//        assert newSolution != null;
-//        assertEquals(1, solution.size());
-//        assertEquals(1, newSolution.size());
-//        assertArrayEquals(solution.toArray(), newSolution.toArray());
-//
-//        int[] pentagonal = {5, 44};
-//        newSolution = P61_CyclicalFigurateNumbers.checkSolution(3, solution, pentagonal);
-//        assert newSolution != null;
-//        assertEquals(2, solution.size());
-//        assertEquals(2, newSolution.size());
-//        assertArrayEquals(solution.toArray(), newSolution.toArray());
-//
-//        int[] square = {4, 91};
-//        newSolution = P61_CyclicalFigurateNumbers.checkSolution(3, solution, square);
-//        assert newSolution != null;
-//        assertEquals(3, solution.size());
-//        assertEquals(3, newSolution.size());
-//        assertArrayEquals(solution.toArray(), newSolution.toArray());
-//    }
-//
-//    @Test
-//    public void testIsSolution() throws Exception {
-//        List<int[]> solution = new ArrayList<>();
-//        assert P61_CyclicalFigurateNumbers.isSolution(3, solution);
-//        solution.add(new int[]{3, 127});
-//        assert P61_CyclicalFigurateNumbers.isSolution(3, solution);
-//        solution.add(new int[]{5, 44});
-//        assert P61_CyclicalFigurateNumbers.isSolution(3, solution);
-//        solution.add(new int[]{4, 91});
-//        assert P61_CyclicalFigurateNumbers.isSolution(3, solution);
-//    }
+    @Test
+    public void testIsFullSize() throws Exception {
+        List<PolygonalNumber> list = new ArrayList<>();
+        PolygonalNumber triangle = new PolygonalNumber(3, 127);
+        PolygonalNumber pentagonal = new PolygonalNumber(5, 44);
+        PolygonalNumber square = new PolygonalNumber(4, 91);
+        assertEquals(new Long(8128), triangle.getValue());
+        assertEquals(new Long(2882), pentagonal.getValue());
+        assertEquals(new Long(8281), square.getValue());
+        list.add(triangle);
+        assertTrue(!CyclicalFigurate.isFullSize(3, list));
+        list.add(pentagonal);
+        assertTrue(!CyclicalFigurate.isFullSize(3, list));
+        list.add(square);
+        assertTrue(CyclicalFigurate.isFullSize(3, list));
+        list.add(square);
+        assertTrue(!CyclicalFigurate.isFullSize(3, list));
+    }
+
+    @Test
+    public void testEachOrderHasDifferentPolygonal() throws Exception {
+        List<PolygonalNumber> solution = new ArrayList<>();
+        PolygonalNumber one = new PolygonalNumber(1, 101);
+        PolygonalNumber two = new PolygonalNumber(2, 202);
+        PolygonalNumber three = new PolygonalNumber(3, 303);
+        PolygonalNumber dupe = new PolygonalNumber(1, 404);
+        solution.add(one);
+        assertTrue(CyclicalFigurate.eachOrderHasDifferentPolygonal(solution));
+        solution.add(two);
+        assertTrue(CyclicalFigurate.eachOrderHasDifferentPolygonal(solution));
+        solution.add(three);
+        assertTrue(CyclicalFigurate.eachOrderHasDifferentPolygonal(solution));
+        solution.add(dupe);
+        assertFalse(CyclicalFigurate.eachOrderHasDifferentPolygonal(solution));
+    }
 }

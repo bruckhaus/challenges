@@ -9,17 +9,17 @@ class CyclicalFigurate {
     final int MIN_VALUE = 1000;
     final int MAX_VALUE = 9999;
 
-    private static boolean diagnosticsToStdOut = false;
     private TreeMap<Long, List<PolygonalNumber>> polygonals = buildPolygonals();
 
     TreeMap<Long, List<PolygonalNumber>> buildPolygonals() {
-        polygonals = new TreeMap<Long, List<PolygonalNumber>>();
+        polygonals = new TreeMap<>();
         int base = MIN_ORDER;
         int exponent = 0;
         while (true) {
             PolygonalNumber p = new PolygonalNumber(base, exponent);
             if (base > MAX_ORDER) break;
             else if (p.getValue() < MIN_VALUE) exponent++;
+            else if (p.getPostfix() < 10) exponent++;
             else if (p.getValue() > MAX_VALUE) {
                 base++;
                 exponent = 0;
@@ -52,18 +52,21 @@ class CyclicalFigurate {
     }
 
     List<PolygonalNumber> findPolygonals(int size) {
-        List<PolygonalNumber> result = new ArrayList<>();
+        List<PolygonalNumber> result;
         Long head = polygonals.firstKey();
         while (true) {
+            System.out.println("findPolygonals: head = " + head);
             result = find(size, size, head, 0);
             if (result != null) return result;
             head = polygonals.higherKey(head);
         }
     }
 
-    private List<PolygonalNumber> find(int solutionSize, int size, Long head, Integer offset) {
+    List<PolygonalNumber> find(int solutionSize, int size, Long head, Integer offset) {
         if (size == 1) return makeList(head, offset);
         List<PolygonalNumber> headList = polygonals.get(head);
+        System.out.println("headList = " + headList + ", offset = " + offset);
+        if (offset >= headList.size()) return null;
         PolygonalNumber p = headList.get(offset);
         int nextOffset = 0;
         while (true) {
@@ -84,7 +87,11 @@ class CyclicalFigurate {
         }
     }
 
-    private List<PolygonalNumber> makeList(Long head, int offset) {
+    List<PolygonalNumber> makeList(Long head, int offset) {
+//        System.out.println("head = " + head);
+//        System.out.println("offset = " + offset);
+//        System.out.println("polygonals.get(head) = " + polygonals.get(head));
+        if (offset >= polygonals.get(head).size()) return null;
         List<PolygonalNumber> list = new ArrayList<>();
         list.add(polygonals.get(head).get(offset));
         return list;
@@ -125,6 +132,7 @@ class CyclicalFigurate {
     }
 
     static boolean isCyclic(List<PolygonalNumber> list) {
+        if (list.size() < 1) return true;
         Long lastPostfix = list.get(0).getPrefix();
         for (PolygonalNumber p : list) {
             if (!p.getPrefix().equals(lastPostfix)) return false;
@@ -134,6 +142,7 @@ class CyclicalFigurate {
     }
 
     static boolean isWrapping(List<PolygonalNumber> list) {
+        if (list.size() < 1) return true;
         Long firstPrefix = list.get(0).getPrefix();
         Long lastPostfix = list.get(list.size() - 1).getPostfix();
         return firstPrefix.equals(lastPostfix);
@@ -144,35 +153,36 @@ class CyclicalFigurate {
     }
 
     static boolean eachOrderHasDifferentPolygonal(List<PolygonalNumber> list) {
-        // TODO: implement this method
-        return false;
+        Set<Integer> set = new HashSet<>();
+        for (PolygonalNumber p : list) set.add(p.getBase());
+        return set.size() == list.size();
     }
 
     // --- diagnostics: ---
 
-    private void showCall(int size, int[] seed) {
-        if (!diagnosticsToStdOut) return;
-//        System.out.printf("size: %d, seed: %s, %d\n", size, Arrays.toString(seed), PolygonalNumber.calculate(seed));
-    }
+//    private void showCall(int size, int[] seed) {
+//        if (!diagnosticsToStdOut) return;
+////        System.out.printf("size: %d, seed: %s, %d\n", size, Arrays.toString(seed), PolygonalNumber.calculate(seed));
+//    }
 
-    private void showStep(int size, int[] seed, int[] anchor, List<int[]> partial) {
-        if (!diagnosticsToStdOut) return;
-        System.out.printf("size: %d, seed: %s, %,d, anchor: %s, %d\n", size
-//                Arrays.toString(seed), PolygonalNumber.calculate(seed),
-//                Arrays.toString(anchor), PolygonalNumber.calculate(anchor)
-        );
-        showList(partial);
-    }
+//    private void showStep(int size, int[] seed, int[] anchor, List<int[]> partial) {
+//        if (!diagnosticsToStdOut) return;
+//        System.out.printf("size: %d, seed: %s, %,d, anchor: %s, %d\n", size
+////                Arrays.toString(seed), PolygonalNumber.calculate(seed),
+////                Arrays.toString(anchor), PolygonalNumber.calculate(anchor)
+//        );
+//        showList(partial);
+//    }
 
-    private void showList(List<int[]> partial) {
-        if (!diagnosticsToStdOut) return;
-        if (partial != null) {
-            for (int i = 0; i < partial.size(); i++) {
-//                System.out.printf("partial[%d]: %,d\n", i, PolygonalNumber.calculate(partial.get(i)));
-            }
-        } else {
-            System.out.println("partial: null");
-        }
-    }
+//    private void showList(List<int[]> partial) {
+//        if (!diagnosticsToStdOut) return;
+//        if (partial != null) {
+//            for (int i = 0; i < partial.size(); i++) {
+////                System.out.printf("partial[%d]: %,d\n", i, PolygonalNumber.calculate(partial.get(i)));
+//            }
+//        } else {
+//            System.out.println("partial: null");
+//        }
+//    }
 }
 
