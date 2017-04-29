@@ -55,8 +55,8 @@ public class CyclicalFigurateTest {
         // size 3: p(5,59)=?, p(4,96)=?, p(7,26)=?
         CyclicalFigurate c = new CyclicalFigurate();
         assertEquals("[p(3,45)=1035]", c.findPolygonals(1).toString());
-        assertEquals("[p(7,32)=2512, p(3,49)=1225]", c.findPolygonals(2).toString());
-//        assertEquals("[p(7,32)=2512, p(3,49)=1225]", c.findPolygonals(3).toString());
+        assertEquals("[p(7,60)=8910, p(4,33)=1089]", c.findPolygonals(2).toString());
+        assertEquals("[p(7,32)=2512, p(3,49)=1225]", c.findPolygonals(3).toString());
     }
 
     @Test

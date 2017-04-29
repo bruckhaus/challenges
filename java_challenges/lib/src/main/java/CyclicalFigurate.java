@@ -67,10 +67,10 @@ class CyclicalFigurate {
         List<PolygonalNumber> headList = polygonals.get(head);
         System.out.println("headList = " + headList + ", offset = " + offset);
         if (offset >= headList.size()) return null;
-        PolygonalNumber p = headList.get(offset);
         int nextOffset = 0;
         while (true) {
             if (offset >= headList.size()) return null;
+            PolygonalNumber p = headList.get(offset);
             Long nextHead = headList.get(offset).getPostfix();
             List<PolygonalNumber> partial = find(solutionSize, size - 1, nextHead, nextOffset);
             if (partial == null) {
