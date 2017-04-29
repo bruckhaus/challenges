@@ -58,7 +58,7 @@ public class CyclicalFigurateTest {
         List<PolygonalNumber> partial = new ArrayList<>();
         PolygonalNumber p = new PolygonalNumber(0, 0);
         List<PolygonalNumber> result = CyclicalFigurate.checkSolution(size, partial, p);
-        assertNull(result);
+        assertEquals("[p(0,0)=-1]", result.toString());
     }
 
     @Test
