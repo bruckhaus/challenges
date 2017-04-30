@@ -50,13 +50,19 @@ public class CyclicalFigurateTest {
 
     @Test
     public void testFindPolygonals() throws Exception {
-        // size 1: p(3,45)=1035
-        // size 2: p(5,55)=4510, p(8,19)=1045
-        // size 3: p(5,59)=?, p(4,96)=?, p(7,26)=?
         CyclicalFigurate c = new CyclicalFigurate();
-        assertEquals("[p(3,45)=1035]", c.findPolygonals(1).toString());
-        assertEquals("[p(7,60)=8910, p(4,33)=1089]", c.findPolygonals(2).toString());
-        assertEquals("[p(7,32)=2512, p(3,49)=1225]", c.findPolygonals(3).toString());
+        assertEquals("[p(3,45)=1035]",
+                c.findPolygonals(1).toString());
+        assertEquals("[p(4,33)=1089, p(7,60)=8910]",
+                c.findPolygonals(2).toString());
+        assertEquals("[p(7,26)=1651, p(5,59)=5192, p(4,96)=9216]",
+                c.findPolygonals(3).toString());
+        assertEquals("[p(5,33)=1617, p(6,30)=1770, p(3,118)=7021, p(4,46)=2116]",
+                c.findPolygonals(4).toString());
+        assertEquals("[p(7,32)=2512, p(5,29)=1247, p(6,49)=4753, p(3,103)=5356, p(4,75)=5625]",
+                c.findPolygonals(5).toString());
+        assertEquals("[p(7,32)=2512, p(8,21)=1281, p(6,64)=8128, p(5,44)=2882, p(3,128)=8256, p(4,75)=5625]",
+                c.findPolygonals(6).toString());
     }
 
     @Test
@@ -64,13 +70,13 @@ public class CyclicalFigurateTest {
         CyclicalFigurate c = new CyclicalFigurate();
         List<PolygonalNumber> list;
         list = c.find(2, 2, 12L, 0);
-        assertEquals("[p(7,32)=2512, p(3,49)=1225]", list.toString());
+        assertEquals("[p(3,49)=1225, p(7,32)=2512]", list.toString());
         list = c.find(3, 2, 12L, 0);
-        assertEquals("[p(7,32)=2512, p(3,49)=1225]", list.toString());
+        assertEquals("[p(3,49)=1225, p(6,36)=2556]", list.toString());
         list = c.find(2, 2, 25L, 0);
-        assertEquals("[p(4,75)=5625, p(3,71)=2556]", list.toString());
+        assertEquals("[p(3,71)=2556, p(4,75)=5625]", list.toString());
         list = c.find(3, 2, 25L, 0);
-        assertEquals("[p(4,75)=5625, p(3,71)=2556]", list.toString());
+        assertEquals("[p(3,71)=2556, p(4,75)=5625]", list.toString());
     }
 
     @Test
@@ -96,24 +102,20 @@ public class CyclicalFigurateTest {
         List<PolygonalNumber> partial = new ArrayList<>();
         List<PolygonalNumber> solution;
         PolygonalNumber p;
-        // any list of length 1 is a solution:
         p = new PolygonalNumber(0, 0);
+        assertEquals("p(0,0)=-1", p.toString());
         solution = CyclicalFigurate.checkSolution(1, partial, p);
-        assertEquals("[p(0,0)=-1]", solution.toString());
-        //  any list of length 1 is a solution:
+        assertNull(solution);
         partial.clear();
-        p = new PolygonalNumber(3, 127);
-        solution = CyclicalFigurate.checkSolution(3, partial, p);
-        assertEquals("[p(3,127)=8128]", solution.toString());
-        // p(3,127), p(5,44) -> pass:
         p = new PolygonalNumber(5, 44);
         solution = CyclicalFigurate.checkSolution(3, partial, p);
+        assertEquals("[p(5,44)=2882]", solution.toString());
+        p = new PolygonalNumber(3, 127);
+        solution = CyclicalFigurate.checkSolution(3, partial, p);
         assertEquals("[p(3,127)=8128, p(5,44)=2882]", solution.toString());
-        // p(3,127), p(5,44), p(4,91) -> pass:
         p = new PolygonalNumber(4, 91);
         solution = CyclicalFigurate.checkSolution(3, partial, p);
-        assertEquals("[p(3,127)=8128, p(5,44)=2882, p(4,91)=8281]", solution.toString());
-        // p(3,127), p(5,44), p(4,91), p(4,91) -> fail:
+        assertEquals("[p(4,91)=8281, p(3,127)=8128, p(5,44)=2882]", solution.toString());
         solution = CyclicalFigurate.checkSolution(4, partial, p);
         assertNull(solution);
     }
@@ -130,6 +132,15 @@ public class CyclicalFigurateTest {
         assertTrue(CyclicalFigurate.isSolution(2, list));
 
         list.clear();
+        // size 3: p(5,59)=?, p(4,96)=?, p(7,26)=?
+        list.add(new PolygonalNumber(5, 59));
+        assertTrue(CyclicalFigurate.isSolution(3, list));
+        list.add(new PolygonalNumber(4, 96));
+        assertTrue(CyclicalFigurate.isSolution(3, list));
+        list.add(new PolygonalNumber(7, 26));
+        assertTrue(CyclicalFigurate.isSolution(3, list));
+
+        list.clear();
         assertTrue(CyclicalFigurate.isSolution(3, list));
         list.add(new PolygonalNumber(3, 127));
         assertTrue(CyclicalFigurate.isSolution(3, list));
@@ -140,21 +151,6 @@ public class CyclicalFigurateTest {
         list.add(new PolygonalNumber(4, 91));
         assertTrue(!CyclicalFigurate.isSolution(3, list));
         assertTrue(!CyclicalFigurate.isSolution(4, list));
-    }
-
-    @Test
-    public void testIsCyclicSolution() throws Exception {
-        List<PolygonalNumber> list = new ArrayList<>();
-        assertTrue(CyclicalFigurate.isCyclicSolution(3, list));
-        list.add(new PolygonalNumber(3, 127));
-        assertTrue(CyclicalFigurate.isCyclicSolution(3, list));
-        list.add(new PolygonalNumber(5, 44));
-        assertTrue(CyclicalFigurate.isCyclicSolution(3, list));
-        list.add(new PolygonalNumber(4, 91));
-        assertTrue(CyclicalFigurate.isCyclicSolution(3, list));
-        list.add(new PolygonalNumber(4, 91));
-        assertTrue(!CyclicalFigurate.isCyclicSolution(3, list));
-        assertTrue(!CyclicalFigurate.isCyclicSolution(4, list));
     }
 
     @Test
@@ -266,10 +262,10 @@ public class CyclicalFigurateTest {
     @Test
     public void testEachOrderHasDifferentPolygonal() throws Exception {
         List<PolygonalNumber> solution = new ArrayList<>();
-        PolygonalNumber one = new PolygonalNumber(1, 101);
-        PolygonalNumber two = new PolygonalNumber(2, 202);
-        PolygonalNumber three = new PolygonalNumber(3, 303);
-        PolygonalNumber dupe = new PolygonalNumber(1, 404);
+        PolygonalNumber one = new PolygonalNumber(3, 101);
+        PolygonalNumber two = new PolygonalNumber(4, 202);
+        PolygonalNumber three = new PolygonalNumber(5, 303);
+        PolygonalNumber dupe = new PolygonalNumber(3, 404);
         solution.add(one);
         assertTrue(CyclicalFigurate.eachOrderHasDifferentPolygonal(solution));
         solution.add(two);
@@ -277,6 +273,6 @@ public class CyclicalFigurateTest {
         solution.add(three);
         assertTrue(CyclicalFigurate.eachOrderHasDifferentPolygonal(solution));
         solution.add(dupe);
-        assertFalse(CyclicalFigurate.eachOrderHasDifferentPolygonal(solution));
+        assertTrue(!CyclicalFigurate.eachOrderHasDifferentPolygonal(solution));
     }
 }

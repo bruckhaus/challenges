@@ -54,24 +54,22 @@ class CyclicalFigurate {
     List<PolygonalNumber> findPolygonals(int size) {
         List<PolygonalNumber> result;
         Long head = polygonals.firstKey();
-        while (true) {
-            System.out.println("findPolygonals: head = " + head);
+        while (head != null) {
             result = find(size, size, head, 0);
             if (result != null) return result;
             head = polygonals.higherKey(head);
         }
+        return null;
     }
 
     List<PolygonalNumber> find(int solutionSize, int size, Long head, Integer offset) {
         if (size == 1) return makeList(head, offset);
         List<PolygonalNumber> headList = polygonals.get(head);
-        System.out.println("headList = " + headList + ", offset = " + offset);
-        if (offset >= headList.size()) return null;
         int nextOffset = 0;
         while (true) {
             if (offset >= headList.size()) return null;
             PolygonalNumber p = headList.get(offset);
-            Long nextHead = headList.get(offset).getPostfix();
+            Long nextHead = p.getPostfix();
             List<PolygonalNumber> partial = find(solutionSize, size - 1, nextHead, nextOffset);
             if (partial == null) {
                 offset++;
@@ -88,9 +86,6 @@ class CyclicalFigurate {
     }
 
     List<PolygonalNumber> makeList(Long head, int offset) {
-//        System.out.println("head = " + head);
-//        System.out.println("offset = " + offset);
-//        System.out.println("polygonals.get(head) = " + polygonals.get(head));
         if (offset >= polygonals.get(head).size()) return null;
         List<PolygonalNumber> list = new ArrayList<>();
         list.add(polygonals.get(head).get(offset));
@@ -100,23 +95,12 @@ class CyclicalFigurate {
     // Solution evaluation:
 
     static List<PolygonalNumber> checkSolution(int size, List<PolygonalNumber> partial, PolygonalNumber p) {
-        partial.add(p);
+        partial.add(0, p);
         if (isSolution(size, partial)) return partial;
         return null;
     }
 
     static boolean isSolution(int size, List<PolygonalNumber> list) {
-        switch (list.size()) {
-            case 0:
-                return true;
-            case 1:
-                return true;
-            default:
-                return isCyclicSolution(size, list);
-        }
-    }
-
-    static boolean isCyclicSolution(int size, List<PolygonalNumber> list) {
         return hasRequiredDigitCounts(list) &&
                 isCyclicAndWraps(size, list) &&
                 eachOrderHasDifferentPolygonal(list);
@@ -153,36 +137,13 @@ class CyclicalFigurate {
     }
 
     static boolean eachOrderHasDifferentPolygonal(List<PolygonalNumber> list) {
-        Set<Integer> set = new HashSet<>();
-        for (PolygonalNumber p : list) set.add(p.getBase());
-        return set.size() == list.size();
+        Set<Integer> bases = new HashSet<>();
+        Set<Long> numbers = new HashSet<>();
+        for (PolygonalNumber p : list) {
+            bases.add(p.getBase());
+            numbers.add(p.getValue());
+        }
+        return (bases.size() == list.size()) &&
+                (numbers.size() == list.size());
     }
-
-    // --- diagnostics: ---
-
-//    private void showCall(int size, int[] seed) {
-//        if (!diagnosticsToStdOut) return;
-////        System.out.printf("size: %d, seed: %s, %d\n", size, Arrays.toString(seed), PolygonalNumber.calculate(seed));
-//    }
-
-//    private void showStep(int size, int[] seed, int[] anchor, List<int[]> partial) {
-//        if (!diagnosticsToStdOut) return;
-//        System.out.printf("size: %d, seed: %s, %,d, anchor: %s, %d\n", size
-////                Arrays.toString(seed), PolygonalNumber.calculate(seed),
-////                Arrays.toString(anchor), PolygonalNumber.calculate(anchor)
-//        );
-//        showList(partial);
-//    }
-
-//    private void showList(List<int[]> partial) {
-//        if (!diagnosticsToStdOut) return;
-//        if (partial != null) {
-//            for (int i = 0; i < partial.size(); i++) {
-////                System.out.printf("partial[%d]: %,d\n", i, PolygonalNumber.calculate(partial.get(i)));
-//            }
-//        } else {
-//            System.out.println("partial: null");
-//        }
-//    }
 }
-
