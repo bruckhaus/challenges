@@ -4,7 +4,7 @@ class Hanoi {
 
     private static int Disks = 4;
 
-    Board board = new Board(Disks);
+    private Board board = new Board(Disks);
 
     Stack<Integer> peg_1 = new Stack<>();
     Stack<Integer> peg_2 = new Stack<>();

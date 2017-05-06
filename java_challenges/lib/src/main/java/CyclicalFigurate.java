@@ -33,11 +33,7 @@ class CyclicalFigurate {
 
     TreeMap<Long, List<PolygonalNumber>> addPolygonal(TreeMap<Long, List<PolygonalNumber>> map, PolygonalNumber p) {
         Long prefix = p.getPrefix();
-        List<PolygonalNumber> list = map.get(prefix);
-        if (list == null) {
-            list = new ArrayList<>();
-            map.put(prefix, list);
-        }
+        List<PolygonalNumber> list = map.computeIfAbsent(prefix, k -> new ArrayList<>());
         list.add(p);
         return map;
     }
