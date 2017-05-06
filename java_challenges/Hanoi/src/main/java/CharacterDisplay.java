@@ -1,44 +1,44 @@
 public class CharacterDisplay {
 
-    public static void render(String content, int size) {
+    static void render(String content, int size) {
         System.out.print(content + drawBase(size));
     }
 
-    public static String drawBase(int size) {
-        String base = "";
+    private static String drawBase(int size) {
+        StringBuilder base = new StringBuilder();
         for (int i = 1; i < 3 * (2 * size + 2); i++) {
-            base += "-";
+            base.append("-");
         }
-        base += "\n\n";
-        return base;
+        base.append("\n\n");
+        return base.toString();
     }
 
-    public static String drawNumber(int number, int size) {
+    static String drawNumber(int number, int size) {
         return spacer(size - number) + numberLine(number) + "|" +
                 numberLine(number) + spacer(size - number) + " ";
     }
 
-    public static String drawSpace(int size) {
+    static String drawSpace(int size) {
         return spacer(size) + "|" + spacer(size) + " ";
     }
 
-    public static void message(String message) {
+    static void message(String message) {
         System.out.println(message);
     }
 
     private static String numberLine(int number) {
-        String line = "";
+        StringBuilder line = new StringBuilder();
         for (int i = 1; i <= number; i++) {
-            line += number;
+            line.append(number);
         }
-        return line;
+        return line.toString();
     }
 
     private static String spacer(int size) {
-        String line = "";
+        StringBuilder line = new StringBuilder();
         for (int i = 1; i <= size; i++) {
-            line += " ";
+            line.append(" ");
         }
-        return line;
+        return line.toString();
     }
 }

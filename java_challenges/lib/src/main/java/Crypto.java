@@ -1,4 +1,4 @@
-public class Crypto {
+class Crypto {
     // Provides methods for generating keys and decrypting messages.
 
     private static int keyCode;
@@ -18,7 +18,7 @@ public class Crypto {
         setKeyCode();
     }
 
-    static void setKeyCode() {
+    private static void setKeyCode() {
         keyCode = 26 * 26 * key.charAt(0) + 26 * key.charAt(1) + key.charAt(2);
     }
 
@@ -36,7 +36,7 @@ public class Crypto {
         return keyCode < 26 * 26 * 26;
     }
 
-    static void updateKey() {
+    private static void updateKey() {
         int positionValue = keyCode / 26 / 26;
         key = getKeyCharacter(positionValue);
         positionValue = keyCode / 26 % 26;
@@ -50,14 +50,14 @@ public class Crypto {
     }
 
     static String decrypt(String cypher) {
-        String decrypted = "";
+        StringBuilder decrypted = new StringBuilder();
         int position = 0;
         for (char code : cypher.toCharArray()) {
             char keyChar = key.charAt(position % 3);
-            decrypted += (char) (code ^ keyChar);
+            decrypted.append((char) (code ^ keyChar));
             position++;
         }
-        return decrypted;
+        return decrypted.toString();
     }
 
     static int getCheckSum(String text) {
