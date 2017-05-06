@@ -2,35 +2,36 @@ import java.util.Stack;
 
 public class Board {
 
+    private static final double WAIT_SECONDS = 1.2;
     private int disks;
 
-    public Board(int count) {
+    Board(int count) {
         disks = count;
     }
 
-    public void show(Hanoi hanoi) throws InterruptedException {
+    void show(Hanoi hanoi) throws InterruptedException {
         String pegs = pegs(hanoi);
         CharacterDisplay.render(pegs, disks);
-        wait_seconds(1.2);
+        wait_seconds(WAIT_SECONDS);
     }
 
-    public void start() {
+    void start() {
         CharacterDisplay.message("Playing Hanoi for " + disks + " disks:\n");
     }
 
-    public void done() {
+    void done() {
         CharacterDisplay.message("Solved.");
     }
 
     private String pegs(Hanoi hanoi) {
-        String pegs = "";
+        StringBuilder pegs = new StringBuilder();
         for (int i = 1; i <= disks; i++) {
             String row = slot(i, hanoi.peg_1) +
                     slot(i, hanoi.peg_2) +
                     slot(i, hanoi.peg_3);
-            pegs = row + "\n" + pegs;
+            pegs.insert(0, row + "\n");
         }
-        return pegs;
+        return pegs.toString();
     }
 
     private String slot(int level, Stack<Integer> peg) {
