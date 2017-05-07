@@ -129,7 +129,7 @@ class PokerScore {
         return getCumulativeSimpleCardScore(hand, count, 1, 1, multiplier);
     }
 
-    private static int getCumulativeSimpleCardScore(String[] hand, int count, int start, int end, int multiplier) {
+    static int getCumulativeSimpleCardScore(String[] hand, int count, int start, int end, int multiplier) {
         int score = 0;
         for (int i = end; i >= start; i--) {
             score += getScoreByCardRank(hand, count, i) * multiplier;

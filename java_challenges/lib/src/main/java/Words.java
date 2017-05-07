@@ -9,7 +9,7 @@ class Words {
 
     private static final String RESOURCES_P042_WORDS_TXT = "file/p042_words.txt";
 
-    private static List words;
+    private static List<Object> words;
 
     static {
         try {
@@ -22,7 +22,7 @@ class Words {
         }
     }
 
-    static List words() {
+    static List<Object> words() {
         return words;
     }
 

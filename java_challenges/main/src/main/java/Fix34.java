@@ -3,8 +3,8 @@ import java.util.Arrays;
 
 public class Fix34 {
 
-    public static int[] fix34(int[] nums) {
-        ArrayList<Integer> list = arrayToArrayList(nums);
+    static int[] fix34(int[] numbers) {
+        ArrayList<Integer> list = arrayToArrayList(numbers);
         int lastPos = -1;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) == 3) {
@@ -16,9 +16,9 @@ public class Fix34 {
         return arrayListToArray(list);
     }
 
-    private static int findFourPosition(ArrayList<Integer> nums, int start) {
-        for (int i = start + 1; i < nums.size(); i++) {
-            if (nums.get(i) == 4) {
+    private static int findFourPosition(ArrayList<Integer> numbers, int start) {
+        for (int i = start + 1; i < numbers.size(); i++) {
+            if (numbers.get(i) == 4) {
                 return i;
             }
         }
@@ -32,7 +32,7 @@ public class Fix34 {
     }
 
     // Converts an array to an ArrayList.
-    public static ArrayList<Integer> arrayToArrayList(int[] list) {
+    private static ArrayList<Integer> arrayToArrayList(int[] list) {
         ArrayList<Integer> newList = new ArrayList<>();
         for (int x : list)
             newList.add(x);
@@ -40,7 +40,7 @@ public class Fix34 {
     }
 
     // Converts an ArrayList to an array.
-    public static int[] arrayListToArray(ArrayList<Integer> list) {
+    private static int[] arrayListToArray(ArrayList<Integer> list) {
         int[] newList = new int[list.size()];
         for (int i = 0; i < list.size(); i++)
             newList[i] = list.get(i);

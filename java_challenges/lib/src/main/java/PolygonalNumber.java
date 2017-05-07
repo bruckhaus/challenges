@@ -1,5 +1,3 @@
-import java.util.List;
-
 class PolygonalNumber {
 
     private static Polygonal triangular = new Triangular();
@@ -71,7 +69,7 @@ class PolygonalNumber {
             case 8:
                 return octagonal.function(exponent);
             default:
-                return -1l;
+                return -1L;
         }
     }
 }

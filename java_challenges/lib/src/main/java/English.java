@@ -3,10 +3,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class English {
+class English {
     // Provides set of common English words and methods for analyzing English text.
 
-    static final String WORDS_FILE = "file/english-words-1000.txt";
+    private static final String WORDS_FILE = "file/english-words-1000.txt";
     private static Set<String> words;
 
     static {
