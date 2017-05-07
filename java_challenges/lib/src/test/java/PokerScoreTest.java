@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertEquals;
+
 public class PokerScoreTest {
 
     // simple hand wins:
@@ -251,5 +253,36 @@ public class PokerScoreTest {
     public void scoreCard() throws Exception {
         int score = PokerScore.scoreCard("9D");
         assert (score > 0);
+    }
+
+    // helpers:
+
+    @Test
+    public void testGetCumulativeSimpleCardScore() throws Exception {
+        String[] hand = new String[]{"5H", "5C", "6S", "7S", "KD"};
+        assertEquals(14, PokerScore.getCumulativeSimpleCardScore(hand, 0, 1, 1, 1));
+        assertEquals(12, PokerScore.getCumulativeSimpleCardScore(hand, 0, 2, 2, 1));
+        assertEquals(11, PokerScore.getCumulativeSimpleCardScore(hand, 0, 3, 3, 1));
+        assertEquals(10, PokerScore.getCumulativeSimpleCardScore(hand, 0, 4, 4, 1));
+        assertEquals(9, PokerScore.getCumulativeSimpleCardScore(hand, 0, 5, 5, 1));
+
+        assertEquals(153209, PokerScore.getCumulativeSimpleCardScore(hand, 0, 1, 5, 1));
+        assertEquals(137589, PokerScore.getCumulativeSimpleCardScore(hand, 1, 1, 5, 1));
+        assertEquals(48889, PokerScore.getCumulativeSimpleCardScore(hand, 2, 1, 5, 1));
+        assertEquals(-11111, PokerScore.getCumulativeSimpleCardScore(hand, 3, 1, 5, 1));
+        assertEquals(-11111, PokerScore.getCumulativeSimpleCardScore(hand, 4, 1, 5, 1));
+        assertEquals(-11111, PokerScore.getCumulativeSimpleCardScore(hand, 5, 1, 5, 1));
+        assertEquals(-11111, PokerScore.getCumulativeSimpleCardScore(hand, 6, 1, 5, 1));
+        assertEquals(-11111, PokerScore.getCumulativeSimpleCardScore(hand, 7, 1, 5, 1));
+
+        assertEquals(0, PokerScore.getCumulativeSimpleCardScore(hand, 0, 1, 5, 0));
+        assertEquals(153209, PokerScore.getCumulativeSimpleCardScore(hand, 0, 1, 5, 1));
+        assertEquals(1532090, PokerScore.getCumulativeSimpleCardScore(hand, 0, 1, 5, 10));
+        assertEquals(1685299, PokerScore.getCumulativeSimpleCardScore(hand, 0, 1, 5, 11));
+        assertEquals(15320900, PokerScore.getCumulativeSimpleCardScore(hand, 0, 1, 5, 100));
+
+        assertEquals(15320, PokerScore.getCumulativeSimpleCardScore(hand, 0, 1, 4, 1));
+        assertEquals(13209, PokerScore.getCumulativeSimpleCardScore(hand, 0, 2, 5, 1));
+        assertEquals(120, PokerScore.getCumulativeSimpleCardScore(hand, 0, 3, 4, 1));
     }
 }

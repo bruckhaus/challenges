@@ -50,20 +50,15 @@ public class Prime1stMillionTest {
     @Test
     public void testGetPrimeFactorSet() throws Exception {
         Prime prime = new Prime1stMillion();
-        checkPrimeFactorSet(prime, new Long[]{2L, 7L}, 14);
-        checkPrimeFactorSet(prime, new Long[]{3L, 5L}, 15);
-        checkPrimeFactorSet(prime, new Long[]{2L, 7L, 23L}, 644);
-        checkPrimeFactorSet(prime, new Long[]{3L, 5L, 43L}, 645);
-        checkPrimeFactorSet(prime, new Long[]{2L, 17L, 19L}, 646);
-        checkPrimeFactorSet(prime, new Long[]{3L, 7L, 13L, 491L}, 134043);
-        checkPrimeFactorSet(prime, new Long[]{2L, 23L, 31L, 47L}, 134044);
-        checkPrimeFactorSet(prime, new Long[]{5L, 17L, 19L, 83L}, 134045);
-        checkPrimeFactorSet(prime, new Long[]{2L, 3L, 11L, 677L}, 134046);
-    }
-
-    // Test helper:
-    private void checkPrimeFactorSet(Prime prime, Long[] factors, int number) throws IOException {
-        assertArrayEquals(factors, prime.getPrimeFactorSet(number).toArray());
+        assertEquals("[2, 7]", prime.getPrimeFactorSet(14).toString());
+        assertEquals("[3, 5]", prime.getPrimeFactorSet(15).toString());
+        assertEquals("[2, 7, 23]", prime.getPrimeFactorSet(644).toString());
+        assertEquals("[3, 5, 43]", prime.getPrimeFactorSet(645).toString());
+        assertEquals("[2, 17, 19]", prime.getPrimeFactorSet(646).toString());
+        assertEquals("[3, 7, 13, 491]", prime.getPrimeFactorSet(134043).toString());
+        assertEquals("[2, 23, 31, 47]", prime.getPrimeFactorSet(134044).toString());
+        assertEquals("[5, 17, 19, 83]", prime.getPrimeFactorSet(134045).toString());
+        assertEquals("[2, 3, 11, 677]", prime.getPrimeFactorSet(134046).toString());
     }
 
     // Test helper:

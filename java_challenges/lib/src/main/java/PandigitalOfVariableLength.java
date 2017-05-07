@@ -9,16 +9,16 @@ public class PandigitalOfVariableLength {
     private static ArrayList<String> Digits =
             new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9"));
 
-    public PandigitalOfVariableLength(int length) {
+    PandigitalOfVariableLength(int length) {
         maxLength = length;
         resetPosition();
     }
 
     public long get() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         ArrayList<String> digits = new ArrayList<>(Digits);
-        for (int i = 0; i < length; i++) result += digits.remove(position[i]);
-        return Integer.valueOf(result);
+        for (int i = 0; i < length; i++) result.append(digits.remove(position[i]));
+        return Integer.valueOf(result.toString());
     }
 
     public long next() {
@@ -36,13 +36,13 @@ public class PandigitalOfVariableLength {
     }
 
     public String list() {
-        String result = "" + get();
+        StringBuilder result = new StringBuilder("" + get());
         Long p = next();
         while (p != -1) {
-            result += ", " + p;
+            result.append(", ").append(p);
             p = next();
         }
-        return result;
+        return result.toString();
     }
 
     private void resetPosition() {

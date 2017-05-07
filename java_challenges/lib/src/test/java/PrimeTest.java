@@ -7,13 +7,13 @@ import static org.junit.Assert.assertEquals;
 
 public class PrimeTest {
 
-    public static final Long[] SAMPLE_PRIMES = new Long[]
+    private static final Long[] SAMPLE_PRIMES = new Long[]
             {2L, 3L, 5L, 7L, 11L, 13L, 17L, 19L, 23L, 29L, 71L, 113L, 173L, 4657L};
-    public static final Long[] LARGE_PRIMES = new Long[]{7652413L};
-    public static final Long[] SAMPLE_NON_PRIMES = new Long[]
+    private static final Long[] LARGE_PRIMES = new Long[]{7652413L};
+    private static final Long[] SAMPLE_NON_PRIMES = new Long[]
             {0L, 1L, 4L, 6L, 8L, 9L, 10L, 12L, 14L, 15L, 16L, 18L, 20L, 21L, 22L, 24L, 25L, 26L, 27L, 28L, 30L, 35L,
                     255L, 256L, 290L, 369L, 492L, 876L, 1431L, 2092L, 2877L, 2991L, 3327L, 4653L};
-    public static final Long[] LARGE_NON_PRIMES = new Long[]
+    private static final Long[] LARGE_NON_PRIMES = new Long[]
             {76654321L, 200000000L, 200000001L, 222299876L, 222299877L};
 
     @Test

@@ -140,6 +140,7 @@ public class PokerHandTest {
         String[] fourOfAKind = new String[]{"KH", "KD", "KC", "KS", "9H"};
         String[] notFourOfAKind = new String[]{"KH", "KD", "KC", "QS", "9H"};
         assertEquals("K", PokerHand.getOfAKindCard(fourOfAKind, 4));
+        assertEquals("K", PokerHand.getOfAKindCard(notFourOfAKind, 3));
         assertEquals("?", PokerHand.getOfAKindCard(notFourOfAKind, 4));
     }
 

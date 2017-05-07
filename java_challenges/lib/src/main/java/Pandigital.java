@@ -2,7 +2,7 @@ import java.util.TreeSet;
 
 public class Pandigital {
 
-    public static final int CURRENT_IS_MAX = -1;
+    private static final int CURRENT_IS_MAX = -1;
     private static long minPandigital = 123456789L;
     private static long maxPandigital = 987654321L;
     private static int position;
@@ -25,7 +25,7 @@ public class Pandigital {
         return current;
     }
 
-    public static int findPosition(long pandigital) {
+    static int findPosition(long pandigital) {
         char[] combo = ("" + pandigital).toCharArray();
         char positionValue = Character.MAX_VALUE;
         char maxValue = Character.MIN_VALUE;
@@ -41,7 +41,7 @@ public class Pandigital {
         return position;
     }
 
-    public static long incrementPosition(long pandigital) {
+    static long incrementPosition(long pandigital) {
         char[] chars = ("" + pandigital).toCharArray();
         for (char value : encountered) {
             if (value > chars[position]) {
@@ -80,7 +80,7 @@ public class Pandigital {
         current = number;
     }
 
-    public static boolean hasNext() {
+    static boolean hasNext() {
         return current < maxPandigital;
     }
 

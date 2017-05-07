@@ -17,7 +17,7 @@ class ResourceFile {
         bufferedReader = new BufferedReader(fileReader);
     }
 
-    public void close() throws IOException {
+    void close() throws IOException {
         bufferedReader.close();
     }
 

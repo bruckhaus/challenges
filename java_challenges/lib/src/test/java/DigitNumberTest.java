@@ -25,7 +25,7 @@ public class DigitNumberTest {
         replacements.add(new int[]{0, 9});
         replacements.add(new int[]{1, 8});
         replacements.add(new int[]{2, 7});
-        assertEquals(987456789L, DigitNumber.replaceDigits(123456789, replacements));
+        assertEquals(987456788L, DigitNumber.replaceDigits(123456788, replacements));
     }
 
     @Test
