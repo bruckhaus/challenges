@@ -24,8 +24,17 @@ public class P40_ChampernownesConstant {
         System.out.printf("The value of the solution expression is: %d\n", solution);
     }
 
-    private static int findSolution() {
+    static void initialize() {
+        solution = 1;
+        totalLength = 0;
+        nextNumber = 1;
+        positions = new Stack<>();
+        position = 0;
         initializePositions();
+    }
+
+    static int findSolution() {
+        initialize();
         while (!positions.empty()) {
             totalLength += (nextNumber + "").length();
             if (totalLength >= position) {
@@ -36,14 +45,15 @@ public class P40_ChampernownesConstant {
         return solution;
     }
 
-    private static void updateSolution() {
+    static int updateSolution() {
         printStringInfo();
         int value = getValueAtPosition();
         solution *= value;
         getNextPosition();
+        return solution;
     }
 
-    private static int getValueAtPosition() {
+    static int getValueAtPosition() {
         String numberString = nextNumber + "";
         int last = numberString.length() - 1;
         int stepBack = totalLength - position;
@@ -53,28 +63,28 @@ public class P40_ChampernownesConstant {
         return value;
     }
 
-    private static void getNextPosition() {
+    static void getNextPosition() {
         positions.pop();
         if (!positions.empty()) {
             position = positions.peek();
         }
     }
 
-    private static void initializePositions() {
+    static void initializePositions() {
         for (int exponent = MAX_EXPONENT; exponent >= 0; exponent--) {
             positions.push((int) Math.pow(10, exponent));
         }
         position = positions.peek();
     }
 
-    private static void printStringInfo() {
+    static void printStringInfo() {
         if (!isInteractive) return;
         System.out.printf(
                 "position: %d, number string: %s, length: %d, total length: %d\n",
                 position, nextNumber + "", (nextNumber + "").length(), totalLength);
     }
 
-    private static void printValueInfo(int stepBack, String digit, int value) {
+    static void printValueInfo(int stepBack, String digit, int value) {
         if (isInteractive) {
             System.out.printf("step back: %d, digit: %s, value: %d\n", stepBack, digit, value);
         }

@@ -14,7 +14,7 @@ public class P39_IntegerRightTriangles {
         e.Arithmetic();
     }
 
-    public void BruteForce() {
+    private void BruteForce() {
         int[] p = new int[1001];
         int result = 0;
         for (int a = 1; a <= 998; a++) {
@@ -37,7 +37,7 @@ public class P39_IntegerRightTriangles {
     }
 
 
-    public void NumberTheory() {
+    private void NumberTheory() {
         int pMax = 0, tMax = 0;
         int m, k;
 
@@ -71,7 +71,7 @@ public class P39_IntegerRightTriangles {
 
 
     @SuppressWarnings("SuspiciousNameCombination")
-    public int gcd(int a, int b) {
+    private int gcd(int a, int b) {
         int y;
         int x;
         if (a > b) {
@@ -89,7 +89,7 @@ public class P39_IntegerRightTriangles {
         return y;
     }
 
-    public void Arithmetic() {
+    private void Arithmetic() {
         int numberOfSolutions;
         long result = 0, resultSolutions = 0;
         for (long p = 2; p <= 1000; p += 2) {

@@ -27,7 +27,7 @@ public class P38_PandigitalMultiples {
         findLargestPandigitalMultiple();
     }
 
-    public static long findLargestPandigitalMultiple() {
+    static long findLargestPandigitalMultiple() {
         for (long candidate = MIN_CANDIDATE; candidate <= MAX_CANDIDATE; candidate++) {
             long sequence = 2;
             long multiple = 0;
@@ -45,17 +45,17 @@ public class P38_PandigitalMultiples {
         return solution_multiple;
     }
 
-    public static long getMultiple(long candidate, long sequence) {
+    static long getMultiple(long candidate, long sequence) {
         long multiple;
-        String concatenatedMultiple = "";
+        StringBuilder concatenatedMultiple = new StringBuilder();
         for (int i = 1; i <= sequence; i++) {
-            concatenatedMultiple += (candidate * i);
+            concatenatedMultiple.append(candidate * i);
         }
-        multiple = Long.parseLong(concatenatedMultiple);
+        multiple = Long.parseLong(concatenatedMultiple.toString());
         return multiple;
     }
 
-    public static boolean isPandigital(long number) {
+    static boolean isPandigital(long number) {
         String numberAsString = number + "";
         if (numberAsString.length() != 9) return false;
         for (int i = 1; i <= 9; i++) {
