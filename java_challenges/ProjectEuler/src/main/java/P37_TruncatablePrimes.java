@@ -21,7 +21,7 @@ public class P37_TruncatablePrimes {
         System.out.printf("\nThe sum of truncatable primes is %d.", t.sumTruncatables());
     }
 
-    public int sumTruncatables() {
+    int sumTruncatables() {
         while (count < NUMBER_OF_TRUNCATABLES) {
             if (isTruncatable(current)) {
                 count++;
@@ -32,7 +32,7 @@ public class P37_TruncatablePrimes {
         return sum;
     }
 
-    public static boolean isTruncatable(int i) {
+    static boolean isTruncatable(int i) {
         return isTruncatable(leftRight.LEFT, i) && isTruncatable(leftRight.RIGHT, i);
     }
 
@@ -44,7 +44,7 @@ public class P37_TruncatablePrimes {
         return true;
     }
 
-    public static int chopDigit(leftRight direction, int number) {
+    static int chopDigit(leftRight direction, int number) {
         if (number < 10) return 0;
         if (direction == leftRight.LEFT) {
             return Integer.parseInt((number + "").substring(1));
