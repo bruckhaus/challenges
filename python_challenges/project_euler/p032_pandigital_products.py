@@ -1,5 +1,4 @@
 # coding=utf-8
-__author__ = 'tilmannbruckhaus'
 
 import os
 import sys
