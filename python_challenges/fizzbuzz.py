@@ -1,5 +1,3 @@
-__author__ = 'tilmann.bruckhaus'
-
 for i in range(1, 51):
     if i % 15 == 0:
         print "fizzbuzz"

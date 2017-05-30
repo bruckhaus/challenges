@@ -1,5 +1,3 @@
-__author__ = 'tilmannbruckhaus'
-
 import unittest
 import pandigital
 
