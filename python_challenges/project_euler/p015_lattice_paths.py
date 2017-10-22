@@ -1,10 +1,7 @@
 from scipy.misc import comb
 
-__author__ = 'tilmannbruckhaus'
-
 
 class LatticePaths:
-
     # Lattice paths
     # Problem 15
     # Starting in the top left corner of a 2x2 grid, and only being able to move to the right and down,
@@ -17,6 +14,7 @@ class LatticePaths:
     @staticmethod
     def find(n):
         return comb(2 * n, n)
+
 
 if __name__ == '__main__':
     p = LatticePaths.find(20)
