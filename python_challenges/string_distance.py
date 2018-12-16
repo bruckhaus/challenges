@@ -13,4 +13,4 @@ if __name__ == '__main__':
     sub_string = 'match'
     input_string = 'Some matching thing in the middle matches the sub-string'
     result = string_distance(sub_string, input_string)
-    print "The greatest distance between occurrences of", sub_string, "in", input_string, "is", result
+    print "The greatest distance between occurrences of [", sub_string, "] in [", input_string, "] is", result
