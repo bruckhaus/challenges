@@ -36,6 +36,7 @@ from project_euler.p034_digit_factorials import DigitFactorials
 from project_euler.p035_circular_primes import CircularPrimes
 from project_euler.p036_double_base_palindromes import DoubleBasePalindrome
 import project_euler.p065_convergents_of_e as p65
+from project_euler.p066_diophantine_equation import DiophantineEquation
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -341,6 +342,58 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(p65.get_numerator_digit_sum(100), 272)
         self.assertEquals(p65.get_numerator_digit_sum(1000), 4034)
         self.assertEquals(p65.get_numerator_digit_sum(1234), 5033)
+
+    def test_problem_66_initialize(self):
+        e = DiophantineEquation()
+        self.assertIsNone(e.a)
+        self.assertIsNone(e.m)
+        self.assertIsNone(e.d)
+        self.assertIsNone(e.num_m1)
+        self.assertIsNone(e.den_m1)
+        e.initialize(123)
+        self.assertEquals(123, e.a)
+        self.assertEquals(0, e.m)
+        self.assertEquals(1, e.d)
+        self.assertEquals(1, e.num_m1)
+        self.assertEquals(0, e.den_m1)
+
+    def test_problem_66_update_terms(self):
+        e = DiophantineEquation()
+        e.initialize(123)
+        self.assertEquals(123, e.a)
+        self.assertEquals(0, e.m)
+        self.assertEquals(1, e.d)
+        e.update_terms(234, 345)
+        self.assertEquals(-1, e.a)
+        self.assertEquals(123, e.m)
+        self.assertEquals(-14895, e.d)
+
+    def test_problem_66_track_series_values(self):
+        e = DiophantineEquation()
+        self.assertEquals(None, e.num_m1)
+        self.assertEquals(None, e.den_m1)
+        self.assertIsNone(None, e.num_m2)
+        self.assertIsNone(None, e.den_m2)
+        e.track_series_values(122666, 42)
+        self.assertEquals(42, e.num_m1)
+        self.assertEquals(122666, e.den_m1)
+        self.assertEquals(None, e.num_m2)
+        self.assertEquals(None, e.den_m2)
+        e.track_series_values(88, 99)
+        self.assertEquals(99, e.num_m1)
+        self.assertEquals(88, e.den_m1)
+        self.assertEquals(42, e.num_m2)
+        self.assertEquals(122666, e.den_m2)
+
+    def test_problem_66_get_max_diophantine_x(self):
+        e = DiophantineEquation()
+        self.assertEquals(0, e.get_max_diophantine_x(-1))
+        self.assertEquals(0, e.get_max_diophantine_x(0))
+        self.assertEquals(0, e.get_max_diophantine_x(1))
+        self.assertEquals(10, e.get_max_diophantine_x(10))
+        self.assertEquals(61, e.get_max_diophantine_x(100))
+        self.assertEquals(421, e.get_max_diophantine_x(456))
+        self.assertEquals(661, e.get_max_diophantine_x(1000))
 
 
 if __name__ == '__main__':
