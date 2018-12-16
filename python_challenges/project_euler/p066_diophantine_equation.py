@@ -19,12 +19,13 @@ from math import sqrt, pow
 BIG_D_MAX = 1000
 
 
-class P66DiophantineEquation:
-
+class DiophantineEquation:
     def __init__(self):
+        # Terms used in calculation of the Diophantine equation:
         self.m = None
         self.d = None
         self.a = None
+        # Track past 2 steps of numerator and denominator for the Diophantine continued fraction:
         self.num_m1 = None
         self.num_m2 = None
         self.den_m1 = None
@@ -69,7 +70,8 @@ class P66DiophantineEquation:
         self.den_m1 = denominator
 
 
-# We get the largest x as a minimal solution for D=661
-e = P66DiophantineEquation()
-d = e.get_max_diophantine_x(BIG_D_MAX)
-print("The largest x for minimal Diophantine solutions up to %d is %d" % (BIG_D_MAX, d))
+if __name__ == '__main__':
+    # We get the largest x as a minimal solution for D=661
+    e = DiophantineEquation()
+    d = e.get_max_diophantine_x(BIG_D_MAX)
+    print("The largest x for minimal Diophantine solutions up to %d is %d" % (BIG_D_MAX, d))
