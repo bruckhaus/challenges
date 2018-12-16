@@ -35,6 +35,7 @@ from project_euler.p033_digit_cancelling_fractions import DigitCancellingFractio
 from project_euler.p034_digit_factorials import DigitFactorials
 from project_euler.p035_circular_primes import CircularPrimes
 from project_euler.p036_double_base_palindromes import DoubleBasePalindrome
+import project_euler.p065_convergents_of_e as p65
 
 
 class TestProjectEuler(unittest.TestCase):
@@ -316,6 +317,30 @@ class TestProjectEuler(unittest.TestCase):
         self.assertEquals(157, d.find(100))
         self.assertEquals(1772, d.find(1000))
         self.assertEquals(18228, d.find(10000))
+
+    def test_problem_65(self):
+        self.assertEquals(0, p65.get_factor_increase(0))
+        self.assertEquals(1, p65.get_factor_increase(1))
+        self.assertEquals(1, p65.get_factor_increase(2))
+        self.assertEquals(2, p65.get_factor_increase(3))
+        self.assertEquals(1, p65.get_factor_increase(4))
+        self.assertEquals(1, p65.get_factor_increase(5))
+        self.assertEquals(4, p65.get_factor_increase(6))
+        self.assertEquals(1, p65.get_factor_increase(7))
+        self.assertEquals(66, p65.get_factor_increase(99))
+        self.assertEquals(1, p65.get_factor_increase(100))
+        self.assertEquals(1, p65.get_factor_increase(101))
+        self.assertEquals(68, p65.get_factor_increase(102))
+        self.assertEquals(1, p65.get_factor_increase(103))
+        self.assertEquals(1, p65.get_factor_increase(104))
+        self.assertEquals(70, p65.get_factor_increase(105))
+        self.assertIsInstance(p65.get_numerator_digit_sum(-1), int)
+        self.assertIsInstance(p65.get_numerator_digit_sum(0), int)
+        self.assertEquals(p65.get_numerator_digit_sum(1), 2)
+        self.assertEquals(p65.get_numerator_digit_sum(10), 17)
+        self.assertEquals(p65.get_numerator_digit_sum(100), 272)
+        self.assertEquals(p65.get_numerator_digit_sum(1000), 4034)
+        self.assertEquals(p65.get_numerator_digit_sum(1234), 5033)
 
 
 if __name__ == '__main__':
