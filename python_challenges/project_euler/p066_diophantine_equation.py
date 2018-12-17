@@ -49,14 +49,18 @@ class DiophantineEquation:
             numerator = self.a
             denominator = 1
             while numerator ** 2 - big_d * denominator ** 2 != 1:
-                self.track_series_values(denominator, numerator)
-                self.update_terms(big_d, limit)
-                numerator = self.a * self.num_m1 + self.num_m2
-                denominator = self.a * self.den_m1 + self.den_m2
+                numerator, denominator = self.update_ratio(numerator, denominator, big_d, limit)
             if numerator > p_max:
                 p_max = numerator
                 result = big_d
         return result
+
+    def update_ratio(self, numerator, denominator, big_d, limit):
+        self.track_series_values(denominator, numerator)
+        self.update_terms(big_d, limit)
+        numerator = self.a * self.num_m1 + self.num_m2
+        denominator = self.a * self.den_m1 + self.den_m2
+        return numerator, denominator
 
     def update_terms(self, big_d, limit):
         self.m = self.d * self.a - self.m
