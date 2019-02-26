@@ -1,12 +1,11 @@
 object HelloWorld {
-  def main(args: Array[String]): String = {
+  def main(args: Array[String]): Unit = {
     val message: String = "Hello World!"
     println(message)
     message
   }
 }
 
-val message = HelloWorld.main(null)
+val message: String = HelloWorld.main(null).toString
 val expected: String = "Hello World!"
-
-assert(message == expected)
+assert(assertion = message == expected)
