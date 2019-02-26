@@ -2,9 +2,6 @@ package scala_for_the_impatient
 
 import scala.beans.BeanProperty
 
-/**
- * Created by tilmannbruckhaus on 1/11/15.
- */
 class Student(@BeanProperty var name: String, @BeanProperty var id: Int) {
 }
 
