@@ -1,9 +1,11 @@
+package main.java;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Fix34 {
 
-    static int[] fix34(int[] numbers) {
+    public static int[] fix34(int[] numbers) {
         ArrayList<Integer> list = arrayToArrayList(numbers);
         int lastPos = -1;
         for (int i = 0; i < list.size(); i++) {

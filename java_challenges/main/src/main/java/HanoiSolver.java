@@ -1,14 +1,14 @@
 import java.util.Arrays;
 import java.util.Stack;
 
-public class Hanoi {
+public class HanoiSolver {
 
     private Stack<Integer> sourcePeg = new Stack<>();
     private Stack<Integer> helperPeg = new Stack<>();
     private Stack<Integer> targetPeg = new Stack<>();
 
     public static void main(String[] args) {
-        new Hanoi().solve(5);
+        new HanoiSolver().solve(5);
     }
 
     private void solve(int disks) {

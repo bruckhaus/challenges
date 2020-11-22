@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class FuzzySearch {
 // Implement a fuzzy search like the path search on Github, where a path matches a pattern if all characters in the
 // pattern appear in the same order in the path.  Return all matching paths in a path catalog.

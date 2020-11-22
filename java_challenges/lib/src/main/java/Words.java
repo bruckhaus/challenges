@@ -1,7 +1,6 @@
-import com.sun.deploy.util.StringUtils;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,8 +28,8 @@ class Words {
     private static void addWords(List items) {
         words = new ArrayList<>();
         for (Object item : items) {
-            String line = String.valueOf(item);
-            String[] newWords = StringUtils.splitString(line, ",\"");
+            String line = String.valueOf(item).replace("\"", "");
+            String[] newWords = line.split(",");
             Collections.addAll(words, newWords);
         }
     }

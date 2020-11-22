@@ -1,5 +1,3 @@
-import com.sun.deploy.util.StringUtils;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -29,7 +27,7 @@ class Prime1stMillion extends Prime {
     }
 
     private long getPrime(String line) {
-        String[] fields = StringUtils.splitString(line, ", ");
+        String[] fields = line.split(", ");
         return Long.parseLong(fields[1]);
     }
 
