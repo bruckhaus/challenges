@@ -51,4 +51,12 @@ class CheersTest {
         String expected = "a:27,b:170";
         assertEquals(expected, result);
     }
+
+    @Test
+    void testGetPartMoteCounts() {
+        assertEquals(0, cheers.partMoteCounts.size());
+        boolean valid = cheers.getPartMoteCounts("Wow!! Nice job. cheers10 cheers5");
+        assertEquals(1, cheers.partMoteCounts.size());
+        assertEquals(15, cheers.partMoteCounts.get("cheers"));
+    }
 }
