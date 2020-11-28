@@ -58,7 +58,7 @@ public class Cheers {
         }
     }
 
-    private boolean getPartMoteCounts(String part) {
+    public boolean getPartMoteCounts(String part) {
         String mote = "";
         int newCount = 0;
         String[] words = part.split(" ");
@@ -70,19 +70,19 @@ public class Cheers {
                     return false;
                 }
                 mote = getMote(word, count);
+                addPartMoteCount(mote, count);
             }
-            addPartMoteCount(mote, count);
         }
         return true;
     }
 
-    private String getMote(String word, int count) {
+    public String getMote(String word, int count) {
         String countStr = "" + count;
         String mote = word.substring(0, word.length() - countStr.length());
         return mote;
     }
 
-    private int getCount(String word) {
+    public int getCount(String word) {
         int i = word.length() - 1;
         String numStr = "";
         while (i >= 0 && word.charAt(i) >= '0' && word.charAt(i) <= '9') {
@@ -96,7 +96,7 @@ public class Cheers {
         return count;
     }
 
-    private void addPartMoteCount(String mote, int count) {
+    public void addPartMoteCount(String mote, int count) {
         int newCount;
         if (partMoteCounts.containsKey(mote)) {
             newCount = partMoteCounts.get(mote) + count;
@@ -106,7 +106,7 @@ public class Cheers {
         partMoteCounts.put(mote, newCount);
     }
 
-    private void initMotes(String[] motes) {
+    public void initMotes(String[] motes) {
         for (String mote : motes) {
             moteCounts.put(mote, 0);
         }
