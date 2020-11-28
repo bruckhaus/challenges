@@ -2,8 +2,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cheers {
-
-    int MAX_PIXELS = 10000;
+    @SuppressWarnings("FieldCanBeLocal")
+    private final int MAX_PIXELS = 10000;
     HashMap<String, Integer> moteCounts = new HashMap<>();
     HashMap<String, Integer> partMoteCounts = new HashMap<>();
     private int minPixels;
@@ -13,7 +13,6 @@ public class Cheers {
         this.minPixels = minPixels;
         initMotes(motes);
         String[] parts = messages.split(",");
-
         for (String part : parts) {
             partMoteCounts.clear();
             valid = getPartMoteCounts(part);
@@ -21,27 +20,48 @@ public class Cheers {
                 addPartMoteCounts(partMoteCounts, moteCounts);
             }
         }
-
-        String report = getReport(moteCounts);
-        return report;
+        return getReport(moteCounts);
     }
 
-    public String getReport(HashMap<String, Integer> moteCounts) {
-        String report = "";
-        boolean first = true;
+    public boolean getPartMoteCounts(String part) {
+        Mote mote;
+        String[] words = part.split("[ ,.;:!?]");
 
-        for (Map.Entry<String, Integer> entry : moteCounts.entrySet()) {
-            Integer count = entry.getValue();
-            if (count >  0) {
-                if (!first) {
-                    report += ",";
+        for (String word : words) {
+            mote = getMote(word);
+            if (mote.count > 0) {
+                if (mote.count < minPixels || mote.count > MAX_PIXELS) {
+                    return false;
                 }
-                String mote = entry.getKey();
-                report += mote + ":" + count;
-                first = false;
+                addPartMoteCount(mote);
             }
         }
-        return report;
+        return true;
+    }
+
+    public Mote getMote(String word) {
+        Mote mote = new Mote();
+        int i = word.length() - 1;
+        StringBuilder numStr = new StringBuilder();
+        while (i >= 0 && word.charAt(i) >= '0' && word.charAt(i) <= '9') {
+            numStr.insert(0, word.charAt(i));
+            i--;
+        }
+        if (numStr.length() > 0) {
+            mote.count = Integer.parseInt(numStr.toString());
+            mote.word = word.substring(0, i + 1);
+        }
+        return mote;
+    }
+
+    public void addPartMoteCount(Mote mote) {
+        int newCount;
+        if (partMoteCounts.containsKey(mote.word)) {
+            newCount = partMoteCounts.get(mote.word) + mote.count;
+        } else {
+            newCount = mote.count;
+        }
+        partMoteCounts.put(mote.word, newCount);
     }
 
     public void addPartMoteCounts(HashMap<String, Integer> partMoteCounts, HashMap<String, Integer> moteCounts) {
@@ -58,57 +78,44 @@ public class Cheers {
         }
     }
 
-    public boolean getPartMoteCounts(String part) {
-        String mote = "";
-        int newCount = 0;
-        String[] words = part.split(" ");
-
-        for (String word : words) {
-            int count = getCount(word);
-            if (count > 0) {
-                if (count < minPixels || count > MAX_PIXELS) {
-                    return false;
-                }
-                mote = getMote(word, count);
-                addPartMoteCount(mote, count);
-            }
-        }
-        return true;
-    }
-
-    public String getMote(String word, int count) {
-        String countStr = "" + count;
-        String mote = word.substring(0, word.length() - countStr.length());
-        return mote;
-    }
-
-    public int getCount(String word) {
-        int i = word.length() - 1;
-        String numStr = "";
-        while (i >= 0 && word.charAt(i) >= '0' && word.charAt(i) <= '9') {
-            numStr = word.charAt(i) + numStr;
-            i--;
-        }
-        int count = 0;
-        if (numStr.length() > 0) {
-            count = Integer.parseInt(numStr);
-        }
-        return count;
-    }
-
-    public void addPartMoteCount(String mote, int count) {
-        int newCount;
-        if (partMoteCounts.containsKey(mote)) {
-            newCount = partMoteCounts.get(mote) + count;
-        } else {
-            newCount = count;
-        }
-        partMoteCounts.put(mote, newCount);
-    }
-
     public void initMotes(String[] motes) {
         for (String mote : motes) {
             moteCounts.put(mote, 0);
+        }
+    }
+
+    public String getReport(HashMap<String, Integer> moteCounts) {
+        StringBuilder report = new StringBuilder();
+        boolean first = true;
+
+        for (Map.Entry<String, Integer> entry : moteCounts.entrySet()) {
+            Integer count = entry.getValue();
+            if (count >  0) {
+                if (!first) {
+                    report.append(",");
+                }
+                String mote = entry.getKey();
+                report.append(mote).append(":").append(count);
+                first = false;
+            }
+        }
+        if (report.toString().equals("")) {
+            return("NO CHEERS");
+        } else {
+            return report.toString();
+        }
+    }
+
+    static class Mote {
+        String word = "";
+        int count = 0;
+
+        public Mote(String word, int count) {
+            this.word = word;
+            this.count = count;
+        }
+
+        public Mote() {
         }
     }
 }
